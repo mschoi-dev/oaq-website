@@ -85,7 +85,7 @@
   }
   .hero .bg {
     position: absolute; inset: 0;
-    background: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=75") center 30% / cover no-repeat;
+    background: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=82") center 30% / cover no-repeat;
     animation: slowzoom 30s ease-out forwards;
     filter: saturate(0.75) brightness(0.85);
   }
@@ -93,13 +93,47 @@
   .hero .veil {
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0.25) 40%, rgba(6,6,8,0.92) 88%),
+      linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0.22) 40%, rgba(6,6,8,0.92) 88%),
       radial-gradient(ellipse 90% 60% at 50% 110%, rgba(6,6,8,0.9), transparent);
   }
   .hero .scan {
     position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
     background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(6,6,8,0.16) 4px);
   }
+  /* 위치 핑 */
+  .pings { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .ping { position: absolute; }
+  .ping .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal); box-shadow: 0 0 10px rgba(95,179,218,0.9);
+  }
+  .ping .ring {
+    position: absolute; left: 50%; top: 50%; width: 64px; height: 64px;
+    margin: -32px 0 0 -29px; border: 1px solid rgba(95,179,218,0.8); border-radius: 50%;
+    animation: pingring 3.2s ease-out infinite;
+  }
+  .ping .lbl {
+    position: absolute; left: 14px; top: -6px; white-space: nowrap;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.6rem;
+    letter-spacing: 0.16em; color: rgba(155,180,196,0.85);
+  }
+  @keyframes pingring {
+    0% { transform: scale(0.18); opacity: 1; }
+    75% { transform: scale(1); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  .ping.gold .dot { background: var(--target); box-shadow: 0 0 12px rgba(201,162,39,0.95); }
+  .ping.gold .ring { border-color: rgba(201,162,39,0.85); }
+  .ping.gold .lbl { color: rgba(215,190,110,0.95); }
+  .ping.gold .box {
+    position: absolute; left: 50%; top: 50%; width: 46px; height: 46px;
+    margin: -23px 0 0 -23px; border: 1px solid rgba(201,162,39,0.8);
+  }
+  .ping.gold .box::before, .ping.gold .box::after {
+    content: ""; position: absolute; background: var(--target);
+  }
+  .ping.gold .box::before { left: 50%; top: -8px; width: 1px; height: 12px; margin-left: -0.5px; box-shadow: 0 60px 0 0 var(--target); }
+  .ping.gold .box::after { top: 50%; left: -8px; height: 1px; width: 12px; margin-top: -0.5px; box-shadow: 60px 0 0 0 var(--target); }
   .hero .container { position: relative; z-index: 2; }
   .hero .eyebrow { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
   .hero .eyebrow::before { content: ""; width: 2.6rem; height: 1px; background: var(--text-dim); }
@@ -170,33 +204,47 @@
   .showcase .center { text-align: center; }
   .showcase .product-name { font-size: clamp(2rem, 5.6vw, 4.2rem); margin: 0.9rem 0 0.6rem; }
   .showcase .product-sub { color: var(--text-dim); max-width: 36rem; margin: 0 auto; font-size: 0.98rem; }
-  .showcase .render-wrap { max-width: 56rem; margin: 2.5rem auto 0; }
+  .showcase .render-wrap { max-width: 58rem; margin: 2rem auto 0; }
   .spec-strip {
     display: flex; justify-content: center; gap: 1px; flex-wrap: wrap;
     background: var(--hairline); border: 1px solid var(--hairline);
-    max-width: 60rem; margin: 3rem auto 0;
+    max-width: 60rem; margin: 2.4rem auto 0;
   }
   .spec-strip .sp { background: var(--bg-2); padding: 1.1rem 1.6rem; flex: 1 1 12rem; text-align: left; }
   .spec-strip .sp .k { font-family: "IBM Plex Mono", monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 0.25rem; }
   .spec-strip .sp .v { font-size: 0.85rem; color: var(--text); }
 
-  /* ─ 플랫폼 캐러셀 ─ */
+  /* ─ 플랫폼 캐러셀 (실사) ─ */
   .platforms { background: var(--bg-2); }
   .carousel { position: relative; border: 1px solid var(--hairline); background: var(--bg); overflow: hidden; }
-  .car-stage { position: relative; height: clamp(20rem, 48vw, 30rem); }
+  .car-stage { position: relative; height: clamp(24rem, 52vw, 34rem); }
   .car-slide {
-    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-    opacity: 0; transform: translateX(4%); transition: opacity 0.9s ease, transform 0.9s ease;
-    pointer-events: none; padding: 2rem;
+    position: absolute; inset: 0;
+    opacity: 0; transform: scale(1.03); transition: opacity 1s ease, transform 1.2s ease;
+    pointer-events: none;
   }
   .car-slide.active { opacity: 1; transform: none; pointer-events: auto; }
-  .car-slide svg { width: min(52rem, 92%); height: auto; }
-  .car-grid {
-    position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
-    background:
-      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(232,234,237,0.03) 60px),
-      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(232,234,237,0.03) 60px);
+  .car-slide .photo { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.6) brightness(0.62) contrast(1.08); }
+  .car-slide .pveil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.42), rgba(6,6,8,0.12) 45%, rgba(6,6,8,0.78)); }
+  .mount { position: absolute; z-index: 3; }
+  .mount .core {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--target); box-shadow: 0 0 14px rgba(201,162,39,0.95);
+    position: absolute; left: 50%; top: 50%; margin: -5px 0 0 -5px;
   }
+  .mount .mring {
+    position: absolute; left: 50%; top: 50%; width: 120px; height: 120px;
+    margin: -60px 0 0 -60px; border: 1.6px solid var(--target); border-radius: 50%;
+    animation: mountpulse 2s ease-out infinite;
+  }
+  .mount .mring.static { animation: none; opacity: 0.55; width: 74px; height: 74px; margin: -37px 0 0 -37px; }
+  @keyframes mountpulse { 0% { transform: scale(0.5); opacity: 1; } 75% { transform: scale(1.1); opacity: 0; } 100% { transform: scale(1.1); opacity: 0; } }
+  .callout {
+    position: absolute; z-index: 3;
+    border-left: 1px solid var(--target); padding-left: 0.9rem;
+  }
+  .callout .c1 { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--target); }
+  .callout .c2 { font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.25rem; }
   .car-tabs { display: flex; gap: 1px; background: var(--hairline); border-top: 1px solid var(--hairline); }
   .car-tab {
     flex: 1; background: var(--bg); border: none; cursor: pointer;
@@ -207,10 +255,8 @@
   .car-tab:hover { color: var(--text-dim); }
   .car-tab.active { color: var(--text); }
   .car-tab .bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--target); }
-  .car-tab.active .bar { animation: fillbar 5s linear forwards; }
+  .car-tab.active .bar { animation: fillbar 6s linear forwards; }
   @keyframes fillbar { from { width: 0; } to { width: 100%; } }
-  .mount-ring { animation: ringpulse 1.8s ease-out infinite; transform-origin: center; transform-box: fill-box; }
-  @keyframes ringpulse { 0% { opacity: 0.9; transform: scale(0.75); } 70% { opacity: 0; transform: scale(1.45); } 100% { opacity: 0; transform: scale(1.45); } }
 
   /* ─ 미션 소프트웨어 ─ */
   .console-sec {
@@ -219,8 +265,8 @@
       radial-gradient(ellipse 75% 60% at 50% 45%, rgba(201, 162, 39, 0.05), transparent 70%),
       var(--bg);
   }
-  .console-wrap { max-width: 54rem; margin: 2.5rem auto 0; }
-  .spec-list { list-style: none; border-top: 1px solid var(--hairline); max-width: 60rem; margin: 2.6rem auto 0; }
+  .console-wrap { max-width: 54rem; margin: 2rem auto 0; }
+  .spec-list { list-style: none; border-top: 1px solid var(--hairline); max-width: 60rem; margin: 2.4rem auto 0; }
   .spec-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.84rem; }
   .spec-list .k { font-family: "IBM Plex Mono", monospace; font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); padding-top: 0.15rem; }
   .spec-list .v { color: var(--text); text-align: right; font-weight: 400; }
@@ -249,7 +295,7 @@
     .domain .bg, .domain:hover .bg { transition: none; transform: none; }
     .car-slide { transition: none; }
     .car-tab.active .bar { animation: none; width: 100%; }
-    .mount-ring { animation: none; opacity: 0.7; }
+    .mount .mring, .ping .ring { animation: none; opacity: 0.6; }
   }
 </style>
 </head>
@@ -272,6 +318,13 @@
   <div class="bg" aria-hidden="true"></div>
   <div class="veil" aria-hidden="true"></div>
   <div class="scan" aria-hidden="true"></div>
+  <div class="pings" aria-hidden="true">
+    <div class="ping" style="left:18%; top:26%;"><span class="ring" style="animation-delay:0s;"></span><span class="dot"></span><span class="lbl">SIG 041 · TRACKED</span></div>
+    <div class="ping" style="left:44%; top:18%;"><span class="ring" style="animation-delay:0.9s;"></span><span class="dot"></span><span class="lbl">SIG 042 · TRACKED</span></div>
+    <div class="ping" style="left:71%; top:34%;"><span class="ring" style="animation-delay:1.7s;"></span><span class="dot"></span><span class="lbl">SIG 044 · TRACKED</span></div>
+    <div class="ping" style="left:83%; top:16%;"><span class="ring" style="animation-delay:2.4s;"></span><span class="dot"></span><span class="lbl">SIG 045 · TRACKED</span></div>
+    <div class="ping gold" style="left:58%; top:27%;"><span class="ring" style="animation-delay:0.4s;"></span><span class="box"></span><span class="dot"></span><span class="lbl" style="top:32px; left:30px;">TGT 043 · LOCK · CONF 0.96</span></div>
+  </div>
   <div class="container">
     <p class="mono eyebrow">Maegnas · Quantum Detection Systems</p>
     <h1 class="display">The Unseen<br>Has Nowhere<br><span class="dim">To Hide.</span></h1>
@@ -296,7 +349,7 @@
 
 <div id="domains">
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1583872341575-610c859c7a57?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1583872341575-610c859c7a57?auto=format&fit=crop&w=2400&q=80');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 01</span>
@@ -312,7 +365,7 @@
   </section>
 
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1637413977805-b7e7ba8e9051?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1637413977805-b7e7ba8e9051?auto=format&fit=crop&w=2400&q=80');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 02</span>
@@ -328,7 +381,7 @@
   </section>
 
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1551796880-ddd03f861ae7?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1551796880-ddd03f861ae7?auto=format&fit=crop&w=2400&q=80');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 03</span>
@@ -344,7 +397,7 @@
   </section>
 
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2400&q=80');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 04</span>
@@ -367,65 +420,96 @@
     <h2 class="display product-name">Quantum Sensing<br>Payload</h2>
     <p class="product-sub">QSP-01. A non-magnetic pod carrying the quantum magnetometer, reference sensors, and precision timing — one synchronized stream of field, position, and attitude, in flight.</p>
     <div class="render-wrap">
-      <svg viewBox="0 0 900 380" fill="none" role="img" aria-label="QSP-01 quantum sensing payload — studio product render">
+      <svg viewBox="0 0 900 460" fill="none" role="img" aria-label="QSP-01 quantum sensing payload — studio product render">
         <defs>
           <linearGradient id="podBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#41454D"/>
-            <stop offset="0.32" stop-color="#24272D"/>
-            <stop offset="0.72" stop-color="#101216"/>
-            <stop offset="1" stop-color="#08090C"/>
+            <stop offset="0" stop-color="#484C55"/>
+            <stop offset="0.22" stop-color="#2B2E35"/>
+            <stop offset="0.55" stop-color="#16181D"/>
+            <stop offset="0.82" stop-color="#0B0C0F"/>
+            <stop offset="1" stop-color="#121419"/>
           </linearGradient>
           <linearGradient id="podNose" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#2E3138"/>
-            <stop offset="1" stop-color="#14161A"/>
+            <stop offset="0" stop-color="#33363E"/>
+            <stop offset="1" stop-color="#15171B"/>
           </linearGradient>
           <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#A9E0F7" stop-opacity="0.95"/>
-            <stop offset="0.45" stop-color="#5FB3DA" stop-opacity="0.5"/>
+            <stop offset="0" stop-color="#C4EAFB" stop-opacity="1"/>
+            <stop offset="0.35" stop-color="#5FB3DA" stop-opacity="0.6"/>
             <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
           </radialGradient>
           <radialGradient id="floorSh" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
+            <stop offset="0" stop-color="#000" stop-opacity="0.65"/>
             <stop offset="1" stop-color="#000" stop-opacity="0"/>
           </radialGradient>
-          <radialGradient id="stageLight" cx="0.5" cy="0.35" r="0.7">
-            <stop offset="0" stop-color="#1A2027" stop-opacity="0.9"/>
-            <stop offset="1" stop-color="#0B0C10" stop-opacity="0"/>
+          <radialGradient id="stageLight" cx="0.5" cy="0.32" r="0.72">
+            <stop offset="0" stop-color="#1C222B" stop-opacity="0.95"/>
+            <stop offset="1" stop-color="#0A0B0F" stop-opacity="0"/>
           </radialGradient>
           <linearGradient id="specular" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.4"/>
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5"/>
             <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
           </linearGradient>
-          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+          <linearGradient id="rimlight" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8FB6CC" stop-opacity="0.55"/>
+            <stop offset="1" stop-color="#8FB6CC" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/>
+            <stop offset="0.7" stop-color="#FFFFFF" stop-opacity="0"/>
+          </linearGradient>
+          <pattern id="carbon" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="7" height="7" fill="none"/>
+            <rect width="3.5" height="3.5" fill="#FFFFFF" opacity="0.016"/>
+            <rect x="3.5" y="3.5" width="3.5" height="3.5" fill="#FFFFFF" opacity="0.016"/>
+          </pattern>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
+          <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
+          <mask id="reflMask"><rect x="0" y="0" width="900" height="460" fill="url(#reflFade)"/></mask>
         </defs>
-        <ellipse cx="450" cy="196" rx="380" ry="150" fill="url(#stageLight)"/>
-        <ellipse cx="450" cy="330" rx="300" ry="24" fill="url(#floorSh)"/>
-        <g filter="url(#soft)" opacity="0.55"><ellipse cx="216" cy="228" rx="42" ry="30" fill="url(#glowCyan)"/></g>
-        <!-- 마운트 파일런 -->
-        <path d="M414 96 L486 96 L474 158 L426 158 Z" fill="#191B20"/>
-        <rect x="406" y="82" width="88" height="16" rx="3" fill="#22252B"/>
-        <circle cx="420" cy="90" r="3" fill="#0C0D10"/><circle cx="480" cy="90" r="3" fill="#0C0D10"/>
-        <!-- 포드 본체 -->
-        <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#podBody)" stroke="#4A4E56" stroke-width="1.6"/>
-        <!-- 노즈 센서 윈도우 -->
-        <path d="M170 228 Q170 172 232 168 Q200 196 200 228 Q200 260 232 288 Q170 284 170 228 Z" fill="url(#podNose)"/>
-        <ellipse cx="212" cy="228" rx="22" ry="36" fill="#0A0C0F" stroke="#4A4E56" stroke-width="1.2"/>
-        <ellipse cx="212" cy="228" rx="12" ry="22" fill="url(#glowCyan)"/>
-        <!-- 패널 라인 -->
-        <line x1="330" y1="171" x2="330" y2="285" stroke="#08090C" stroke-width="2.4"/>
-        <line x1="340" y1="171" x2="340" y2="285" stroke="#54585F" stroke-width="0.9" opacity="0.6"/>
-        <line x1="540" y1="170" x2="540" y2="286" stroke="#08090C" stroke-width="2.4"/>
-        <line x1="550" y1="170" x2="550" y2="286" stroke="#54585F" stroke-width="0.9" opacity="0.6"/>
-        <!-- 액세스 패널 + 상태등 -->
-        <rect x="590" y="206" width="82" height="40" rx="5" fill="#0C0E11" stroke="#3E424A" stroke-width="1.1"/>
-        <circle cx="608" cy="226" r="4" fill="#C9A227"/>
-        <circle cx="626" cy="226" r="4" fill="#2E3136"/>
-        <circle cx="644" cy="226" r="4" fill="#2E3136"/>
-        <!-- 스펙큘러 -->
-        <path d="M250 178 Q450 166 724 202 L724 214 Q450 182 250 190 Z" fill="url(#specular)"/>
-        <!-- 각인 -->
-        <text x="292" y="262" font-family="IBM Plex Mono, monospace" font-size="17" letter-spacing="6" fill="#767C85">MAEGNAS</text>
-        <text x="292" y="236" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.6" fill="#4E535B">QSP-01 · QUANTUM SENSING PAYLOAD</text>
+        <ellipse cx="450" cy="200" rx="400" ry="160" fill="url(#stageLight)"/>
+        <!-- 포드 그룹 -->
+        <g id="podG">
+          <!-- 마운트 파일런 -->
+          <path d="M414 96 L486 96 L474 158 L426 158 Z" fill="#17191E"/>
+          <path d="M414 96 L486 96 L484 104 L417 104 Z" fill="#2B2E35"/>
+          <rect x="406" y="82" width="88" height="16" rx="3" fill="#22252B"/>
+          <circle cx="420" cy="90" r="3" fill="#0B0C0F"/><circle cx="480" cy="90" r="3" fill="#0B0C0F"/>
+          <!-- 본체 -->
+          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#podBody)"/>
+          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#carbon)"/>
+          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="none" stroke="#565B64" stroke-width="1.4"/>
+          <!-- 상단 림라이트 -->
+          <path d="M236 170 L610 170 Q690 170 730 220 L726 214 Q688 174 610 174 L236 174 Q206 174 190 194 Q206 170 236 170 Z" fill="url(#rimlight)" filter="url(#soft2)"/>
+          <!-- 노즈 -->
+          <path d="M170 228 Q170 172 232 168 Q200 196 200 228 Q200 260 232 288 Q170 284 170 228 Z" fill="url(#podNose)"/>
+          <ellipse cx="212" cy="228" rx="22" ry="36" fill="#0A0C0F" stroke="#565B64" stroke-width="1.2"/>
+          <ellipse cx="212" cy="228" rx="12" ry="22" fill="url(#glowCyan)"/>
+          <!-- 패널 컷라인 -->
+          <line x1="330" y1="171" x2="330" y2="285" stroke="#07080B" stroke-width="2.6"/>
+          <line x1="336" y1="171" x2="336" y2="285" stroke="#5E636C" stroke-width="0.9" opacity="0.55"/>
+          <line x1="540" y1="170" x2="540" y2="286" stroke="#07080B" stroke-width="2.6"/>
+          <line x1="546" y1="170" x2="546" y2="286" stroke="#5E636C" stroke-width="0.9" opacity="0.55"/>
+          <!-- 액세스 패널 -->
+          <rect x="590" y="206" width="82" height="40" rx="5" fill="#0C0E11" stroke="#464B53" stroke-width="1.1"/>
+          <rect x="590" y="206" width="82" height="6" rx="3" fill="#22252B"/>
+          <circle cx="608" cy="228" r="4" fill="#C9A227"/>
+          <circle cx="626" cy="228" r="4" fill="#2E3136"/>
+          <circle cx="644" cy="228" r="4" fill="#2E3136"/>
+          <!-- 환경 반사 스트릭 -->
+          <path d="M250 178 Q450 166 724 202 L724 212 Q450 180 250 188 Z" fill="url(#specular)"/>
+          <path d="M280 274 Q470 284 700 258 L700 264 Q470 290 280 280 Z" fill="#FFFFFF" opacity="0.05"/>
+          <!-- 각인 -->
+          <text x="292" y="262" font-family="IBM Plex Mono, monospace" font-size="17" letter-spacing="6" fill="#7C828B">MAEGNAS</text>
+          <text x="292" y="236" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.6" fill="#535861">QSP-01 · QUANTUM SENSING PAYLOAD</text>
+        </g>
+        <!-- 바닥 그림자 + 글로우 -->
+        <ellipse cx="450" cy="330" rx="300" ry="22" fill="url(#floorSh)"/>
+        <g filter="url(#soft)" opacity="0.5"><ellipse cx="216" cy="238" rx="44" ry="30" fill="url(#glowCyan)"/></g>
+        <!-- 바닥 반사 -->
+        <g mask="url(#reflMask)" transform="translate(0 616) scale(1 -1)">
+          <use href="#podG"/>
+        </g>
       </svg>
     </div>
     <div class="spec-strip">
@@ -437,7 +521,7 @@
   </div>
 </section>
 
-<!-- ═══ 플랫폼 통합 캐러셀 ═══ -->
+<!-- ═══ 플랫폼 통합 캐러셀 (실사) ═══ -->
 <section class="platforms">
   <div class="container pad">
     <div class="sec-head reveal">
@@ -447,129 +531,51 @@
     <p class="sec-intro reveal">QSP-01 is platform-agnostic by design. From a quadcopter to a patrol aircraft to the hunt beneath the waves — the same sensing core, a different station.</p>
     <div class="carousel reveal" id="carousel">
       <div class="car-stage">
-        <div class="car-grid" aria-hidden="true"></div>
-
         <!-- SLIDE 1: 쿼드콥터 -->
-        <div class="car-slide active" data-name="Quadcopter UAS">
-          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Quadcopter with ventral payload station highlighted">
-            <g stroke="#3A3E45" stroke-width="3" fill="#181A1F">
-              <ellipse cx="240" cy="118" rx="86" ry="7" fill="none" stroke="#4A4E56"/>
-              <ellipse cx="660" cy="118" rx="86" ry="7" fill="none" stroke="#4A4E56"/>
-              <rect x="228" y="124" width="24" height="16" rx="3"/>
-              <rect x="648" y="124" width="24" height="16" rx="3"/>
-              <path d="M252 140 L410 172 M648 140 L490 172" stroke-width="9" stroke-linecap="round"/>
-              <path d="M396 160 Q396 148 414 148 L486 148 Q504 148 504 160 L504 190 Q504 204 486 204 L414 204 Q396 204 396 190 Z" fill="#1D2026" stroke="#4A4E56"/>
-              <path d="M410 204 L396 252 M490 204 L504 252" stroke-width="6" stroke-linecap="round"/>
-              <line x1="380" y1="252" x2="420" y2="252" stroke-width="6" stroke-linecap="round"/>
-              <line x1="480" y1="252" x2="520" y2="252" stroke-width="6" stroke-linecap="round"/>
-            </g>
-            <!-- 페이로드 포드 -->
-            <line x1="450" y1="204" x2="450" y2="240" stroke="#4A4E56" stroke-width="3" stroke-dasharray="3 6"/>
-            <path d="M410 254 Q410 240 428 240 L472 240 Q496 240 506 254 Q496 268 472 268 L428 268 Q410 268 410 254 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
-            <circle cx="420" cy="254" r="5" fill="#5FB3DA" opacity="0.9"/>
-            <!-- 하이라이트 -->
-            <circle class="mount-ring" cx="458" cy="254" r="52" fill="none" stroke="#C9A227" stroke-width="2"/>
-            <circle cx="458" cy="254" r="52" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
-            <line x1="510" y1="254" x2="640" y2="254" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="650" y="250" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">PAYLOAD STATION</text>
-            <text x="650" y="268" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">VENTRAL · QUICK-RELEASE</text>
-          </svg>
+        <div class="car-slide active">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1473968512647-3e447244af8f?auto=format&fit=crop&w=2400&q=80'); background-position: center 30%;"></div>
+          <div class="pveil"></div>
+          <div class="mount" style="left:50%; top:61%;"><span class="mring"></span><span class="mring static"></span><span class="core"></span></div>
+          <div class="callout" style="left:56%; top:72%;">
+            <div class="c1">Payload Station</div>
+            <div class="c2">Ventral · Quick-Release</div>
+          </div>
         </div>
-
-        <!-- SLIDE 2: 프레데터급 UAV -->
-        <div class="car-slide" data-name="MALE UAV">
-          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Long-endurance UAV with nose payload station highlighted">
-            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
-              <!-- 동체 -->
-              <path d="M150 210 Q170 186 230 184 L560 190 Q640 194 700 216 L700 228 Q640 244 560 240 L230 236 Q170 234 150 222 Z"/>
-              <!-- 벌브 노즈 -->
-              <path d="M150 216 Q128 194 158 188 Q186 184 196 200 Q186 230 158 226 Q132 234 150 216 Z" fill="#1D2026" stroke="#4A4E56"/>
-              <!-- 주익 -->
-              <path d="M360 206 L80 178 L84 170 L364 196 Z" fill="#1D2026"/>
-              <path d="M470 206 L810 176 L806 168 L466 196 Z" fill="#1D2026"/>
-              <!-- 역V 테일 -->
-              <path d="M652 220 L710 152 L722 156 L672 226 Z" fill="#1D2026"/>
-              <!-- 푸셔 프로펠러 -->
-              <ellipse cx="712" cy="222" rx="6" ry="42" fill="none" stroke="#4A4E56"/>
-              <!-- 랜딩기어 -->
-              <path d="M260 240 L252 286 M480 240 L488 286" stroke-width="5" stroke-linecap="round"/>
-              <circle cx="252" cy="292" r="9" fill="#0C0D10"/>
-              <circle cx="488" cy="292" r="9" fill="#0C0D10"/>
-            </g>
-            <!-- 하부 페이로드 -->
-            <path d="M300 250 Q300 240 314 240 L352 240 Q370 240 378 250 Q370 260 352 260 L314 260 Q300 260 300 250 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
-            <circle cx="308" cy="250" r="4" fill="#5FB3DA" opacity="0.9"/>
-            <circle class="mount-ring" cx="339" cy="250" r="46" fill="none" stroke="#C9A227" stroke-width="2"/>
-            <circle cx="339" cy="250" r="46" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
-            <line x1="339" y1="298" x2="339" y2="342" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="339" y1="342" x2="560" y2="342" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="570" y="338" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">PAYLOAD STATION</text>
-            <text x="570" y="356" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">CENTERLINE HARDPOINT</text>
-          </svg>
+        <!-- SLIDE 2: 고정익 UAV -->
+        <div class="car-slide">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1689510230616-76823330dbf7?auto=format&fit=crop&w=2400&q=80'); background-position: center 55%;"></div>
+          <div class="pveil"></div>
+          <div class="mount" style="left:49%; top:64%;"><span class="mring"></span><span class="mring static"></span><span class="core"></span></div>
+          <div class="callout" style="left:55%; top:78%;">
+            <div class="c1">Payload Station</div>
+            <div class="c2">Centerline Hardpoint</div>
+          </div>
         </div>
-
-        <!-- SLIDE 3: 해상초계기 -->
-        <div class="car-slide" data-name="Maritime Patrol">
-          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Maritime patrol aircraft with tail boom station highlighted">
-            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
-              <!-- 동체 -->
-              <path d="M120 206 Q150 178 230 176 L560 180 Q640 182 680 200 L680 224 Q640 238 560 236 L230 234 Q150 232 120 218 Z"/>
-              <!-- 콕핏 -->
-              <path d="M126 202 Q140 186 176 184 L180 198 Q150 202 132 210 Z" fill="#2A2E36"/>
-              <!-- 주익 + 엔진 -->
-              <path d="M330 200 L120 148 L126 138 L338 188 Z" fill="#1D2026"/>
-              <path d="M430 200 L740 146 L734 136 L424 188 Z" fill="#1D2026"/>
-              <rect x="238" y="168" width="46" height="18" rx="8" fill="#1D2026" stroke="#4A4E56"/>
-              <rect x="524" y="166" width="46" height="18" rx="8" fill="#1D2026" stroke="#4A4E56"/>
-              <ellipse cx="238" cy="177" rx="4" ry="16" fill="none" stroke="#4A4E56"/>
-              <ellipse cx="524" cy="175" rx="4" ry="16" fill="none" stroke="#4A4E56"/>
-              <!-- 수직미익 -->
-              <path d="M628 202 L668 128 L692 132 L664 206 Z" fill="#1D2026"/>
-            </g>
-            <!-- MAD 테일 붐 -->
-            <path d="M680 208 L790 204 Q812 204 812 212 Q812 220 790 218 L680 220 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
-            <circle cx="804" cy="212" r="4" fill="#5FB3DA" opacity="0.9"/>
-            <circle class="mount-ring" cx="780" cy="212" r="48" fill="none" stroke="#C9A227" stroke-width="2"/>
-            <circle cx="780" cy="212" r="48" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
-            <line x1="780" y1="262" x2="780" y2="318" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <line x1="780" y1="318" x2="560" y2="318" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="330" y="314" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">MAD TAIL BOOM</text>
-            <text x="330" y="332" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">MAGNETIC ANOMALY DETECTION STATION</text>
-          </svg>
+        <!-- SLIDE 3: 초계기 -->
+        <div class="car-slide">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1549434505-f758ce899977?auto=format&fit=crop&w=2400&q=80'); background-position: center 40%;"></div>
+          <div class="pveil"></div>
+          <div class="mount" style="left:50%; top:62%;"><span class="mring"></span><span class="mring static"></span><span class="core"></span></div>
+          <div class="callout" style="left:56%; top:76%;">
+            <div class="c1">MAD Station</div>
+            <div class="c2">Magnetic Anomaly Detection</div>
+          </div>
         </div>
-
         <!-- SLIDE 4: 잠수함 -->
-        <div class="car-slide" data-name="Submarine">
-          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Submarine with towed detection body highlighted">
-            <!-- 수면 -->
-            <line x1="40" y1="120" x2="860" y2="120" stroke="#243038" stroke-width="1.5" stroke-dasharray="8 8"/>
-            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
-              <!-- 선체 -->
-              <path d="M140 232 Q160 196 260 192 L560 192 Q660 196 700 232 Q660 268 560 272 L260 272 Q160 268 140 232 Z"/>
-              <!-- 세일 -->
-              <path d="M330 192 Q332 156 360 152 L404 152 Q416 156 416 192 Z" fill="#1D2026" stroke="#4A4E56"/>
-              <line x1="366" y1="152" x2="366" y2="128" stroke="#4A4E56" stroke-width="3"/>
-              <!-- 함미 러더/프로펠러 -->
-              <path d="M690 210 L724 186 L730 194 L702 220 Z" fill="#1D2026"/>
-              <path d="M690 254 L724 278 L730 270 L702 244 Z" fill="#1D2026"/>
-              <ellipse cx="716" cy="232" rx="5" ry="26" fill="none" stroke="#4A4E56"/>
-            </g>
-            <!-- 예인 케이블 + 토우드 바디 -->
-            <path d="M700 240 Q770 258 820 288" stroke="#767C85" stroke-width="1.6" fill="none"/>
-            <path d="M806 282 Q806 272 818 272 L846 272 Q862 272 868 282 Q862 292 846 292 L818 292 Q806 292 806 282 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
-            <circle cx="814" cy="282" r="4" fill="#5FB3DA" opacity="0.9"/>
-            <circle class="mount-ring" cx="837" cy="282" r="44" fill="none" stroke="#C9A227" stroke-width="2"/>
-            <circle cx="837" cy="282" r="44" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
-            <line x1="791" y1="282" x2="600" y2="282" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
-            <text x="352" y="278" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">TOWED DETECTION BODY</text>
-            <text x="352" y="296" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">ASTERN TOW · DEEP SEARCH</text>
-          </svg>
+        <div class="car-slide">
+          <div class="photo" style="background-image:url('https://images.unsplash.com/photo-1588947130823-db168fa854ac?auto=format&fit=crop&w=2400&q=80'); background-position: center 55%;"></div>
+          <div class="pveil"></div>
+          <div class="mount" style="left:18%; top:44%;"><span class="mring"></span><span class="mring static"></span><span class="core"></span></div>
+          <div class="callout" style="left:24%; top:30%;">
+            <div class="c1">Towed Detection Body</div>
+            <div class="c2">Astern Tow · Deep Search</div>
+          </div>
         </div>
       </div>
       <div class="car-tabs" role="tablist">
         <button class="car-tab active" data-i="0">01 · Quadcopter<span class="bar"></span></button>
-        <button class="car-tab" data-i="1">02 · MALE UAV<span class="bar"></span></button>
-        <button class="car-tab" data-i="2">03 · Maritime Patrol<span class="bar"></span></button>
+        <button class="car-tab" data-i="1">02 · Fixed-Wing UAV<span class="bar"></span></button>
+        <button class="car-tab" data-i="2">03 · Patrol Aircraft<span class="bar"></span></button>
         <button class="car-tab" data-i="3">04 · Submarine<span class="bar"></span></button>
       </div>
     </div>
@@ -583,100 +589,117 @@
     <h2 class="display product-name" style="font-size:clamp(2rem,5.6vw,4.2rem); margin:0.9rem 0 0.6rem;">Mission Software</h2>
     <p class="product-sub" style="color:var(--text-dim); max-width:38rem; margin:0 auto; font-size:0.98rem;">MCS-01. Field-deployable mission console — compensation, detection, and localization rendered as coordinates and confidence on a satellite map. Built for the operator's seat, at the edge of the battlefield.</p>
     <div class="console-wrap reveal">
-      <svg viewBox="0 0 900 560" fill="none" role="img" aria-label="Rugged field console running MAEGNAS mission software">
+      <svg viewBox="0 0 900 620" fill="none" role="img" aria-label="Rugged field console running MAEGNAS mission software">
         <defs>
           <linearGradient id="rugBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#33363D"/>
-            <stop offset="0.5" stop-color="#1C1F24"/>
+            <stop offset="0" stop-color="#3B3E46"/>
+            <stop offset="0.4" stop-color="#20232A"/>
             <stop offset="1" stop-color="#0E1013"/>
           </linearGradient>
           <linearGradient id="rugDeck" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#26292F"/>
-            <stop offset="1" stop-color="#101216"/>
+            <stop offset="0" stop-color="#2B2E35"/>
+            <stop offset="0.6" stop-color="#15171C"/>
+            <stop offset="1" stop-color="#0B0C0F"/>
           </linearGradient>
           <linearGradient id="scr" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#0F1720"/>
-            <stop offset="0.5" stop-color="#0B1118"/>
-            <stop offset="1" stop-color="#070B0F"/>
+            <stop offset="0" stop-color="#101A24"/>
+            <stop offset="0.5" stop-color="#0B121A"/>
+            <stop offset="1" stop-color="#070B10"/>
           </linearGradient>
           <radialGradient id="anom2" cx="0.5" cy="0.5" r="0.5">
             <stop offset="0" stop-color="#5FB3DA" stop-opacity="0.5"/>
             <stop offset="0.6" stop-color="#5FB3DA" stop-opacity="0.16"/>
             <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
           </radialGradient>
+          <radialGradient id="scrBloom" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#3A6E8F" stop-opacity="0.35"/>
+            <stop offset="1" stop-color="#3A6E8F" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="floorShC" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#000" stop-opacity="0.65"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="reflFadeC" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.12"/>
+            <stop offset="0.8" stop-color="#FFFFFF" stop-opacity="0"/>
+          </linearGradient>
           <filter id="tglow2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.4"/></filter>
+          <mask id="reflMaskC"><rect x="0" y="0" width="900" height="620" fill="url(#reflFadeC)"/></mask>
         </defs>
-        <ellipse cx="450" cy="530" rx="330" ry="20" fill="url(#floorShC)"/>
-        <radialGradient id="floorShC" cx="0.5" cy="0.5" r="0.5">
-          <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
-          <stop offset="1" stop-color="#000" stop-opacity="0"/>
-        </radialGradient>
-        <!-- 핸들 -->
-        <rect x="380" y="18" width="140" height="14" rx="7" fill="#16181D" stroke="#3A3E45" stroke-width="1.5"/>
-        <!-- 러기드 스크린 섀시 -->
-        <rect x="120" y="36" width="660" height="420" rx="18" fill="url(#rugBody)" stroke="#4A4E56" stroke-width="2"/>
-        <!-- 코너 범퍼 -->
-        <path d="M120 92 L120 54 Q120 36 138 36 L176 36 L176 50 Q140 50 136 92 Z" fill="#0E1013"/>
-        <path d="M780 92 L780 54 Q780 36 762 36 L724 36 L724 50 Q760 50 764 92 Z" fill="#0E1013"/>
-        <path d="M120 400 L120 438 Q120 456 138 456 L176 456 L176 442 Q140 442 136 400 Z" fill="#0E1013"/>
-        <path d="M780 400 L780 438 Q780 456 762 456 L724 456 L724 442 Q760 442 764 400 Z" fill="#0E1013"/>
-        <!-- 베젤 볼트 -->
-        <circle cx="146" cy="62" r="5" fill="#0A0B0E" stroke="#4A4E56"/><circle cx="754" cy="62" r="5" fill="#0A0B0E" stroke="#4A4E56"/>
-        <circle cx="146" cy="430" r="5" fill="#0A0B0E" stroke="#4A4E56"/><circle cx="754" cy="430" r="5" fill="#0A0B0E" stroke="#4A4E56"/>
-        <!-- 스크린 -->
-        <rect x="164" y="72" width="572" height="348" rx="4" fill="url(#scr)" stroke="#3E424A" stroke-width="1.4"/>
-        <!-- 상단 HUD 바 -->
-        <rect x="164" y="72" width="572" height="26" fill="#0A0F14"/>
-        <text x="176" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.4" fill="#7C8891">MAEGNAS MCS-01 · MISSION 047 · LINK ●</text>
-        <text x="640" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#5F707C">GRID 52S</text>
-        <!-- 지도 그리드 -->
-        <g opacity="0.55" stroke="#1B2733" stroke-width="0.9">
-          <path d="M164 140 H736 M164 200 H736 M164 260 H736 M164 320 H736 M164 380 H736 M260 98 V420 M356 98 V420 M452 98 V420 M548 98 V420 M644 98 V420"/>
+        <!-- 스크린 블룸 -->
+        <ellipse cx="450" cy="250" rx="430" ry="240" fill="url(#scrBloom)"/>
+        <g id="conG">
+          <!-- 핸들 -->
+          <rect x="380" y="18" width="140" height="14" rx="7" fill="#16181D" stroke="#464B53" stroke-width="1.5"/>
+          <!-- 스크린 섀시 -->
+          <rect x="120" y="36" width="660" height="420" rx="18" fill="url(#rugBody)" stroke="#565B64" stroke-width="2"/>
+          <rect x="126" y="42" width="648" height="10" rx="5" fill="#4A4E56" opacity="0.5"/>
+          <!-- 코너 범퍼 -->
+          <path d="M120 92 L120 54 Q120 36 138 36 L176 36 L176 50 Q140 50 136 92 Z" fill="#0C0D10"/>
+          <path d="M780 92 L780 54 Q780 36 762 36 L724 36 L724 50 Q760 50 764 92 Z" fill="#0C0D10"/>
+          <path d="M120 400 L120 438 Q120 456 138 456 L176 456 L176 442 Q140 442 136 400 Z" fill="#0C0D10"/>
+          <path d="M780 400 L780 438 Q780 456 762 456 L724 456 L724 442 Q760 442 764 400 Z" fill="#0C0D10"/>
+          <circle cx="146" cy="62" r="5" fill="#0A0B0E" stroke="#565B64"/><circle cx="754" cy="62" r="5" fill="#0A0B0E" stroke="#565B64"/>
+          <circle cx="146" cy="430" r="5" fill="#0A0B0E" stroke="#565B64"/><circle cx="754" cy="430" r="5" fill="#0A0B0E" stroke="#565B64"/>
+          <!-- 스크린 -->
+          <rect x="164" y="72" width="572" height="348" rx="4" fill="url(#scr)" stroke="#464B53" stroke-width="1.4"/>
+          <rect x="164" y="72" width="572" height="26" fill="#0A0F14"/>
+          <text x="176" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.4" fill="#87939D">MAEGNAS MCS-01 · MISSION 047 · LINK ●</text>
+          <text x="640" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#5F707C">GRID 52S</text>
+          <g opacity="0.55" stroke="#1B2733" stroke-width="0.9">
+            <path d="M164 140 H736 M164 200 H736 M164 260 H736 M164 320 H736 M164 380 H736 M260 98 V420 M356 98 V420 M452 98 V420 M548 98 V420 M644 98 V420"/>
+          </g>
+          <g stroke="#33556B" stroke-width="1.6">
+            <path d="M190 126 H710 M710 126 V156 M710 156 H190 M190 156 V186 M190 186 H710 M710 186 V216 M710 216 H190 M190 216 V246 M190 246 H710 M710 246 V276 M710 276 H190 M190 276 V306 M190 306 H710"/>
+          </g>
+          <path d="M190 126 H452" stroke="#5FB3DA" stroke-width="2"/>
+          <circle cx="342" cy="196" r="52" fill="url(#anom2)"/>
+          <circle cx="596" cy="300" r="36" fill="url(#anom2)"/>
+          <g filter="url(#tglow2)" stroke="#E5C766" stroke-width="2.6">
+            <circle cx="342" cy="196" r="11" fill="none"/>
+            <path d="M342 174 V218 M320 196 H364"/>
+          </g>
+          <g stroke="#C9A227" stroke-width="2">
+            <circle cx="342" cy="196" r="11" fill="none"/>
+            <path d="M342 174 V218 M320 196 H364"/>
+            <circle cx="596" cy="300" r="8.5" fill="none"/>
+            <path d="M596 284 V316 M580 300 H612"/>
+          </g>
+          <rect x="612" y="110" width="112" height="120" rx="2" fill="#090D11" stroke="#243038" stroke-width="1.1"/>
+          <rect x="620" y="118" width="96" height="9" fill="#33556B"/>
+          <rect x="620" y="136" width="96" height="28" fill="none" stroke="#C9A227" stroke-width="1.2"/>
+          <rect x="627" y="143" width="56" height="5" fill="#87939D"/>
+          <rect x="627" y="153" width="38" height="5" fill="#465059"/>
+          <rect x="620" y="172" width="96" height="28" fill="none" stroke="#243038" stroke-width="1.2"/>
+          <rect x="627" y="179" width="56" height="5" fill="#87939D"/>
+          <rect x="627" y="189" width="38" height="5" fill="#465059"/>
+          <text x="176" y="404" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.8" fill="#5F707C">TGT 01 · CONF 0.94 · 36.3504N 127.3845E · DEPTH EST 0.4M</text>
+          <!-- 스크린 스캔라인 + 반사 -->
+          <rect x="164" y="72" width="572" height="348" fill="url(#scanlines)" opacity="0.5"/>
+          <path d="M164 72 L340 72 L212 420 L164 420 Z" fill="#FFFFFF" opacity="0.03"/>
+          <path d="M700 72 L736 72 L736 160 Z" fill="#FFFFFF" opacity="0.035"/>
+          <!-- 힌지 -->
+          <rect x="180" y="458" width="90" height="16" rx="6" fill="#0C0D10" stroke="#464B53"/>
+          <rect x="630" y="458" width="90" height="16" rx="6" fill="#0C0D10" stroke="#464B53"/>
+          <!-- 키보드 데크 -->
+          <path d="M96 476 L804 476 L840 522 Q842 530 830 530 L70 530 Q58 530 60 522 Z" fill="url(#rugDeck)" stroke="#565B64" stroke-width="1.6"/>
+          <path d="M96 476 L804 476 L806 480 L94 480 Z" fill="#4A4E56" opacity="0.6"/>
+          <g fill="#0A0C0F" stroke="#33363D" stroke-width="0.8">
+            <rect x="180" y="486" width="380" height="12" rx="2"/>
+            <rect x="186" y="502" width="368" height="12" rx="2"/>
+          </g>
+          <rect x="600" y="488" width="90" height="26" rx="3" fill="#0A0C0F" stroke="#33363D"/>
+          <text x="120" y="512" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.6" fill="#5C6167">MCS-01</text>
         </g>
-        <!-- 서베이 라인 -->
-        <g stroke="#33556B" stroke-width="1.6">
-          <path d="M190 126 H710 M710 126 V156 M710 156 H190 M190 156 V186 M190 186 H710 M710 186 V216 M710 216 H190 M190 216 V246 M190 246 H710"/>
+        <pattern id="scanlines" width="4" height="4" patternUnits="userSpaceOnUse">
+          <rect width="4" height="3" fill="none"/>
+          <rect y="3" width="4" height="1" fill="#04070A" opacity="0.5"/>
+        </pattern>
+        <!-- 바닥 그림자 + 반사 -->
+        <ellipse cx="450" cy="546" rx="340" ry="22" fill="url(#floorShC)"/>
+        <g mask="url(#reflMaskC)" transform="translate(0 1062) scale(1 -1)">
+          <use href="#conG"/>
         </g>
-        <path d="M190 126 H452" stroke="#5FB3DA" stroke-width="2"/>
-        <!-- 이상 신호 -->
-        <circle cx="342" cy="196" r="52" fill="url(#anom2)"/>
-        <circle cx="596" cy="300" r="36" fill="url(#anom2)"/>
-        <!-- 표적 마커 -->
-        <g filter="url(#tglow2)" stroke="#E5C766" stroke-width="2.6">
-          <circle cx="342" cy="196" r="11" fill="none"/>
-          <path d="M342 174 V218 M320 196 H364"/>
-        </g>
-        <g stroke="#C9A227" stroke-width="2">
-          <circle cx="342" cy="196" r="11" fill="none"/>
-          <path d="M342 174 V218 M320 196 H364"/>
-          <circle cx="596" cy="300" r="8.5" fill="none"/>
-          <path d="M596 284 V316 M580 300 H612"/>
-        </g>
-        <!-- 우측 후보 패널 -->
-        <rect x="612" y="110" width="112" height="120" rx="2" fill="#090D11" stroke="#233039" stroke-width="1.1"/>
-        <rect x="620" y="118" width="96" height="9" fill="#33556B"/>
-        <rect x="620" y="136" width="96" height="28" fill="none" stroke="#C9A227" stroke-width="1.2"/>
-        <rect x="627" y="143" width="56" height="5" fill="#7C8891"/>
-        <rect x="627" y="153" width="38" height="5" fill="#465059"/>
-        <rect x="620" y="172" width="96" height="28" fill="none" stroke="#233039" stroke-width="1.2"/>
-        <rect x="627" y="179" width="56" height="5" fill="#7C8891"/>
-        <rect x="627" y="189" width="38" height="5" fill="#465059"/>
-        <!-- 하단 HUD -->
-        <text x="176" y="404" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.8" fill="#5F707C">TGT 01 · CONF 0.94 · 36.3504N 127.3845E · DEPTH EST 0.4M</text>
-        <!-- 스크린 반사 -->
-        <path d="M164 72 L340 72 L212 420 L164 420 Z" fill="#FFFFFF" opacity="0.026"/>
-        <!-- 힌지 -->
-        <rect x="180" y="458" width="90" height="16" rx="6" fill="#0E1013" stroke="#3A3E45"/>
-        <rect x="630" y="458" width="90" height="16" rx="6" fill="#0E1013" stroke="#3A3E45"/>
-        <!-- 키보드 데크 -->
-        <path d="M96 476 L804 476 L840 522 Q842 530 830 530 L70 530 Q58 530 60 522 Z" fill="url(#rugDeck)" stroke="#4A4E56" stroke-width="1.6"/>
-        <g fill="#0B0D10" stroke="#2E3136" stroke-width="0.8">
-          <rect x="180" y="486" width="380" height="12" rx="2"/>
-          <rect x="186" y="502" width="368" height="12" rx="2"/>
-        </g>
-        <rect x="600" y="488" width="90" height="26" rx="3" fill="#0B0D10" stroke="#2E3136"/>
-        <text x="612" y="505" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.5" fill="#565B62">TRACKPAD</text>
-        <text x="120" y="512" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.6" fill="#565B62">MCS-01</text>
       </svg>
     </div>
     <ul class="spec-list reveal">
@@ -769,7 +792,7 @@
         if (k === i) t.classList.add('active');
       });
     }
-    function start() { if (!reduced) timer = setInterval(() => show(i + 1), 5000); }
+    function start() { if (!reduced) timer = setInterval(() => show(i + 1), 6000); }
     tabs.forEach(t => t.addEventListener('click', () => {
       clearInterval(timer); show(+t.dataset.i); start();
     }));

@@ -120,7 +120,7 @@
 
   /* ─ 공통 ─ */
   section { border-bottom: 1px solid var(--hairline); }
-  .pad { padding: 6.5rem 0; }
+  .pad { padding-top: 6.5rem; padding-bottom: 6.5rem; }
   .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
   .sec-head h2 { font-size: clamp(1.8rem, 4.4vw, 3.4rem); }
   .sec-intro { color: var(--text-dim); max-width: 42rem; font-size: 0.98rem; margin-bottom: 3.2rem; }
@@ -142,10 +142,10 @@
     display: flex; align-items: flex-end;
     border-bottom: 1px solid var(--hairline);
   }
-  .domain .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.6) brightness(0.75); transition: transform 1.2s ease; }
+  .domain .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.55) brightness(0.72) contrast(1.05); transition: transform 1.2s ease; }
   .domain:hover .bg { transform: scale(1.03); }
-  .domain .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.55) 0%, rgba(6,6,8,0.15) 45%, rgba(6,6,8,0.94) 92%); }
-  .domain .content { position: relative; z-index: 2; width: 100%; padding: 3.4rem 0; }
+  .domain .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.55) 0%, rgba(6,6,8,0.18) 45%, rgba(6,6,8,0.94) 92%); }
+  .domain .content { position: relative; z-index: 2; width: 100%; padding-top: 3.4rem; padding-bottom: 3.4rem; }
   .domain .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 2.5rem; flex-wrap: wrap; }
   .domain h3.big { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.95; }
   .domain .info { max-width: 26rem; padding-bottom: 0.8rem; }
@@ -158,15 +158,70 @@
   }
   .chip.now { border-color: var(--target); color: var(--target); }
 
-  /* ─ SYSTEM ─ */
-  .sys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
-  @media (max-width: 900px) { .sys-grid { grid-template-columns: 1fr; } }
-  .sys-cell { background: var(--bg-2); padding: 2.8rem 2.6rem; }
-  .sys-cell h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 1.3rem; margin: 0.7rem 0 1.6rem; }
-  .sys-cell .render { margin: 0 0 1.8rem; }
-  .sys-cell p { font-size: 0.92rem; color: var(--text-dim); margin-bottom: 1.5rem; }
-  .spec-list { list-style: none; border-top: 1px solid var(--hairline); }
-  .spec-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.82rem; }
+  /* ─ 제품 쇼케이스: 페이로드 ─ */
+  .showcase {
+    position: relative; min-height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 0 5rem;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 42%, rgba(95, 179, 218, 0.07), transparent 70%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, #0B0C10, var(--bg) 80%);
+  }
+  .showcase .center { text-align: center; }
+  .showcase .product-name { font-size: clamp(2rem, 5.6vw, 4.2rem); margin: 0.9rem 0 0.6rem; }
+  .showcase .product-sub { color: var(--text-dim); max-width: 36rem; margin: 0 auto; font-size: 0.98rem; }
+  .showcase .render-wrap { max-width: 56rem; margin: 2.5rem auto 0; }
+  .spec-strip {
+    display: flex; justify-content: center; gap: 1px; flex-wrap: wrap;
+    background: var(--hairline); border: 1px solid var(--hairline);
+    max-width: 60rem; margin: 3rem auto 0;
+  }
+  .spec-strip .sp { background: var(--bg-2); padding: 1.1rem 1.6rem; flex: 1 1 12rem; text-align: left; }
+  .spec-strip .sp .k { font-family: "IBM Plex Mono", monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 0.25rem; }
+  .spec-strip .sp .v { font-size: 0.85rem; color: var(--text); }
+
+  /* ─ 플랫폼 캐러셀 ─ */
+  .platforms { background: var(--bg-2); }
+  .carousel { position: relative; border: 1px solid var(--hairline); background: var(--bg); overflow: hidden; }
+  .car-stage { position: relative; height: clamp(20rem, 48vw, 30rem); }
+  .car-slide {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateX(4%); transition: opacity 0.9s ease, transform 0.9s ease;
+    pointer-events: none; padding: 2rem;
+  }
+  .car-slide.active { opacity: 1; transform: none; pointer-events: auto; }
+  .car-slide svg { width: min(52rem, 92%); height: auto; }
+  .car-grid {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.6;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(232,234,237,0.03) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(232,234,237,0.03) 60px);
+  }
+  .car-tabs { display: flex; gap: 1px; background: var(--hairline); border-top: 1px solid var(--hairline); }
+  .car-tab {
+    flex: 1; background: var(--bg); border: none; cursor: pointer;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.62rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint);
+    padding: 1rem 0.5rem; position: relative; overflow: hidden;
+  }
+  .car-tab:hover { color: var(--text-dim); }
+  .car-tab.active { color: var(--text); }
+  .car-tab .bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--target); }
+  .car-tab.active .bar { animation: fillbar 5s linear forwards; }
+  @keyframes fillbar { from { width: 0; } to { width: 100%; } }
+  .mount-ring { animation: ringpulse 1.8s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+  @keyframes ringpulse { 0% { opacity: 0.9; transform: scale(0.75); } 70% { opacity: 0; transform: scale(1.45); } 100% { opacity: 0; transform: scale(1.45); } }
+
+  /* ─ 미션 소프트웨어 ─ */
+  .console-sec {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse 75% 60% at 50% 45%, rgba(201, 162, 39, 0.05), transparent 70%),
+      var(--bg);
+  }
+  .console-wrap { max-width: 54rem; margin: 2.5rem auto 0; }
+  .spec-list { list-style: none; border-top: 1px solid var(--hairline); max-width: 60rem; margin: 2.6rem auto 0; }
+  .spec-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.84rem; }
   .spec-list .k { font-family: "IBM Plex Mono", monospace; font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); padding-top: 0.15rem; }
   .spec-list .v { color: var(--text); text-align: right; font-weight: 400; }
 
@@ -192,6 +247,9 @@
     .hero .bg { animation: none; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .domain .bg, .domain:hover .bg { transition: none; transform: none; }
+    .car-slide { transition: none; }
+    .car-tab.active .bar { animation: none; width: 100%; }
+    .mount-ring { animation: none; opacity: 0.7; }
   }
 </style>
 </head>
@@ -238,7 +296,7 @@
 
 <div id="domains">
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1583872341575-610c859c7a57?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 01</span>
@@ -247,14 +305,14 @@
         <div class="info">
           <span class="chip now">In Development</span>
           <h4>Landmine &amp; UXO Detection</h4>
-          <p>Airborne magnetic detection that finds buried metallic threats without touching the ground — and marks them as coordinates on a satellite map. Machines search first. People stay safe.</p>
+          <p>Beneath every contested field lies what the war left behind. Airborne quantum detection finds buried metallic threats without touching the ground — and marks each one as coordinates on a satellite map. Machines search first. People stay safe.</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1637413977805-b7e7ba8e9051?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 02</span>
@@ -263,14 +321,14 @@
         <div class="info">
           <span class="chip">Next</span>
           <h4>Naval Mine &amp; Submarine Detection</h4>
-          <p>Steel cannot silence its own field. The same detection architecture extends beneath the surface — against moored mines, wrecks, and the quietest hulls in the ocean.</p>
+          <p>Steel cannot silence its own field. The same detection architecture extends beneath the surface — against moored mines, and the quietest hulls in the ocean. Patrol without pause. Search without mercy.</p>
         </div>
       </div>
     </div>
   </section>
 
   <section class="domain">
-    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1551796880-ddd03f861ae7?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
     <div class="veil" aria-hidden="true"></div>
     <div class="container content reveal">
       <span class="mono">02 / Domains — 03</span>
@@ -279,7 +337,7 @@
         <div class="info">
           <span class="chip">Roadmap</span>
           <h4>MagNav — GPS-Denied Navigation</h4>
-          <p>When GPS is jammed, spoofed, or gone, Earth's magnetic field remains. Quantum magnetic navigation gives aircraft a map that cannot be switched off.</p>
+          <p>When GPS is jammed, spoofed, or gone, Earth's magnetic field remains. Quantum magnetic navigation gives aircraft a map that cannot be switched off — in any theater, under any denial.</p>
         </div>
       </div>
     </div>
@@ -302,153 +360,331 @@
   </section>
 </div>
 
-<section id="system">
+<!-- ═══ 제품 쇼케이스 1: 페이로드 ═══ -->
+<section class="showcase" id="system">
+  <div class="container center reveal">
+    <span class="mono">03 / System — Component 01</span>
+    <h2 class="display product-name">Quantum Sensing<br>Payload</h2>
+    <p class="product-sub">QSP-01. A non-magnetic pod carrying the quantum magnetometer, reference sensors, and precision timing — one synchronized stream of field, position, and attitude, in flight.</p>
+    <div class="render-wrap">
+      <svg viewBox="0 0 900 380" fill="none" role="img" aria-label="QSP-01 quantum sensing payload — studio product render">
+        <defs>
+          <linearGradient id="podBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#41454D"/>
+            <stop offset="0.32" stop-color="#24272D"/>
+            <stop offset="0.72" stop-color="#101216"/>
+            <stop offset="1" stop-color="#08090C"/>
+          </linearGradient>
+          <linearGradient id="podNose" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#2E3138"/>
+            <stop offset="1" stop-color="#14161A"/>
+          </linearGradient>
+          <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#A9E0F7" stop-opacity="0.95"/>
+            <stop offset="0.45" stop-color="#5FB3DA" stop-opacity="0.5"/>
+            <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="floorSh" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
+            <stop offset="1" stop-color="#000" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="stageLight" cx="0.5" cy="0.35" r="0.7">
+            <stop offset="0" stop-color="#1A2027" stop-opacity="0.9"/>
+            <stop offset="1" stop-color="#0B0C10" stop-opacity="0"/>
+          </radialGradient>
+          <linearGradient id="specular" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.4"/>
+            <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+          </linearGradient>
+          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="8"/></filter>
+        </defs>
+        <ellipse cx="450" cy="196" rx="380" ry="150" fill="url(#stageLight)"/>
+        <ellipse cx="450" cy="330" rx="300" ry="24" fill="url(#floorSh)"/>
+        <g filter="url(#soft)" opacity="0.55"><ellipse cx="216" cy="228" rx="42" ry="30" fill="url(#glowCyan)"/></g>
+        <!-- 마운트 파일런 -->
+        <path d="M414 96 L486 96 L474 158 L426 158 Z" fill="#191B20"/>
+        <rect x="406" y="82" width="88" height="16" rx="3" fill="#22252B"/>
+        <circle cx="420" cy="90" r="3" fill="#0C0D10"/><circle cx="480" cy="90" r="3" fill="#0C0D10"/>
+        <!-- 포드 본체 -->
+        <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#podBody)" stroke="#4A4E56" stroke-width="1.6"/>
+        <!-- 노즈 센서 윈도우 -->
+        <path d="M170 228 Q170 172 232 168 Q200 196 200 228 Q200 260 232 288 Q170 284 170 228 Z" fill="url(#podNose)"/>
+        <ellipse cx="212" cy="228" rx="22" ry="36" fill="#0A0C0F" stroke="#4A4E56" stroke-width="1.2"/>
+        <ellipse cx="212" cy="228" rx="12" ry="22" fill="url(#glowCyan)"/>
+        <!-- 패널 라인 -->
+        <line x1="330" y1="171" x2="330" y2="285" stroke="#08090C" stroke-width="2.4"/>
+        <line x1="340" y1="171" x2="340" y2="285" stroke="#54585F" stroke-width="0.9" opacity="0.6"/>
+        <line x1="540" y1="170" x2="540" y2="286" stroke="#08090C" stroke-width="2.4"/>
+        <line x1="550" y1="170" x2="550" y2="286" stroke="#54585F" stroke-width="0.9" opacity="0.6"/>
+        <!-- 액세스 패널 + 상태등 -->
+        <rect x="590" y="206" width="82" height="40" rx="5" fill="#0C0E11" stroke="#3E424A" stroke-width="1.1"/>
+        <circle cx="608" cy="226" r="4" fill="#C9A227"/>
+        <circle cx="626" cy="226" r="4" fill="#2E3136"/>
+        <circle cx="644" cy="226" r="4" fill="#2E3136"/>
+        <!-- 스펙큘러 -->
+        <path d="M250 178 Q450 166 724 202 L724 214 Q450 182 250 190 Z" fill="url(#specular)"/>
+        <!-- 각인 -->
+        <text x="292" y="262" font-family="IBM Plex Mono, monospace" font-size="17" letter-spacing="6" fill="#767C85">MAEGNAS</text>
+        <text x="292" y="236" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.6" fill="#4E535B">QSP-01 · QUANTUM SENSING PAYLOAD</text>
+      </svg>
+    </div>
+    <div class="spec-strip">
+      <div class="sp"><span class="k">Sensing</span><span class="v">Quantum magnetometer · reference vector · IMU</span></div>
+      <div class="sp"><span class="k">Positioning</span><span class="v">GNSS / RTK precision</span></div>
+      <div class="sp"><span class="k">Integrity</span><span class="v">Non-magnetic structure · synced timing</span></div>
+      <div class="sp"><span class="k">Link</span><span class="v">Real-time downlink</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 플랫폼 통합 캐러셀 ═══ -->
+<section class="platforms">
   <div class="container pad">
     <div class="sec-head reveal">
-      <h2 class="display">One System.<br>Sensor to Map.</h2>
-      <span class="mono">03 / System</span>
+      <h2 class="display">One Payload.<br>Every Platform.</h2>
+      <span class="mono">03 / System — Integration</span>
     </div>
-    <p class="sec-intro reveal">The first MAEGNAS system pairs an airborne quantum sensing payload with mission software that turns raw field data into targets on a satellite map.</p>
-    <div class="sys-grid reveal">
-      <div class="sys-cell">
-        <span class="mono">Component 01 — Airborne</span>
-        <h3>Quantum Sensing Payload</h3>
-        <svg class="render" viewBox="0 0 460 240" fill="none" role="img" aria-label="Rendered quantum sensing payload pod">
-          <defs>
-            <linearGradient id="podBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#3A3E45"/>
-              <stop offset="0.35" stop-color="#22252B"/>
-              <stop offset="0.75" stop-color="#101216"/>
-              <stop offset="1" stop-color="#0A0B0E"/>
-            </linearGradient>
-            <linearGradient id="podNose" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0" stop-color="#2C2F36"/>
-              <stop offset="1" stop-color="#14161A"/>
-            </linearGradient>
-            <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#8FD4F2" stop-opacity="0.95"/>
-              <stop offset="0.45" stop-color="#5FB3DA" stop-opacity="0.5"/>
-              <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
-            </radialGradient>
-            <radialGradient id="floorSh" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#000" stop-opacity="0.55"/>
-              <stop offset="1" stop-color="#000" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="specular" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
-              <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
-          </defs>
-          <ellipse cx="230" cy="204" rx="150" ry="16" fill="url(#floorSh)"/>
-          <g filter="url(#soft)" opacity="0.5"><ellipse cx="118" cy="160" rx="26" ry="18" fill="url(#glowCyan)"/></g>
-          <!-- 마운트 파일런 -->
-          <path d="M210 52 L250 52 L244 92 L216 92 Z" fill="#1A1C21"/>
-          <rect x="206" y="44" width="48" height="10" rx="2" fill="#22252B"/>
-          <!-- 포드 본체 -->
-          <path d="M96 128 Q96 96 132 96 L340 96 Q392 96 414 128 Q392 160 340 160 L132 160 Q96 160 96 128 Z" fill="url(#podBody)" stroke="#43474F" stroke-width="1.2"/>
-          <!-- 노즈(센서 윈도우) -->
-          <path d="M96 128 Q96 98 130 96 Q112 112 112 128 Q112 144 130 160 Q96 158 96 128 Z" fill="url(#podNose)"/>
-          <ellipse cx="118" cy="128" rx="13" ry="20" fill="#0B0D10" stroke="#43474F" stroke-width="1"/>
-          <ellipse cx="118" cy="128" rx="7" ry="12" fill="url(#glowCyan)"/>
-          <!-- 패널 라인 -->
-          <line x1="180" y1="98" x2="180" y2="158" stroke="#0A0B0E" stroke-width="1.6"/>
-          <line x1="186" y1="98" x2="186" y2="158" stroke="#4A4E56" stroke-width="0.6" opacity="0.6"/>
-          <line x1="300" y1="97" x2="300" y2="159" stroke="#0A0B0E" stroke-width="1.6"/>
-          <line x1="306" y1="97" x2="306" y2="159" stroke="#4A4E56" stroke-width="0.6" opacity="0.6"/>
-          <rect x="330" y="118" width="42" height="20" rx="3" fill="#0D0F12" stroke="#3A3E45" stroke-width="0.8"/>
-          <circle cx="340" cy="128" r="2.2" fill="#C9A227"/>
-          <circle cx="350" cy="128" r="2.2" fill="#2E3136"/>
-          <circle cx="360" cy="128" r="2.2" fill="#2E3136"/>
-          <!-- 스펙큘러 하이라이트 -->
-          <path d="M140 102 Q250 96 396 116 L396 122 Q250 104 140 108 Z" fill="url(#specular)"/>
-          <!-- 각인 -->
-          <text x="212" y="146" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="3" fill="#6A6F77">MAEGNAS</text>
-          <text x="212" y="132" font-family="IBM Plex Mono, monospace" font-size="6.5" letter-spacing="2" fill="#4A4E56">QSP-01 · QUANTUM SENSING PAYLOAD</text>
-        </svg>
-        <p>A non-magnetic pod carrying the quantum magnetometer, reference sensors, and precision timing — acquiring field, position, and attitude as one synchronized stream in flight.</p>
-        <ul class="spec-list">
-          <li><span class="k">Sensing</span><span class="v">Quantum magnetometer + reference vector + IMU</span></li>
-          <li><span class="k">Positioning</span><span class="v">GNSS / RTK precision</span></li>
-          <li><span class="k">Integrity</span><span class="v">Non-magnetic structure · synchronized timing</span></li>
-          <li><span class="k">Link</span><span class="v">Real-time downlink to ground</span></li>
-        </ul>
+    <p class="sec-intro reveal">QSP-01 is platform-agnostic by design. From a quadcopter to a patrol aircraft to the hunt beneath the waves — the same sensing core, a different station.</p>
+    <div class="carousel reveal" id="carousel">
+      <div class="car-stage">
+        <div class="car-grid" aria-hidden="true"></div>
+
+        <!-- SLIDE 1: 쿼드콥터 -->
+        <div class="car-slide active" data-name="Quadcopter UAS">
+          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Quadcopter with ventral payload station highlighted">
+            <g stroke="#3A3E45" stroke-width="3" fill="#181A1F">
+              <ellipse cx="240" cy="118" rx="86" ry="7" fill="none" stroke="#4A4E56"/>
+              <ellipse cx="660" cy="118" rx="86" ry="7" fill="none" stroke="#4A4E56"/>
+              <rect x="228" y="124" width="24" height="16" rx="3"/>
+              <rect x="648" y="124" width="24" height="16" rx="3"/>
+              <path d="M252 140 L410 172 M648 140 L490 172" stroke-width="9" stroke-linecap="round"/>
+              <path d="M396 160 Q396 148 414 148 L486 148 Q504 148 504 160 L504 190 Q504 204 486 204 L414 204 Q396 204 396 190 Z" fill="#1D2026" stroke="#4A4E56"/>
+              <path d="M410 204 L396 252 M490 204 L504 252" stroke-width="6" stroke-linecap="round"/>
+              <line x1="380" y1="252" x2="420" y2="252" stroke-width="6" stroke-linecap="round"/>
+              <line x1="480" y1="252" x2="520" y2="252" stroke-width="6" stroke-linecap="round"/>
+            </g>
+            <!-- 페이로드 포드 -->
+            <line x1="450" y1="204" x2="450" y2="240" stroke="#4A4E56" stroke-width="3" stroke-dasharray="3 6"/>
+            <path d="M410 254 Q410 240 428 240 L472 240 Q496 240 506 254 Q496 268 472 268 L428 268 Q410 268 410 254 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
+            <circle cx="420" cy="254" r="5" fill="#5FB3DA" opacity="0.9"/>
+            <!-- 하이라이트 -->
+            <circle class="mount-ring" cx="458" cy="254" r="52" fill="none" stroke="#C9A227" stroke-width="2"/>
+            <circle cx="458" cy="254" r="52" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
+            <line x1="510" y1="254" x2="640" y2="254" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="650" y="250" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">PAYLOAD STATION</text>
+            <text x="650" y="268" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">VENTRAL · QUICK-RELEASE</text>
+          </svg>
+        </div>
+
+        <!-- SLIDE 2: 프레데터급 UAV -->
+        <div class="car-slide" data-name="MALE UAV">
+          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Long-endurance UAV with nose payload station highlighted">
+            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
+              <!-- 동체 -->
+              <path d="M150 210 Q170 186 230 184 L560 190 Q640 194 700 216 L700 228 Q640 244 560 240 L230 236 Q170 234 150 222 Z"/>
+              <!-- 벌브 노즈 -->
+              <path d="M150 216 Q128 194 158 188 Q186 184 196 200 Q186 230 158 226 Q132 234 150 216 Z" fill="#1D2026" stroke="#4A4E56"/>
+              <!-- 주익 -->
+              <path d="M360 206 L80 178 L84 170 L364 196 Z" fill="#1D2026"/>
+              <path d="M470 206 L810 176 L806 168 L466 196 Z" fill="#1D2026"/>
+              <!-- 역V 테일 -->
+              <path d="M652 220 L710 152 L722 156 L672 226 Z" fill="#1D2026"/>
+              <!-- 푸셔 프로펠러 -->
+              <ellipse cx="712" cy="222" rx="6" ry="42" fill="none" stroke="#4A4E56"/>
+              <!-- 랜딩기어 -->
+              <path d="M260 240 L252 286 M480 240 L488 286" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="252" cy="292" r="9" fill="#0C0D10"/>
+              <circle cx="488" cy="292" r="9" fill="#0C0D10"/>
+            </g>
+            <!-- 하부 페이로드 -->
+            <path d="M300 250 Q300 240 314 240 L352 240 Q370 240 378 250 Q370 260 352 260 L314 260 Q300 260 300 250 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
+            <circle cx="308" cy="250" r="4" fill="#5FB3DA" opacity="0.9"/>
+            <circle class="mount-ring" cx="339" cy="250" r="46" fill="none" stroke="#C9A227" stroke-width="2"/>
+            <circle cx="339" cy="250" r="46" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
+            <line x1="339" y1="298" x2="339" y2="342" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="339" y1="342" x2="560" y2="342" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="570" y="338" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">PAYLOAD STATION</text>
+            <text x="570" y="356" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">CENTERLINE HARDPOINT</text>
+          </svg>
+        </div>
+
+        <!-- SLIDE 3: 해상초계기 -->
+        <div class="car-slide" data-name="Maritime Patrol">
+          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Maritime patrol aircraft with tail boom station highlighted">
+            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
+              <!-- 동체 -->
+              <path d="M120 206 Q150 178 230 176 L560 180 Q640 182 680 200 L680 224 Q640 238 560 236 L230 234 Q150 232 120 218 Z"/>
+              <!-- 콕핏 -->
+              <path d="M126 202 Q140 186 176 184 L180 198 Q150 202 132 210 Z" fill="#2A2E36"/>
+              <!-- 주익 + 엔진 -->
+              <path d="M330 200 L120 148 L126 138 L338 188 Z" fill="#1D2026"/>
+              <path d="M430 200 L740 146 L734 136 L424 188 Z" fill="#1D2026"/>
+              <rect x="238" y="168" width="46" height="18" rx="8" fill="#1D2026" stroke="#4A4E56"/>
+              <rect x="524" y="166" width="46" height="18" rx="8" fill="#1D2026" stroke="#4A4E56"/>
+              <ellipse cx="238" cy="177" rx="4" ry="16" fill="none" stroke="#4A4E56"/>
+              <ellipse cx="524" cy="175" rx="4" ry="16" fill="none" stroke="#4A4E56"/>
+              <!-- 수직미익 -->
+              <path d="M628 202 L668 128 L692 132 L664 206 Z" fill="#1D2026"/>
+            </g>
+            <!-- MAD 테일 붐 -->
+            <path d="M680 208 L790 204 Q812 204 812 212 Q812 220 790 218 L680 220 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
+            <circle cx="804" cy="212" r="4" fill="#5FB3DA" opacity="0.9"/>
+            <circle class="mount-ring" cx="780" cy="212" r="48" fill="none" stroke="#C9A227" stroke-width="2"/>
+            <circle cx="780" cy="212" r="48" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
+            <line x1="780" y1="262" x2="780" y2="318" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <line x1="780" y1="318" x2="560" y2="318" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="330" y="314" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">MAD TAIL BOOM</text>
+            <text x="330" y="332" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">MAGNETIC ANOMALY DETECTION STATION</text>
+          </svg>
+        </div>
+
+        <!-- SLIDE 4: 잠수함 -->
+        <div class="car-slide" data-name="Submarine">
+          <svg viewBox="0 0 900 420" fill="none" role="img" aria-label="Submarine with towed detection body highlighted">
+            <!-- 수면 -->
+            <line x1="40" y1="120" x2="860" y2="120" stroke="#243038" stroke-width="1.5" stroke-dasharray="8 8"/>
+            <g fill="#181A1F" stroke="#3A3E45" stroke-width="3">
+              <!-- 선체 -->
+              <path d="M140 232 Q160 196 260 192 L560 192 Q660 196 700 232 Q660 268 560 272 L260 272 Q160 268 140 232 Z"/>
+              <!-- 세일 -->
+              <path d="M330 192 Q332 156 360 152 L404 152 Q416 156 416 192 Z" fill="#1D2026" stroke="#4A4E56"/>
+              <line x1="366" y1="152" x2="366" y2="128" stroke="#4A4E56" stroke-width="3"/>
+              <!-- 함미 러더/프로펠러 -->
+              <path d="M690 210 L724 186 L730 194 L702 220 Z" fill="#1D2026"/>
+              <path d="M690 254 L724 278 L730 270 L702 244 Z" fill="#1D2026"/>
+              <ellipse cx="716" cy="232" rx="5" ry="26" fill="none" stroke="#4A4E56"/>
+            </g>
+            <!-- 예인 케이블 + 토우드 바디 -->
+            <path d="M700 240 Q770 258 820 288" stroke="#767C85" stroke-width="1.6" fill="none"/>
+            <path d="M806 282 Q806 272 818 272 L846 272 Q862 272 868 282 Q862 292 846 292 L818 292 Q806 292 806 282 Z" fill="#22252B" stroke="#767C85" stroke-width="2"/>
+            <circle cx="814" cy="282" r="4" fill="#5FB3DA" opacity="0.9"/>
+            <circle class="mount-ring" cx="837" cy="282" r="44" fill="none" stroke="#C9A227" stroke-width="2"/>
+            <circle cx="837" cy="282" r="44" fill="none" stroke="#C9A227" stroke-width="1" opacity="0.6"/>
+            <line x1="791" y1="282" x2="600" y2="282" stroke="#C9A227" stroke-width="1" stroke-dasharray="4 4"/>
+            <text x="352" y="278" font-family="IBM Plex Mono, monospace" font-size="13" letter-spacing="2.5" fill="#C9A227">TOWED DETECTION BODY</text>
+            <text x="352" y="296" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#767C85">ASTERN TOW · DEEP SEARCH</text>
+          </svg>
+        </div>
       </div>
-      <div class="sys-cell">
-        <span class="mono">Component 02 — Ground</span>
-        <h3>Detection &amp; Mapping Software</h3>
-        <svg class="render" viewBox="0 0 460 240" fill="none" role="img" aria-label="Rendered mission console with satellite map and targets">
-          <defs>
-            <linearGradient id="scrBody" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#2A2D33"/>
-              <stop offset="1" stop-color="#0C0D10"/>
-            </linearGradient>
-            <linearGradient id="scrMap" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#101820"/>
-              <stop offset="0.5" stop-color="#0C1218"/>
-              <stop offset="1" stop-color="#080B0E"/>
-            </linearGradient>
-            <radialGradient id="anom" cx="0.5" cy="0.5" r="0.5">
-              <stop offset="0" stop-color="#5FB3DA" stop-opacity="0.55"/>
-              <stop offset="0.6" stop-color="#5FB3DA" stop-opacity="0.18"/>
-              <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
-            </radialGradient>
-            <filter id="tglow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.2"/></filter>
-          </defs>
-          <ellipse cx="230" cy="216" rx="160" ry="13" fill="url(#floorSh)"/>
-          <!-- 콘솔 바디 -->
-          <rect x="60" y="28" width="340" height="176" rx="8" fill="url(#scrBody)" stroke="#43474F" stroke-width="1.2"/>
-          <rect x="72" y="40" width="316" height="152" rx="3" fill="url(#scrMap)"/>
-          <!-- 지도 그리드 -->
-          <g opacity="0.5" stroke="#1C2630" stroke-width="0.8">
-            <path d="M72 78 H388 M72 116 H388 M72 154 H388 M132 40 V192 M192 40 V192 M252 40 V192 M312 40 V192"/>
-          </g>
-          <!-- 서베이 라인 -->
-          <g stroke="#33556B" stroke-width="1.3">
-            <path d="M88 58 H372 M372 58 V76 M372 76 H88 M88 76 V94 M88 94 H372 M372 94 V112 M372 112 H88 M88 112 V130 M88 130 H372"/>
-          </g>
-          <path d="M88 58 H240" stroke="#5FB3DA" stroke-width="1.6"/>
-          <!-- 이상 신호 -->
-          <circle cx="176" cy="103" r="30" fill="url(#anom)"/>
-          <circle cx="304" cy="146" r="20" fill="url(#anom)"/>
-          <!-- 표적 마커 (글로우) -->
-          <g filter="url(#tglow)" stroke="#E5C766" stroke-width="2">
-            <circle cx="176" cy="103" r="7" fill="none"/>
-            <path d="M176 89 V117 M162 103 H190"/>
-          </g>
-          <g stroke="#C9A227" stroke-width="1.6">
-            <circle cx="176" cy="103" r="7" fill="none"/>
-            <path d="M176 89 V117 M162 103 H190"/>
-            <circle cx="304" cy="146" r="5.5" fill="none"/>
-            <path d="M304 136 V156 M294 146 H314"/>
-          </g>
-          <!-- 후보 패널 -->
-          <g>
-            <rect x="318" y="48" width="62" height="58" rx="2" fill="#0A0D10" stroke="#243038" stroke-width="0.9"/>
-            <rect x="323" y="54" width="52" height="5" fill="#33556B"/>
-            <rect x="323" y="64" width="52" height="16" fill="none" stroke="#C9A227" stroke-width="0.9"/>
-            <rect x="327" y="68" width="30" height="3" fill="#7C8891"/>
-            <rect x="327" y="74" width="20" height="3" fill="#465059"/>
-            <rect x="323" y="86" width="52" height="16" fill="none" stroke="#243038" stroke-width="0.9"/>
-            <rect x="327" y="90" width="30" height="3" fill="#7C8891"/>
-            <rect x="327" y="96" width="20" height="3" fill="#465059"/>
-          </g>
-          <!-- HUD 텍스트 -->
-          <text x="82" y="184" font-family="IBM Plex Mono, monospace" font-size="7" letter-spacing="1.5" fill="#5F707C">TGT 02 · CONF 0.94 · 36.35N 127.38E</text>
-          <!-- 스크린 반사 -->
-          <path d="M72 40 L200 40 L110 192 L72 192 Z" fill="#FFFFFF" opacity="0.03"/>
-          <!-- 스탠드 -->
-          <path d="M208 204 L252 204 L246 214 L214 214 Z" fill="#16181D"/>
-        </svg>
-        <p>Mission software that compensates platform interference, detects and localizes anomalies, and renders every candidate as coordinates and confidence on a satellite map — built for operators, not laboratories.</p>
-        <ul class="spec-list">
-          <li><span class="k">Processing</span><span class="v">Platform &amp; environment compensation</span></li>
-          <li><span class="k">Detection</span><span class="v">Physics-informed + machine-learned</span></li>
-          <li><span class="k">Output</span><span class="v">Satellite map · coordinates · confidence</span></li>
-          <li><span class="k">Export</span><span class="v">Mission reports · target data</span></li>
-        </ul>
+      <div class="car-tabs" role="tablist">
+        <button class="car-tab active" data-i="0">01 · Quadcopter<span class="bar"></span></button>
+        <button class="car-tab" data-i="1">02 · MALE UAV<span class="bar"></span></button>
+        <button class="car-tab" data-i="2">03 · Maritime Patrol<span class="bar"></span></button>
+        <button class="car-tab" data-i="3">04 · Submarine<span class="bar"></span></button>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ═══ 제품 쇼케이스 2: 미션 소프트웨어 ═══ -->
+<section class="console-sec">
+  <div class="container pad center" style="text-align:center;">
+    <span class="mono">03 / System — Component 02</span>
+    <h2 class="display product-name" style="font-size:clamp(2rem,5.6vw,4.2rem); margin:0.9rem 0 0.6rem;">Mission Software</h2>
+    <p class="product-sub" style="color:var(--text-dim); max-width:38rem; margin:0 auto; font-size:0.98rem;">MCS-01. Field-deployable mission console — compensation, detection, and localization rendered as coordinates and confidence on a satellite map. Built for the operator's seat, at the edge of the battlefield.</p>
+    <div class="console-wrap reveal">
+      <svg viewBox="0 0 900 560" fill="none" role="img" aria-label="Rugged field console running MAEGNAS mission software">
+        <defs>
+          <linearGradient id="rugBody" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#33363D"/>
+            <stop offset="0.5" stop-color="#1C1F24"/>
+            <stop offset="1" stop-color="#0E1013"/>
+          </linearGradient>
+          <linearGradient id="rugDeck" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#26292F"/>
+            <stop offset="1" stop-color="#101216"/>
+          </linearGradient>
+          <linearGradient id="scr" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#0F1720"/>
+            <stop offset="0.5" stop-color="#0B1118"/>
+            <stop offset="1" stop-color="#070B0F"/>
+          </linearGradient>
+          <radialGradient id="anom2" cx="0.5" cy="0.5" r="0.5">
+            <stop offset="0" stop-color="#5FB3DA" stop-opacity="0.5"/>
+            <stop offset="0.6" stop-color="#5FB3DA" stop-opacity="0.16"/>
+            <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="tglow2" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.4"/></filter>
+        </defs>
+        <ellipse cx="450" cy="530" rx="330" ry="20" fill="url(#floorShC)"/>
+        <radialGradient id="floorShC" cx="0.5" cy="0.5" r="0.5">
+          <stop offset="0" stop-color="#000" stop-opacity="0.6"/>
+          <stop offset="1" stop-color="#000" stop-opacity="0"/>
+        </radialGradient>
+        <!-- 핸들 -->
+        <rect x="380" y="18" width="140" height="14" rx="7" fill="#16181D" stroke="#3A3E45" stroke-width="1.5"/>
+        <!-- 러기드 스크린 섀시 -->
+        <rect x="120" y="36" width="660" height="420" rx="18" fill="url(#rugBody)" stroke="#4A4E56" stroke-width="2"/>
+        <!-- 코너 범퍼 -->
+        <path d="M120 92 L120 54 Q120 36 138 36 L176 36 L176 50 Q140 50 136 92 Z" fill="#0E1013"/>
+        <path d="M780 92 L780 54 Q780 36 762 36 L724 36 L724 50 Q760 50 764 92 Z" fill="#0E1013"/>
+        <path d="M120 400 L120 438 Q120 456 138 456 L176 456 L176 442 Q140 442 136 400 Z" fill="#0E1013"/>
+        <path d="M780 400 L780 438 Q780 456 762 456 L724 456 L724 442 Q760 442 764 400 Z" fill="#0E1013"/>
+        <!-- 베젤 볼트 -->
+        <circle cx="146" cy="62" r="5" fill="#0A0B0E" stroke="#4A4E56"/><circle cx="754" cy="62" r="5" fill="#0A0B0E" stroke="#4A4E56"/>
+        <circle cx="146" cy="430" r="5" fill="#0A0B0E" stroke="#4A4E56"/><circle cx="754" cy="430" r="5" fill="#0A0B0E" stroke="#4A4E56"/>
+        <!-- 스크린 -->
+        <rect x="164" y="72" width="572" height="348" rx="4" fill="url(#scr)" stroke="#3E424A" stroke-width="1.4"/>
+        <!-- 상단 HUD 바 -->
+        <rect x="164" y="72" width="572" height="26" fill="#0A0F14"/>
+        <text x="176" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.4" fill="#7C8891">MAEGNAS MCS-01 · MISSION 047 · LINK ●</text>
+        <text x="640" y="89" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2" fill="#5F707C">GRID 52S</text>
+        <!-- 지도 그리드 -->
+        <g opacity="0.55" stroke="#1B2733" stroke-width="0.9">
+          <path d="M164 140 H736 M164 200 H736 M164 260 H736 M164 320 H736 M164 380 H736 M260 98 V420 M356 98 V420 M452 98 V420 M548 98 V420 M644 98 V420"/>
+        </g>
+        <!-- 서베이 라인 -->
+        <g stroke="#33556B" stroke-width="1.6">
+          <path d="M190 126 H710 M710 126 V156 M710 156 H190 M190 156 V186 M190 186 H710 M710 186 V216 M710 216 H190 M190 216 V246 M190 246 H710"/>
+        </g>
+        <path d="M190 126 H452" stroke="#5FB3DA" stroke-width="2"/>
+        <!-- 이상 신호 -->
+        <circle cx="342" cy="196" r="52" fill="url(#anom2)"/>
+        <circle cx="596" cy="300" r="36" fill="url(#anom2)"/>
+        <!-- 표적 마커 -->
+        <g filter="url(#tglow2)" stroke="#E5C766" stroke-width="2.6">
+          <circle cx="342" cy="196" r="11" fill="none"/>
+          <path d="M342 174 V218 M320 196 H364"/>
+        </g>
+        <g stroke="#C9A227" stroke-width="2">
+          <circle cx="342" cy="196" r="11" fill="none"/>
+          <path d="M342 174 V218 M320 196 H364"/>
+          <circle cx="596" cy="300" r="8.5" fill="none"/>
+          <path d="M596 284 V316 M580 300 H612"/>
+        </g>
+        <!-- 우측 후보 패널 -->
+        <rect x="612" y="110" width="112" height="120" rx="2" fill="#090D11" stroke="#233039" stroke-width="1.1"/>
+        <rect x="620" y="118" width="96" height="9" fill="#33556B"/>
+        <rect x="620" y="136" width="96" height="28" fill="none" stroke="#C9A227" stroke-width="1.2"/>
+        <rect x="627" y="143" width="56" height="5" fill="#7C8891"/>
+        <rect x="627" y="153" width="38" height="5" fill="#465059"/>
+        <rect x="620" y="172" width="96" height="28" fill="none" stroke="#233039" stroke-width="1.2"/>
+        <rect x="627" y="179" width="56" height="5" fill="#7C8891"/>
+        <rect x="627" y="189" width="38" height="5" fill="#465059"/>
+        <!-- 하단 HUD -->
+        <text x="176" y="404" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="1.8" fill="#5F707C">TGT 01 · CONF 0.94 · 36.3504N 127.3845E · DEPTH EST 0.4M</text>
+        <!-- 스크린 반사 -->
+        <path d="M164 72 L340 72 L212 420 L164 420 Z" fill="#FFFFFF" opacity="0.026"/>
+        <!-- 힌지 -->
+        <rect x="180" y="458" width="90" height="16" rx="6" fill="#0E1013" stroke="#3A3E45"/>
+        <rect x="630" y="458" width="90" height="16" rx="6" fill="#0E1013" stroke="#3A3E45"/>
+        <!-- 키보드 데크 -->
+        <path d="M96 476 L804 476 L840 522 Q842 530 830 530 L70 530 Q58 530 60 522 Z" fill="url(#rugDeck)" stroke="#4A4E56" stroke-width="1.6"/>
+        <g fill="#0B0D10" stroke="#2E3136" stroke-width="0.8">
+          <rect x="180" y="486" width="380" height="12" rx="2"/>
+          <rect x="186" y="502" width="368" height="12" rx="2"/>
+        </g>
+        <rect x="600" y="488" width="90" height="26" rx="3" fill="#0B0D10" stroke="#2E3136"/>
+        <text x="612" y="505" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.5" fill="#565B62">TRACKPAD</text>
+        <text x="120" y="512" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="1.6" fill="#565B62">MCS-01</text>
+      </svg>
+    </div>
+    <ul class="spec-list reveal">
+      <li><span class="k">Processing</span><span class="v">Platform &amp; environment compensation</span></li>
+      <li><span class="k">Detection</span><span class="v">Physics-informed + machine-learned</span></li>
+      <li><span class="k">Output</span><span class="v">Satellite map · coordinates · confidence</span></li>
+      <li><span class="k">Deployment</span><span class="v">Rugged field console · disconnected operation</span></li>
+    </ul>
   </div>
 </section>
 
@@ -516,6 +752,29 @@
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // 플랫폼 캐러셀
+  (function () {
+    const slides = document.querySelectorAll('.car-slide');
+    const tabs = document.querySelectorAll('.car-tab');
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, timer = null;
+    function show(n) {
+      i = n % slides.length;
+      slides.forEach((s, k) => s.classList.toggle('active', k === i));
+      tabs.forEach((t, k) => {
+        t.classList.remove('active');
+        const bar = t.querySelector('.bar');
+        bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+        if (k === i) t.classList.add('active');
+      });
+    }
+    function start() { if (!reduced) timer = setInterval(() => show(i + 1), 5000); }
+    tabs.forEach(t => t.addEventListener('click', () => {
+      clearInterval(timer); show(+t.dataset.i); start();
+    }));
+    show(0); start();
+  })();
 </script>
 </body>
 </html>

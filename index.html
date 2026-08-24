@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OAQ — Airborne Magnetic Detection</title>
+<meta name="description" content="OAQ는 드론 탑재형 자기장 탐지 시스템을 만듭니다. Reveal the Unseen Battlespace through Magnetic Sensing.">
+<meta property="og:title" content="OAQ — Airborne Magnetic Detection">
+<meta property="og:description" content="보이지 않는 위협을, 지도 위에 드러냅니다. 드론 탑재형 자기장 탐지 시스템.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230F1730'/%3E%3Cpath d='M6 20 Q16 10 26 20' stroke='%236FB6D8' stroke-width='2.5' fill='none'/%3E%3Ccircle cx='16' cy='14' r='2.5' fill='%23C9A227'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@600;700;900&family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --navy: #0F1730;
+    --navy-2: #16223F;
+    --navy-line: #26314F;
+    --ink: #1A2233;
+    --muted: #5B6478;
+    --paper: #F6F7FA;
+    --card: #FFFFFF;
+    --line: #D9DDE6;
+    --accent: #1E5A8A;
+    --accent-deep: #16406B;
+    --cyan: #6FB6D8;
+    --gold: #C9A227;
+    --navy-text: #E6EBF5;
+    --navy-muted: #9AA6C0;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 68rem; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ─ 내비게이션 ─ */
+  header.nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(15, 23, 48, 0.96);
+    border-bottom: 1px solid var(--navy-line);
+    backdrop-filter: blur(6px);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.6rem; }
+  .logo {
+    font-family: "IBM Plex Mono", monospace; font-weight: 700;
+    font-size: 1.15rem; letter-spacing: 0.28em; color: #F2F5FB; text-decoration: none;
+  }
+  .logo span { color: var(--cyan); }
+  nav.menu { display: flex; gap: 1.6rem; }
+  nav.menu a {
+    color: var(--navy-muted); text-decoration: none;
+    font-size: 0.86rem; letter-spacing: 0.04em;
+  }
+  nav.menu a:hover { color: var(--cyan); }
+  @media (max-width: 640px) { nav.menu { display: none; } }
+
+  /* ─ 히어로 ─ */
+  .hero { background: var(--navy); color: var(--navy-text); padding: 6.5rem 0 5.5rem; position: relative; overflow: hidden; }
+  .hero::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 60% 45% at 78% 88%, rgba(111, 182, 216, 0.13), transparent 70%),
+      radial-gradient(ellipse 45% 35% at 15% 10%, rgba(30, 90, 138, 0.25), transparent 70%);
+  }
+  .hero .container { position: relative; z-index: 1; }
+  .hero .kicker {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.78rem;
+    letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-bottom: 1.2rem;
+  }
+  .hero h1 {
+    font-family: "Noto Serif KR", serif; font-weight: 900;
+    font-size: clamp(1.9rem, 5vw, 3.3rem); line-height: 1.28;
+    color: #F2F5FB; max-width: 46rem; text-wrap: balance;
+  }
+  .hero .sub { margin-top: 1.5rem; font-size: 1.08rem; color: var(--navy-muted); max-width: 40rem; }
+  .hero .cta-row { margin-top: 2.5rem; display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 0.7rem 1.6rem; border-radius: 4px;
+    font-size: 0.92rem; font-weight: 500; text-decoration: none; letter-spacing: 0.02em;
+  }
+  .btn-primary { background: var(--cyan); color: var(--navy); }
+  .btn-primary:hover { background: #8CC8E4; }
+  .btn-ghost { border: 1px solid var(--navy-line); color: var(--navy-text); }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  /* ─ 공통 섹션 ─ */
+  section { padding: 5rem 0; }
+  .sec-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.75rem;
+    letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.6rem;
+  }
+  h2 {
+    font-family: "Noto Serif KR", serif; font-weight: 700;
+    font-size: clamp(1.4rem, 3vw, 2rem); line-height: 1.35; margin-bottom: 1rem; text-wrap: balance;
+  }
+  .sec-intro { color: var(--muted); max-width: 44rem; margin-bottom: 2.5rem; }
+
+  /* ─ 제품 카드 ─ */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1.5rem; }
+  .prod-card {
+    background: var(--card); border: 1px solid var(--line); border-top: 4px solid var(--accent);
+    border-radius: 6px; padding: 1.8rem;
+  }
+  .prod-card .p-sub {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.72rem;
+    letter-spacing: 0.14em; color: var(--accent); margin-bottom: 0.4rem;
+  }
+  .prod-card h3 { font-family: "Noto Serif KR", serif; font-size: 1.25rem; margin-bottom: 1rem; }
+  .prod-card svg { width: 100%; height: auto; margin-bottom: 1.2rem; }
+  .prod-card p { font-size: 0.95rem; color: var(--muted); margin-bottom: 1rem; }
+  .kw-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .kw {
+    font-family: "IBM Plex Mono", monospace; font-size: 0.7rem;
+    border: 1px solid var(--line); border-radius: 99px;
+    padding: 0.15rem 0.7rem; background: var(--paper); color: var(--ink); white-space: nowrap;
+  }
+  .kw.hl { background: rgba(30,90,138,0.08); border-color: var(--accent); color: var(--accent-deep); font-weight: 500; }
+
+  /* ─ 기술 ─ */
+  .tech { background: var(--navy); color: var(--navy-text); }
+  .tech .sec-label { color: var(--cyan); }
+  .tech h2 { color: #F2F5FB; }
+  .tech .sec-intro { color: var(--navy-muted); }
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1.2rem; }
+  .tech-card { background: var(--navy-2); border: 1px solid var(--navy-line); border-radius: 6px; padding: 1.5rem; }
+  .tech-card .t-num { font-family: "IBM Plex Mono", monospace; font-size: 0.75rem; color: var(--cyan); margin-bottom: 0.5rem; }
+  .tech-card h3 { font-size: 1.02rem; color: #F2F5FB; margin-bottom: 0.5rem; }
+  .tech-card p { font-size: 0.88rem; color: var(--navy-muted); }
+
+  /* ─ 작동 흐름 ─ */
+  .flow-row { display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: stretch; }
+  .flow-step {
+    flex: 1 1 8.5rem; background: var(--card); border: 1px solid var(--line);
+    border-radius: 6px; padding: 1rem 1.1rem; position: relative;
+  }
+  .flow-step .f-num { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; color: var(--accent); }
+  .flow-step h3 { font-size: 0.95rem; margin: 0.2rem 0 0.3rem; }
+  .flow-step p { font-size: 0.8rem; color: var(--muted); line-height: 1.55; }
+
+  /* ─ 적용 분야 ─ */
+  .apps { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .app-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 1.2rem; }
+  .app-card { border: 1px solid var(--line); border-left: 4px solid var(--gold); border-radius: 6px; padding: 1.3rem 1.4rem; background: var(--paper); }
+  .app-card h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+  .app-card p { font-size: 0.87rem; color: var(--muted); }
+
+  /* ─ 컨택트 / 푸터 ─ */
+  .contact { text-align: center; }
+  .contact .sec-intro { margin-left: auto; margin-right: auto; }
+  footer {
+    background: var(--navy); color: var(--navy-muted);
+    padding: 2.2rem 0; font-size: 0.82rem;
+  }
+  .foot-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .foot-inner .mono { font-family: "IBM Plex Mono", monospace; letter-spacing: 0.1em; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="logo" href="#top">OA<span>Q</span></a>
+    <nav class="menu">
+      <a href="#product">Product</a>
+      <a href="#technology">Technology</a>
+      <a href="#how">How It Works</a>
+      <a href="#applications">Applications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div class="container">
+    <p class="kicker">Airborne Magnetic Detection</p>
+    <h1>Reveal the Unseen Battlespace<br>through Magnetic Sensing.</h1>
+    <p class="sub">보이지 않는 위협을, 지도 위에 드러냅니다. OAQ는 고감도 자기장 센싱으로 땅속과 물속의 금속성 표적을 탐지하여 운용자의 지도 위에 좌표로 표시하는 <strong style="color:#E6EBF5;">드론 탑재형 자기장 탐지 시스템</strong>을 만듭니다.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="#product">제품 보기</a>
+      <a class="btn btn-ghost" href="#contact">문의하기</a>
+    </div>
+  </div>
+</section>
+
+<section id="product">
+  <div class="container">
+    <p class="sec-label">Product</p>
+    <h2>하나의 시스템, 두 개의 몸</h2>
+    <p class="sec-intro">Airborne Magnetic Detection System은 드론에 실리는 센싱 페이로드와, 데이터를 표적으로 바꾸는 소프트웨어로 구성됩니다. 센서부터 화면까지, 하나의 흐름으로 통합되어 있습니다.</p>
+    <div class="grid-2">
+      <div class="prod-card">
+        <p class="p-sub">AIRBORNE</p>
+        <h3>Magnetic Sensing Payload</h3>
+        <svg viewBox="0 0 400 220" fill="none" role="img" aria-label="드론과 하부 탑재 센서 포드">
+          <rect x="165" y="52" width="70" height="24" rx="8" fill="#1E5A8A"/>
+          <rect x="182" y="44" width="36" height="12" rx="4" fill="#16406B"/>
+          <line x1="170" y1="60" x2="92" y2="38" stroke="#16406B" stroke-width="5" stroke-linecap="round"/>
+          <line x1="230" y1="60" x2="308" y2="38" stroke="#16406B" stroke-width="5" stroke-linecap="round"/>
+          <rect x="84" y="28" width="16" height="12" rx="3" fill="#1E5A8A"/>
+          <rect x="300" y="28" width="16" height="12" rx="3" fill="#1E5A8A"/>
+          <ellipse cx="92" cy="26" rx="42" ry="4.5" fill="none" stroke="#6FB6D8" stroke-width="2"/>
+          <ellipse cx="308" cy="26" rx="42" ry="4.5" fill="none" stroke="#6FB6D8" stroke-width="2"/>
+          <line x1="180" y1="76" x2="168" y2="96" stroke="#16406B" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="220" y1="76" x2="232" y2="96" stroke="#16406B" stroke-width="3.5" stroke-linecap="round"/>
+          <line x1="200" y1="76" x2="200" y2="128" stroke="#1E5A8A" stroke-width="3" stroke-dasharray="1 5" stroke-linecap="round"/>
+          <rect x="168" y="128" width="64" height="26" rx="7" fill="#FFFFFF" stroke="#1E5A8A" stroke-width="2.5"/>
+          <circle cx="185" cy="141" r="5.5" fill="#6FB6D8"/>
+          <rect x="197" y="136" width="12" height="10" rx="2" fill="none" stroke="#16406B" stroke-width="1.8"/>
+          <rect x="214" y="136" width="10" height="10" rx="5" fill="none" stroke="#16406B" stroke-width="1.8"/>
+          <path d="M150 178 Q200 158 250 178" stroke="#6FB6D8" stroke-width="1.8" stroke-dasharray="4 4"/>
+          <path d="M136 192 Q200 166 264 192" stroke="#6FB6D8" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.65"/>
+          <path d="M122 206 Q200 176 278 206" stroke="#6FB6D8" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.4"/>
+          <rect x="192" y="200" width="16" height="9" rx="2" fill="#C9A227"/>
+        </svg>
+        <p>비행 중 자기장·위치·자세·시각을 하나의 데이터로 동기 취득해 지상으로 전송합니다. 비자성 탑재 구조와 정밀 시각 동기가 데이터의 품질을 지킵니다.</p>
+        <div class="kw-row">
+          <span class="kw hl">Magnetometer</span><span class="kw">Reference 3-axis</span><span class="kw">IMU</span><span class="kw">GNSS / RTK</span><span class="kw">Onboard Computer</span><span class="kw">실시간 전송</span>
+        </div>
+      </div>
+      <div class="prod-card">
+        <p class="p-sub">GROUND</p>
+        <h3>Detection &amp; Mapping Software</h3>
+        <svg viewBox="0 0 400 220" fill="none" role="img" aria-label="위성 지도 위 표적 표시 소프트웨어 화면">
+          <rect x="18" y="14" width="364" height="192" rx="8" fill="#FFFFFF" stroke="#D9DDE6" stroke-width="2"/>
+          <rect x="18" y="14" width="364" height="24" rx="8" fill="#EDF0F5"/>
+          <circle cx="34" cy="26" r="3.5" fill="#C9A227"/><circle cx="46" cy="26" r="3.5" fill="#6FB6D8"/><circle cx="58" cy="26" r="3.5" fill="#1E5A8A"/>
+          <rect x="30" y="46" width="248" height="150" rx="4" fill="#F6F7FA" stroke="#D9DDE6" stroke-width="1.5"/>
+          <path d="M30 84 H278 M30 122 H278 M30 160 H278 M92 46 V196 M154 46 V196 M216 46 V196" stroke="#E5E8EF" stroke-width="1.2"/>
+          <path d="M44 60 H262 M262 60 V78 M262 78 H44 M44 78 V96 M44 96 H262 M262 96 V114 M262 114 H44 M44 114 V132 M44 132 H262" stroke="#1E5A8A" stroke-width="1.8" opacity="0.75"/>
+          <circle cx="118" cy="105" r="20" fill="#6FB6D8" opacity="0.22"/>
+          <circle cx="118" cy="105" r="11" fill="#6FB6D8" opacity="0.35"/>
+          <circle cx="212" cy="152" r="15" fill="#6FB6D8" opacity="0.2"/>
+          <circle cx="118" cy="105" r="6" fill="none" stroke="#C9A227" stroke-width="2.5"/>
+          <line x1="118" y1="93" x2="118" y2="117" stroke="#C9A227" stroke-width="2"/>
+          <line x1="106" y1="105" x2="130" y2="105" stroke="#C9A227" stroke-width="2"/>
+          <circle cx="212" cy="152" r="5" fill="none" stroke="#C9A227" stroke-width="2.2"/>
+          <line x1="212" y1="143" x2="212" y2="161" stroke="#C9A227" stroke-width="1.8"/>
+          <line x1="203" y1="152" x2="221" y2="152" stroke="#C9A227" stroke-width="1.8"/>
+          <rect x="288" y="46" width="82" height="150" rx="4" fill="#F6F7FA" stroke="#D9DDE6" stroke-width="1.5"/>
+          <rect x="295" y="55" width="68" height="7" rx="2" fill="#1E5A8A"/>
+          <rect x="295" y="70" width="68" height="22" rx="2" fill="#FFFFFF" stroke="#C9A227" stroke-width="1.5"/>
+          <rect x="299" y="75" width="42" height="4" rx="1.5" fill="#5B6478"/>
+          <rect x="299" y="83" width="30" height="4" rx="1.5" fill="#9AA6C0"/>
+          <rect x="295" y="98" width="68" height="22" rx="2" fill="#FFFFFF" stroke="#D9DDE6" stroke-width="1.5"/>
+          <rect x="299" y="103" width="42" height="4" rx="1.5" fill="#5B6478"/>
+          <rect x="299" y="111" width="30" height="4" rx="1.5" fill="#9AA6C0"/>
+          <rect x="295" y="126" width="68" height="22" rx="2" fill="#FFFFFF" stroke="#D9DDE6" stroke-width="1.5"/>
+          <rect x="299" y="131" width="42" height="4" rx="1.5" fill="#5B6478"/>
+          <rect x="299" y="139" width="30" height="4" rx="1.5" fill="#9AA6C0"/>
+          <rect x="295" y="158" width="68" height="12" rx="3" fill="#1E5A8A"/>
+          <rect x="303" y="162" width="52" height="4" rx="1.5" fill="#BFD6E8"/>
+        </svg>
+        <p>수집 데이터를 보정하고 표적을 탐지·위치화하여 위성 지도 위에 좌표와 신뢰도로 표시합니다. 임무 중심으로 설계된 운용자 화면과 보고서 출력을 제공합니다.</p>
+        <div class="kw-row">
+          <span class="kw">Compensation</span><span class="kw hl">Anomaly Detection</span><span class="kw hl">Localization</span><span class="kw hl">Satellite Map UI</span><span class="kw">Confidence</span><span class="kw">Report / Export</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tech" id="technology">
+  <div class="container">
+    <p class="sec-label">Technology</p>
+    <h2>Quantum Sensing : Sixth-sense for the Battlespace</h2>
+    <p class="sec-intro">양자 센싱은 전장의 여섯 번째 감각이 됩니다. OAQ는 고감도 양자 자기장 센싱 기술과 자체 탐지 알고리즘을 하나의 제품으로 통합합니다.</p>
+    <div class="tech-grid">
+      <div class="tech-card">
+        <p class="t-num">01</p>
+        <h3>고감도 자기장 센싱</h3>
+        <p>미세한 자기장의 흔들림까지 읽어내는 양자 기반 고감도 계측 기술. 센서부터 시스템까지 자체 기술로 통제합니다.</p>
+      </div>
+      <div class="tech-card">
+        <p class="t-num">02</p>
+        <h3>플랫폼 보정 기술</h3>
+        <p>드론 자체가 만드는 자기 간섭과 환경 변화를 분리·제거하여, 움직이는 플랫폼 위에서도 신뢰할 수 있는 데이터를 만듭니다.</p>
+      </div>
+      <div class="tech-card">
+        <p class="t-num">03</p>
+        <h3>지능형 탐지 알고리즘</h3>
+        <p>물리 기반 해석과 기계학습을 결합한 자체 알고리즘으로 표적 후보를 자동 검출하고 위치와 신뢰도를 산출합니다.</p>
+      </div>
+      <div class="tech-card">
+        <p class="t-num">04</p>
+        <h3>임무 중심 소프트웨어</h3>
+        <p>실험실이 아니라 현장의 관점에서 설계된 운용 화면. 판단에 필요한 정보를, 판단할 수 있는 형태로 제공합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="container">
+    <p class="sec-label">How It Works</p>
+    <h2>계획에서 보고서까지, 하나의 흐름</h2>
+    <p class="sec-intro">운용자는 영역을 지정하고 비행시키는 것으로 충분합니다. 나머지는 시스템이 처리합니다.</p>
+    <div class="flow-row">
+      <div class="flow-step"><p class="f-num">01</p><h3>Plan</h3><p>탐사 영역·경로·고도 계획</p></div>
+      <div class="flow-step"><p class="f-num">02</p><h3>Fly</h3><p>드론 자동 서베이 비행</p></div>
+      <div class="flow-step"><p class="f-num">03</p><h3>Acquire</h3><p>자기장+위치+자세 동기 취득</p></div>
+      <div class="flow-step"><p class="f-num">04</p><h3>Compensate</h3><p>플랫폼·환경 영향 보정</p></div>
+      <div class="flow-step"><p class="f-num">05</p><h3>Detect</h3><p>표적 후보 검출·위치화</p></div>
+      <div class="flow-step"><p class="f-num">06</p><h3>Display</h3><p>위성 지도 위 좌표·신뢰도 표시</p></div>
+      <div class="flow-step"><p class="f-num">07</p><h3>Export</h3><p>보고서·좌표 데이터 출력</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="apps" id="applications">
+  <div class="container">
+    <p class="sec-label">Applications</p>
+    <h2>사람이 들어가기 전에, 기계가 먼저</h2>
+    <p class="sec-intro">위험 구역에 사람이 진입하기 전에 무인 플랫폼이 먼저 탐색합니다. 지도 위의 좌표 하나가 현장의 안전을 바꿉니다.</p>
+    <div class="app-grid">
+      <div class="app-card">
+        <h3>지뢰·불발탄(UXO) 탐지</h3>
+        <p>매설된 금속성 위협을 비접촉으로 탐지하여 제거 작업의 안전과 효율을 높입니다.</p>
+      </div>
+      <div class="app-card">
+        <h3>수중·해양 탐사</h3>
+        <p>수중 금속 구조물과 침몰체 탐지 등 해양 환경으로 확장 가능한 동일 아키텍처.</p>
+      </div>
+      <div class="app-card">
+        <h3>보안·인프라 조사</h3>
+        <p>지하 매설물과 금속 구조물의 위치 파악이 필요한 조사·보안 임무를 지원합니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="container">
+    <p class="sec-label">Contact</p>
+    <h2>함께할 파트너를 찾습니다</h2>
+    <p class="sec-intro">제품 도입, 실증 협력, 투자에 관한 문의를 환영합니다.<br>공식 문의 채널은 준비 중입니다.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot-inner">
+    <span class="mono">OAQ Corp.</span>
+    <span>Reveal the Unseen Battlespace through Magnetic Sensing.</span>
+    <span>© 2026 OAQ Corp. All rights reserved.</span>
+  </div>
+</footer>
+
+</body>
+</html>

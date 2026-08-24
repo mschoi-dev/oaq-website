@@ -1,114 +1,116 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>OAQ — Airborne Magnetic Detection</title>
-<meta name="description" content="OAQ builds airborne magnetic detection systems. Reveal the unseen battlespace through magnetic sensing.">
-<meta property="og:title" content="OAQ — Airborne Magnetic Detection">
-<meta property="og:description" content="Reveal the unseen battlespace through magnetic sensing.">
+<title>MAEGNAS — Quantum Detection</title>
+<meta name="description" content="MAEGNAS builds quantum magnetic detection systems. Land. Sea. Air. Space. The unseen has nowhere to hide.">
+<meta property="og:title" content="MAEGNAS — Quantum Detection">
+<meta property="og:description" content="Every threat leaves a magnetic signature. We read it.">
 <meta property="og:type" content="website">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23070709'/%3E%3Cpath d='M6 20 Q16 10 26 20' stroke='%23E8EAED' stroke-width='2.5' fill='none'/%3E%3Ccircle cx='16' cy='14' r='2.5' fill='%23C9A227'/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060608'/%3E%3Cpath d='M7 24 V10 L16 19 L25 10 V24' stroke='%23E8EAED' stroke-width='2.6' fill='none' stroke-linecap='square'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=IBM+Plex+Sans+KR:wght@300;400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <style>
-  /* 단일 다크 테마 — 안두릴 스타일: 모노크롬, 직각, 헤어라인 */
   :root {
-    --bg: #070709;
-    --bg-2: #0C0D10;
+    --bg: #060608;
+    --bg-2: #0B0C0F;
     --panel: #101114;
-    --hairline: #232529;
+    --hairline: #1F2126;
     --hairline-2: #2E3136;
-    --text: #E8EAED;
+    --text: #EDEFF2;
     --text-dim: #9BA1A9;
-    --text-faint: #5C6167;
-    --accent: #C9A227;   /* 표적 마커 — 절제된 사용 */
-    --signal: #6FB6D8;   /* 신호 — 극히 절제된 사용 */
+    --text-faint: #565B62;
+    --target: #C9A227;
+    --signal: #5FB3DA;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body {
     background: var(--bg);
     color: var(--text);
-    font-family: "IBM Plex Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+    font-family: "Inter", "Archivo", sans-serif;
     font-weight: 300;
-    line-height: 1.8;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
   }
-  .container { max-width: 78rem; margin: 0 auto; padding: 0 2rem; }
+  .container { max-width: 82rem; margin: 0 auto; padding: 0 2.2rem; }
   ::selection { background: var(--text); color: var(--bg); }
-
   .display {
-    font-family: "Archivo", "IBM Plex Sans KR", sans-serif;
+    font-family: "Archivo", sans-serif;
     font-weight: 800;
     text-transform: uppercase;
-    letter-spacing: -0.015em;
-    line-height: 1.02;
+    letter-spacing: -0.01em;
+    line-height: 1.0;
   }
   .mono {
     font-family: "IBM Plex Mono", monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.22em;
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-dim);
   }
+  img { max-width: 100%; }
 
-  /* ─ 내비게이션 ─ */
+  /* ─ NAV ─ */
   header.nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    background: rgba(7, 7, 9, 0.88);
+    position: fixed; inset: 0 0 auto; z-index: 100;
+    background: rgba(6, 6, 8, 0.82);
     border-bottom: 1px solid var(--hairline);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(10px);
   }
-  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.4rem; }
-  .logo {
-    font-family: "Archivo", sans-serif; font-weight: 800;
-    font-size: 1.05rem; letter-spacing: 0.42em; color: var(--text);
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.6rem; }
+  .wordmark {
+    font-family: "Archivo", sans-serif; font-weight: 900;
+    font-size: 1.02rem; letter-spacing: 0.34em; color: var(--text);
     text-decoration: none; text-transform: uppercase;
   }
-  nav.menu { display: flex; gap: 2.2rem; }
+  nav.menu { display: flex; gap: 2.1rem; align-items: center; }
   nav.menu a {
     font-family: "IBM Plex Mono", monospace;
     color: var(--text-dim); text-decoration: none;
-    font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase;
+    font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
   }
   nav.menu a:hover { color: var(--text); }
-  @media (max-width: 720px) { nav.menu { display: none; } }
+  nav.menu a.corp { border: 1px solid var(--hairline-2); padding: 0.45rem 1rem; }
+  nav.menu a.corp:hover { border-color: var(--text-dim); }
+  @media (max-width: 760px) { nav.menu a:not(.corp) { display: none; } }
 
-  /* ─ 히어로 ─ */
+  /* ─ HERO ─ */
   .hero {
-    min-height: 100vh;
+    min-height: 100vh; position: relative; overflow: hidden;
     display: flex; flex-direction: column; justify-content: flex-end;
-    position: relative; overflow: hidden;
-    padding: 8rem 0 4.5rem;
+    padding: 8rem 0 5rem;
     border-bottom: 1px solid var(--hairline);
+  }
+  .hero .bg {
+    position: absolute; inset: 0;
+    background: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2000&q=75") center 30% / cover no-repeat;
+    animation: slowzoom 30s ease-out forwards;
+    filter: saturate(0.75) brightness(0.85);
+  }
+  @keyframes slowzoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+  .hero .veil {
+    position: absolute; inset: 0;
     background:
-      linear-gradient(rgba(7,7,9,0) 55%, rgba(7,7,9,0.9)),
-      repeating-linear-gradient(0deg, transparent, transparent 79px, rgba(232,234,237,0.028) 80px),
-      repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(232,234,237,0.028) 80px),
-      var(--bg);
+      linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0.25) 40%, rgba(6,6,8,0.92) 88%),
+      radial-gradient(ellipse 90% 60% at 50% 110%, rgba(6,6,8,0.9), transparent);
   }
-  .hero-field {
+  .hero .scan {
     position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(6,6,8,0.16) 4px);
   }
-  .hero-field svg { position: absolute; right: -4%; top: 8%; width: 62%; min-width: 34rem; height: auto; }
   .hero .container { position: relative; z-index: 2; }
-  .hero .eyebrow { margin-bottom: 1.6rem; display: flex; align-items: center; gap: 1rem; }
-  .hero .eyebrow::before { content: ""; width: 2.4rem; height: 1px; background: var(--text-dim); }
-  .hero h1 {
-    font-size: clamp(2.6rem, 8.2vw, 6.4rem);
-    max-width: 62rem;
-  }
-  .hero h1 .dim { color: var(--text-faint); }
-  .hero .sub {
-    margin-top: 2rem; max-width: 36rem;
-    font-size: 1rem; color: var(--text-dim);
-  }
+  .hero .eyebrow { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
+  .hero .eyebrow::before { content: ""; width: 2.6rem; height: 1px; background: var(--text-dim); }
+  .hero h1 { font-size: clamp(2.7rem, 8.6vw, 7rem); max-width: 68rem; }
+  .hero h1 .dim { color: rgba(237,239,242,0.42); }
+  .hero .sub { margin-top: 2rem; max-width: 37rem; font-size: 1.02rem; color: var(--text-dim); }
   .hero .cta-row { margin-top: 2.8rem; display: flex; gap: 1px; flex-wrap: wrap; }
   .btn {
     font-family: "IBM Plex Mono", monospace;
-    display: inline-block; padding: 0.85rem 2rem;
-    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    display: inline-block; padding: 0.9rem 2.1rem;
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
     text-decoration: none; border: 1px solid var(--hairline-2);
   }
   .btn-solid { background: var(--text); color: var(--bg); border-color: var(--text); }
@@ -116,225 +118,334 @@
   .btn-line { color: var(--text); }
   .btn-line:hover { border-color: var(--text); }
 
-  /* ─ 공통 섹션 ─ */
-  section { border-bottom: 1px solid var(--hairline); padding: 6rem 0; }
-  .sec-head {
-    display: flex; align-items: baseline; justify-content: space-between;
-    gap: 2rem; margin-bottom: 3.5rem; flex-wrap: wrap;
-  }
-  .sec-head h2 { font-size: clamp(1.7rem, 4vw, 3rem); }
-  .sec-head .mono { flex-shrink: 0; }
-  .sec-intro { color: var(--text-dim); max-width: 40rem; font-size: 0.98rem; margin-top: -2rem; margin-bottom: 3rem; }
+  /* ─ 공통 ─ */
+  section { border-bottom: 1px solid var(--hairline); }
+  .pad { padding: 6.5rem 0; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .sec-head h2 { font-size: clamp(1.8rem, 4.4vw, 3.4rem); }
+  .sec-intro { color: var(--text-dim); max-width: 42rem; font-size: 0.98rem; margin-bottom: 3.2rem; }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
 
-  /* ─ 미션 배너 ─ */
-  .mission { padding: 7.5rem 0; text-align: left; }
+  /* ─ MISSION ─ */
+  .mission { padding: 7.5rem 0; }
   .mission .statement {
-    font-size: clamp(1.5rem, 3.6vw, 2.7rem);
-    max-width: 60rem; line-height: 1.25;
-    font-weight: 600;
+    font-family: "Archivo", sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.18;
+    max-width: 62rem; text-transform: uppercase; letter-spacing: -0.005em;
   }
-  .mission .statement em { font-style: normal; color: var(--text-faint); }
-  .mission .mono { margin-bottom: 2rem; display: block; }
+  .mission .statement .dim { color: var(--text-faint); }
 
-  /* ─ 시스템(제품) ─ */
+  /* ─ DOMAINS ─ */
+  .domain {
+    position: relative; min-height: 78vh; overflow: hidden;
+    display: flex; align-items: flex-end;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .domain .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.6) brightness(0.75); transition: transform 1.2s ease; }
+  .domain:hover .bg { transform: scale(1.03); }
+  .domain .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.55) 0%, rgba(6,6,8,0.15) 45%, rgba(6,6,8,0.94) 92%); }
+  .domain .content { position: relative; z-index: 2; width: 100%; padding: 3.4rem 0; }
+  .domain .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 2.5rem; flex-wrap: wrap; }
+  .domain h3.big { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.95; }
+  .domain .info { max-width: 26rem; padding-bottom: 0.8rem; }
+  .domain .info h4 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 1.02rem; letter-spacing: 0.04em; margin: 0.7rem 0 0.6rem; }
+  .domain .info p { font-size: 0.9rem; color: var(--text-dim); }
+  .chip {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    border: 1px solid var(--hairline-2); padding: 0.32rem 0.85rem; color: var(--text-dim);
+  }
+  .chip.now { border-color: var(--target); color: var(--target); }
+
+  /* ─ SYSTEM ─ */
   .sys-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
-  @media (max-width: 860px) { .sys-grid { grid-template-columns: 1fr; } }
-  .sys-cell { background: var(--bg-2); padding: 2.6rem 2.4rem; }
-  .sys-cell .cell-tag { margin-bottom: 0.8rem; display: block; }
-  .sys-cell h3 {
-    font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase;
-    font-size: 1.35rem; letter-spacing: 0.02em; margin-bottom: 1.6rem;
-  }
-  .sys-cell svg { width: 100%; height: auto; margin-bottom: 1.8rem; }
-  .sys-cell p { font-size: 0.92rem; color: var(--text-dim); margin-bottom: 1.4rem; }
+  @media (max-width: 900px) { .sys-grid { grid-template-columns: 1fr; } }
+  .sys-cell { background: var(--bg-2); padding: 2.8rem 2.6rem; }
+  .sys-cell h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 1.3rem; margin: 0.7rem 0 1.6rem; }
+  .sys-cell .render { margin: 0 0 1.8rem; }
+  .sys-cell p { font-size: 0.92rem; color: var(--text-dim); margin-bottom: 1.5rem; }
   .spec-list { list-style: none; border-top: 1px solid var(--hairline); }
-  .spec-list li {
-    display: flex; justify-content: space-between; gap: 1rem;
-    padding: 0.55rem 0; border-bottom: 1px solid var(--hairline);
-    font-size: 0.8rem;
-  }
-  .spec-list .k { font-family: "IBM Plex Mono", monospace; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-faint); }
-  .spec-list .v { color: var(--text); text-align: right; }
+  .spec-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.82rem; }
+  .spec-list .k { font-family: "IBM Plex Mono", monospace; font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); padding-top: 0.15rem; }
+  .spec-list .v { color: var(--text); text-align: right; font-weight: 400; }
 
-  /* ─ 기술 ─ */
+  /* ─ TECH ─ */
   .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
-  .tech-cell { background: var(--bg-2); padding: 2rem 1.8rem; }
-  .tech-cell .num { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; color: var(--text-faint); letter-spacing: 0.2em; }
-  .tech-cell h3 { font-weight: 700; font-size: 1rem; margin: 0.9rem 0 0.6rem; letter-spacing: 0.01em; }
+  .tech-cell { background: var(--bg-2); padding: 2.1rem 1.9rem; }
+  .tech-cell .num { font-family: "IBM Plex Mono", monospace; font-size: 0.66rem; color: var(--text-faint); letter-spacing: 0.22em; }
+  .tech-cell h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.98rem; margin: 0.9rem 0 0.6rem; letter-spacing: 0.03em; }
   .tech-cell p { font-size: 0.85rem; color: var(--text-dim); }
 
-  /* ─ 작동 흐름 ─ */
-  .flow-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
-  .flow-cell { background: var(--bg-2); padding: 1.5rem 1.3rem; min-height: 9rem; display: flex; flex-direction: column; }
-  .flow-cell .num { font-family: "IBM Plex Mono", monospace; font-size: 0.66rem; color: var(--text-faint); letter-spacing: 0.2em; }
-  .flow-cell h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; margin: 0.7rem 0 0.4rem; }
-  .flow-cell p { font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
-
-  /* ─ 적용 분야 ─ */
-  .app-row { border: 1px solid var(--hairline); }
-  .app-item {
-    display: grid; grid-template-columns: 8rem 1fr 2fr; gap: 2rem;
-    padding: 2rem 2.2rem; border-bottom: 1px solid var(--hairline);
-    align-items: baseline;
+  /* ─ CONTACT / FOOTER ─ */
+  .contact { padding: 7.5rem 0; border-bottom: none; }
+  .contact h2 { font-size: clamp(2rem, 5.6vw, 4rem); margin: 1rem 0 1.6rem; }
+  .contact p { color: var(--text-dim); max-width: 35rem; }
+  footer { border-top: 1px solid var(--hairline); padding: 3rem 0; color: var(--text-faint); font-size: 0.78rem; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; align-items: flex-start; }
+  .foot-grid .fm { font-family: "Archivo", sans-serif; font-weight: 900; letter-spacing: 0.34em; text-transform: uppercase; color: var(--text-dim); font-size: 0.95rem; }
+  .foot-grid a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--hairline-2); }
+  .foot-grid a:hover { color: var(--text); }
+  .foot-note { margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero .bg { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .domain .bg, .domain:hover .bg { transition: none; transform: none; }
   }
-  .app-item:last-child { border-bottom: none; }
-  @media (max-width: 720px) { .app-item { grid-template-columns: 1fr; gap: 0.4rem; } }
-  .app-item h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 1.05rem; letter-spacing: 0.02em; }
-  .app-item p { font-size: 0.88rem; color: var(--text-dim); }
-
-  /* ─ 컨택트 ─ */
-  .contact { padding: 7rem 0; border-bottom: none; }
-  .contact h2 { font-size: clamp(1.9rem, 5vw, 3.4rem); margin-bottom: 1.6rem; }
-  .contact p { color: var(--text-dim); max-width: 34rem; }
-
-  footer {
-    border-top: 1px solid var(--hairline);
-    padding: 2.4rem 0 3rem;
-    color: var(--text-faint); font-size: 0.78rem;
-  }
-  .foot-inner { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; align-items: center; }
-  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
 </head>
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
-    <a class="logo" href="#top">OAQ</a>
+    <a class="wordmark" href="#top">Maegnas</a>
     <nav class="menu">
-      <a href="#mission">Mission</a>
+      <a href="#domains">Domains</a>
       <a href="#system">System</a>
       <a href="#technology">Technology</a>
-      <a href="#operations">Operations</a>
       <a href="#contact">Contact</a>
+      <a class="corp" href="oaq.html">An OAQ Company</a>
     </nav>
   </div>
 </header>
 
-<section class="hero" id="top" style="border-bottom:1px solid var(--hairline);">
-  <div class="hero-field" aria-hidden="true">
-    <svg viewBox="0 0 700 520" fill="none">
-      <!-- 등고선풍 자기장 필드 라인 -->
-      <path d="M60 470 Q350 300 640 470" stroke="#232529" stroke-width="1.5"/>
-      <path d="M100 430 Q350 270 600 430" stroke="#2E3136" stroke-width="1.5"/>
-      <path d="M140 390 Q350 245 560 390" stroke="#2E3136" stroke-width="1.5"/>
-      <path d="M180 352 Q350 225 520 352" stroke="#3A3E44" stroke-width="1.5"/>
-      <path d="M220 318 Q350 210 480 318" stroke="#3A3E44" stroke-width="1.5"/>
-      <path d="M258 288 Q350 200 442 288" stroke="#4A4F56" stroke-width="1.5"/>
-      <path d="M292 262 Q350 194 408 262" stroke="#5C6167" stroke-width="1.5"/>
-      <!-- 표적 -->
-      <circle cx="350" cy="238" r="7" fill="none" stroke="#C9A227" stroke-width="2"/>
-      <line x1="350" y1="220" x2="350" y2="256" stroke="#C9A227" stroke-width="1.5"/>
-      <line x1="332" y1="238" x2="368" y2="238" stroke="#C9A227" stroke-width="1.5"/>
-      <!-- 비행 경로 -->
-      <path d="M40 120 H660 M660 120 V150 M660 150 H40 M40 150 V180 M40 180 H660" stroke="#232529" stroke-width="1.2"/>
-      <path d="M40 120 H350" stroke="#6FB6D8" stroke-width="1.4" opacity="0.55"/>
-      <!-- 드론 심볼 -->
-      <g transform="translate(350 120)">
-        <rect x="-13" y="-4" width="26" height="8" fill="#9BA1A9"/>
-        <line x1="-13" y1="0" x2="-30" y2="-8" stroke="#5C6167" stroke-width="2.4"/>
-        <line x1="13" y1="0" x2="30" y2="-8" stroke="#5C6167" stroke-width="2.4"/>
-        <ellipse cx="-30" cy="-10" rx="12" ry="2.2" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-        <ellipse cx="30" cy="-10" rx="12" ry="2.2" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-        <line x1="0" y1="4" x2="0" y2="26" stroke="#5C6167" stroke-width="1.4" stroke-dasharray="2 4"/>
-        <rect x="-9" y="26" width="18" height="8" fill="none" stroke="#9BA1A9" stroke-width="1.6"/>
-      </g>
-    </svg>
-  </div>
+<section class="hero" id="top">
+  <div class="bg" aria-hidden="true"></div>
+  <div class="veil" aria-hidden="true"></div>
+  <div class="scan" aria-hidden="true"></div>
   <div class="container">
-    <p class="mono eyebrow">Airborne Magnetic Detection</p>
-    <h1 class="display">Reveal<br>the Unseen<br><span class="dim">Battlespace.</span></h1>
-    <p class="sub">OAQ는 고감도 자기장 센싱으로 땅속과 물속의 금속성 위협을 탐지하여, 운용자의 지도 위에 좌표로 표시하는 드론 탑재형 탐지 시스템을 만듭니다.</p>
+    <p class="mono eyebrow">Maegnas · Quantum Detection Systems</p>
+    <h1 class="display">The Unseen<br>Has Nowhere<br><span class="dim">To Hide.</span></h1>
+    <p class="sub">Every threat leaves a magnetic signature — beneath soil, beneath sea, beyond sky. MAEGNAS builds quantum detection systems that read it, and put it on the map.</p>
     <div class="cta-row">
-      <a class="btn btn-solid" href="#system">Explore the System</a>
-      <a class="btn btn-line" href="#contact">Contact</a>
+      <a class="btn btn-solid" href="#domains">Explore Domains</a>
+      <a class="btn btn-line" href="#system">The System</a>
     </div>
   </div>
 </section>
 
-<section class="mission" id="mission">
-  <div class="container">
+<section class="mission">
+  <div class="container reveal">
     <span class="mono">01 / Mission</span>
-    <p class="statement display" style="text-transform:none; font-weight:600; letter-spacing:0; line-height:1.3; font-family:'IBM Plex Sans KR',sans-serif;">
-      보이지 않는 위협은 사라진 것이 아니라, <em>아직 탐지되지 않았을 뿐입니다.</em><br>
-      OAQ는 사람이 위험 구역에 들어가기 전에 기계가 먼저 탐색하게 하고,<br class="wide-only">
-      지도 위의 좌표 하나로 현장의 안전을 바꿉니다.
+    <p class="statement" style="margin-top:1.6rem;">
+      Detection is our identity.<br>
+      Quantum is our edge.<br>
+      <span class="dim">We find what hides — before it finds you.</span>
     </p>
   </div>
 </section>
 
-<section id="system">
-  <div class="container">
-    <div class="sec-head">
-      <h2 class="display">Airborne Magnetic<br>Detection System</h2>
-      <span class="mono">02 / System</span>
+<div id="domains">
+  <section class="domain">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="container content reveal">
+      <span class="mono">02 / Domains — 01</span>
+      <div class="row">
+        <h3 class="big display">Land</h3>
+        <div class="info">
+          <span class="chip now">In Development</span>
+          <h4>Landmine &amp; UXO Detection</h4>
+          <p>Airborne magnetic detection that finds buried metallic threats without touching the ground — and marks them as coordinates on a satellite map. Machines search first. People stay safe.</p>
+        </div>
+      </div>
     </div>
-    <p class="sec-intro">하나의 시스템, 두 개의 구성. 드론에 실리는 센싱 페이로드와 데이터를 표적으로 바꾸는 소프트웨어가 센서부터 화면까지 하나의 흐름으로 통합됩니다.</p>
-    <div class="sys-grid">
+  </section>
+
+  <section class="domain">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1518837695005-2083093ee35b?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="container content reveal">
+      <span class="mono">02 / Domains — 02</span>
+      <div class="row">
+        <h3 class="big display">Sea</h3>
+        <div class="info">
+          <span class="chip">Next</span>
+          <h4>Naval Mine &amp; Submarine Detection</h4>
+          <p>Steel cannot silence its own field. The same detection architecture extends beneath the surface — against moored mines, wrecks, and the quietest hulls in the ocean.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="domain">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="container content reveal">
+      <span class="mono">02 / Domains — 03</span>
+      <div class="row">
+        <h3 class="big display">Air</h3>
+        <div class="info">
+          <span class="chip">Roadmap</span>
+          <h4>MagNav — GPS-Denied Navigation</h4>
+          <p>When GPS is jammed, spoofed, or gone, Earth's magnetic field remains. Quantum magnetic navigation gives aircraft a map that cannot be switched off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="domain">
+    <div class="bg" style="background-image:url('https://images.unsplash.com/photo-1419242902214-272b3f66ee7a?auto=format&fit=crop&w=2000&q=70');" aria-hidden="true"></div>
+    <div class="veil" aria-hidden="true"></div>
+    <div class="container content reveal">
+      <span class="mono">02 / Domains — 04</span>
+      <div class="row">
+        <h3 class="big display">Space</h3>
+        <div class="info">
+          <span class="chip">Vision</span>
+          <h4>Quantum Radar — Total Detection</h4>
+          <p>The end state of detection: quantum sensing from orbit. A battlespace where stealth is a legacy concept — where everything that hides can be found.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section id="system">
+  <div class="container pad">
+    <div class="sec-head reveal">
+      <h2 class="display">One System.<br>Sensor to Map.</h2>
+      <span class="mono">03 / System</span>
+    </div>
+    <p class="sec-intro reveal">The first MAEGNAS system pairs an airborne quantum sensing payload with mission software that turns raw field data into targets on a satellite map.</p>
+    <div class="sys-grid reveal">
       <div class="sys-cell">
-        <span class="mono cell-tag">Component 01 — Airborne</span>
-        <h3>Magnetic Sensing Payload</h3>
-        <svg viewBox="0 0 400 200" fill="none" role="img" aria-label="드론 탑재 센서 페이로드 다이어그램">
-          <rect x="165" y="38" width="70" height="22" fill="none" stroke="#9BA1A9" stroke-width="1.8"/>
-          <line x1="170" y1="45" x2="92" y2="26" stroke="#5C6167" stroke-width="3"/>
-          <line x1="230" y1="45" x2="308" y2="26" stroke="#5C6167" stroke-width="3"/>
-          <ellipse cx="92" cy="22" rx="38" ry="3.5" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-          <ellipse cx="308" cy="22" rx="38" ry="3.5" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-          <line x1="200" y1="60" x2="200" y2="108" stroke="#5C6167" stroke-width="1.4" stroke-dasharray="2 5"/>
-          <rect x="168" y="108" width="64" height="24" fill="none" stroke="#E8EAED" stroke-width="1.8"/>
-          <circle cx="185" cy="120" r="5" fill="none" stroke="#6FB6D8" stroke-width="1.6"/>
-          <rect x="198" y="115" width="11" height="10" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-          <rect x="215" y="115" width="10" height="10" fill="none" stroke="#9BA1A9" stroke-width="1.4"/>
-          <path d="M150 158 Q200 138 250 158" stroke="#3A3E44" stroke-width="1.4" stroke-dasharray="4 4"/>
-          <path d="M132 174 Q200 148 268 174" stroke="#2E3136" stroke-width="1.4" stroke-dasharray="4 4"/>
-          <path d="M116 190 Q200 158 284 190" stroke="#232529" stroke-width="1.4" stroke-dasharray="4 4"/>
-          <rect x="193" y="182" width="14" height="8" fill="#C9A227"/>
+        <span class="mono">Component 01 — Airborne</span>
+        <h3>Quantum Sensing Payload</h3>
+        <svg class="render" viewBox="0 0 460 240" fill="none" role="img" aria-label="Rendered quantum sensing payload pod">
+          <defs>
+            <linearGradient id="podBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3A3E45"/>
+              <stop offset="0.35" stop-color="#22252B"/>
+              <stop offset="0.75" stop-color="#101216"/>
+              <stop offset="1" stop-color="#0A0B0E"/>
+            </linearGradient>
+            <linearGradient id="podNose" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#2C2F36"/>
+              <stop offset="1" stop-color="#14161A"/>
+            </linearGradient>
+            <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#8FD4F2" stop-opacity="0.95"/>
+              <stop offset="0.45" stop-color="#5FB3DA" stop-opacity="0.5"/>
+              <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="floorSh" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#000" stop-opacity="0.55"/>
+              <stop offset="1" stop-color="#000" stop-opacity="0"/>
+            </radialGradient>
+            <linearGradient id="specular" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.35"/>
+              <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="6"/></filter>
+          </defs>
+          <ellipse cx="230" cy="204" rx="150" ry="16" fill="url(#floorSh)"/>
+          <g filter="url(#soft)" opacity="0.5"><ellipse cx="118" cy="160" rx="26" ry="18" fill="url(#glowCyan)"/></g>
+          <!-- 마운트 파일런 -->
+          <path d="M210 52 L250 52 L244 92 L216 92 Z" fill="#1A1C21"/>
+          <rect x="206" y="44" width="48" height="10" rx="2" fill="#22252B"/>
+          <!-- 포드 본체 -->
+          <path d="M96 128 Q96 96 132 96 L340 96 Q392 96 414 128 Q392 160 340 160 L132 160 Q96 160 96 128 Z" fill="url(#podBody)" stroke="#43474F" stroke-width="1.2"/>
+          <!-- 노즈(센서 윈도우) -->
+          <path d="M96 128 Q96 98 130 96 Q112 112 112 128 Q112 144 130 160 Q96 158 96 128 Z" fill="url(#podNose)"/>
+          <ellipse cx="118" cy="128" rx="13" ry="20" fill="#0B0D10" stroke="#43474F" stroke-width="1"/>
+          <ellipse cx="118" cy="128" rx="7" ry="12" fill="url(#glowCyan)"/>
+          <!-- 패널 라인 -->
+          <line x1="180" y1="98" x2="180" y2="158" stroke="#0A0B0E" stroke-width="1.6"/>
+          <line x1="186" y1="98" x2="186" y2="158" stroke="#4A4E56" stroke-width="0.6" opacity="0.6"/>
+          <line x1="300" y1="97" x2="300" y2="159" stroke="#0A0B0E" stroke-width="1.6"/>
+          <line x1="306" y1="97" x2="306" y2="159" stroke="#4A4E56" stroke-width="0.6" opacity="0.6"/>
+          <rect x="330" y="118" width="42" height="20" rx="3" fill="#0D0F12" stroke="#3A3E45" stroke-width="0.8"/>
+          <circle cx="340" cy="128" r="2.2" fill="#C9A227"/>
+          <circle cx="350" cy="128" r="2.2" fill="#2E3136"/>
+          <circle cx="360" cy="128" r="2.2" fill="#2E3136"/>
+          <!-- 스펙큘러 하이라이트 -->
+          <path d="M140 102 Q250 96 396 116 L396 122 Q250 104 140 108 Z" fill="url(#specular)"/>
+          <!-- 각인 -->
+          <text x="212" y="146" font-family="IBM Plex Mono, monospace" font-size="9" letter-spacing="3" fill="#6A6F77">MAEGNAS</text>
+          <text x="212" y="132" font-family="IBM Plex Mono, monospace" font-size="6.5" letter-spacing="2" fill="#4A4E56">QSP-01 · QUANTUM SENSING PAYLOAD</text>
         </svg>
-        <p>비행 중 자기장·위치·자세·시각을 하나의 타임라인으로 동기 취득해 지상으로 전송합니다. 비자성 탑재 구조와 정밀 시각 동기가 데이터 품질을 지킵니다.</p>
+        <p>A non-magnetic pod carrying the quantum magnetometer, reference sensors, and precision timing — acquiring field, position, and attitude as one synchronized stream in flight.</p>
         <ul class="spec-list">
-          <li><span class="k">Sensing</span><span class="v">고감도 Magnetometer + Reference 3-axis + IMU</span></li>
-          <li><span class="k">Positioning</span><span class="v">GNSS / RTK 정밀 측위</span></li>
-          <li><span class="k">Compute</span><span class="v">온보드 컴퓨터 · 이원 스트림 로깅</span></li>
-          <li><span class="k">Link</span><span class="v">실시간 지상 전송</span></li>
+          <li><span class="k">Sensing</span><span class="v">Quantum magnetometer + reference vector + IMU</span></li>
+          <li><span class="k">Positioning</span><span class="v">GNSS / RTK precision</span></li>
+          <li><span class="k">Integrity</span><span class="v">Non-magnetic structure · synchronized timing</span></li>
+          <li><span class="k">Link</span><span class="v">Real-time downlink to ground</span></li>
         </ul>
       </div>
       <div class="sys-cell">
-        <span class="mono cell-tag">Component 02 — Ground</span>
+        <span class="mono">Component 02 — Ground</span>
         <h3>Detection &amp; Mapping Software</h3>
-        <svg viewBox="0 0 400 200" fill="none" role="img" aria-label="위성 지도 위 표적 표시 화면 다이어그램">
-          <rect x="20" y="12" width="360" height="176" fill="none" stroke="#3A3E44" stroke-width="1.8"/>
-          <rect x="20" y="12" width="360" height="20" fill="#101114" stroke="#3A3E44" stroke-width="1.8"/>
-          <circle cx="34" cy="22" r="3" fill="#5C6167"/><circle cx="46" cy="22" r="3" fill="#5C6167"/>
-          <rect x="32" y="42" width="240" height="134" fill="none" stroke="#2E3136" stroke-width="1.4"/>
-          <path d="M32 76 H272 M32 110 H272 M32 144 H272 M92 42 V176 M152 42 V176 M212 42 V176" stroke="#1A1C1F" stroke-width="1.1"/>
-          <path d="M44 56 H260 M260 56 V72 M260 72 H44 M44 72 V88 M44 88 H260 M260 88 V104 M260 104 H44 M44 104 V120 M44 120 H260" stroke="#4A4F56" stroke-width="1.4"/>
-          <circle cx="116" cy="96" r="17" fill="#6FB6D8" opacity="0.12"/>
-          <circle cx="116" cy="96" r="9" fill="#6FB6D8" opacity="0.2"/>
-          <circle cx="116" cy="96" r="5.5" fill="none" stroke="#C9A227" stroke-width="2"/>
-          <line x1="116" y1="85" x2="116" y2="107" stroke="#C9A227" stroke-width="1.6"/>
-          <line x1="105" y1="96" x2="127" y2="96" stroke="#C9A227" stroke-width="1.6"/>
-          <circle cx="210" cy="140" r="4.5" fill="none" stroke="#C9A227" stroke-width="1.8"/>
-          <line x1="210" y1="132" x2="210" y2="148" stroke="#C9A227" stroke-width="1.4"/>
-          <line x1="202" y1="140" x2="218" y2="140" stroke="#C9A227" stroke-width="1.4"/>
-          <rect x="284" y="42" width="84" height="134" fill="none" stroke="#2E3136" stroke-width="1.4"/>
-          <rect x="292" y="52" width="68" height="6" fill="#5C6167"/>
-          <rect x="292" y="68" width="68" height="20" fill="none" stroke="#C9A227" stroke-width="1.2"/>
-          <rect x="296" y="73" width="40" height="3.5" fill="#9BA1A9"/>
-          <rect x="296" y="80" width="28" height="3.5" fill="#5C6167"/>
-          <rect x="292" y="94" width="68" height="20" fill="none" stroke="#2E3136" stroke-width="1.2"/>
-          <rect x="296" y="99" width="40" height="3.5" fill="#9BA1A9"/>
-          <rect x="296" y="106" width="28" height="3.5" fill="#5C6167"/>
-          <rect x="292" y="120" width="68" height="20" fill="none" stroke="#2E3136" stroke-width="1.2"/>
-          <rect x="296" y="125" width="40" height="3.5" fill="#9BA1A9"/>
-          <rect x="296" y="132" width="28" height="3.5" fill="#5C6167"/>
-          <rect x="292" y="150" width="68" height="12" fill="#E8EAED"/>
+        <svg class="render" viewBox="0 0 460 240" fill="none" role="img" aria-label="Rendered mission console with satellite map and targets">
+          <defs>
+            <linearGradient id="scrBody" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#2A2D33"/>
+              <stop offset="1" stop-color="#0C0D10"/>
+            </linearGradient>
+            <linearGradient id="scrMap" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#101820"/>
+              <stop offset="0.5" stop-color="#0C1218"/>
+              <stop offset="1" stop-color="#080B0E"/>
+            </linearGradient>
+            <radialGradient id="anom" cx="0.5" cy="0.5" r="0.5">
+              <stop offset="0" stop-color="#5FB3DA" stop-opacity="0.55"/>
+              <stop offset="0.6" stop-color="#5FB3DA" stop-opacity="0.18"/>
+              <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="tglow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="2.2"/></filter>
+          </defs>
+          <ellipse cx="230" cy="216" rx="160" ry="13" fill="url(#floorSh)"/>
+          <!-- 콘솔 바디 -->
+          <rect x="60" y="28" width="340" height="176" rx="8" fill="url(#scrBody)" stroke="#43474F" stroke-width="1.2"/>
+          <rect x="72" y="40" width="316" height="152" rx="3" fill="url(#scrMap)"/>
+          <!-- 지도 그리드 -->
+          <g opacity="0.5" stroke="#1C2630" stroke-width="0.8">
+            <path d="M72 78 H388 M72 116 H388 M72 154 H388 M132 40 V192 M192 40 V192 M252 40 V192 M312 40 V192"/>
+          </g>
+          <!-- 서베이 라인 -->
+          <g stroke="#33556B" stroke-width="1.3">
+            <path d="M88 58 H372 M372 58 V76 M372 76 H88 M88 76 V94 M88 94 H372 M372 94 V112 M372 112 H88 M88 112 V130 M88 130 H372"/>
+          </g>
+          <path d="M88 58 H240" stroke="#5FB3DA" stroke-width="1.6"/>
+          <!-- 이상 신호 -->
+          <circle cx="176" cy="103" r="30" fill="url(#anom)"/>
+          <circle cx="304" cy="146" r="20" fill="url(#anom)"/>
+          <!-- 표적 마커 (글로우) -->
+          <g filter="url(#tglow)" stroke="#E5C766" stroke-width="2">
+            <circle cx="176" cy="103" r="7" fill="none"/>
+            <path d="M176 89 V117 M162 103 H190"/>
+          </g>
+          <g stroke="#C9A227" stroke-width="1.6">
+            <circle cx="176" cy="103" r="7" fill="none"/>
+            <path d="M176 89 V117 M162 103 H190"/>
+            <circle cx="304" cy="146" r="5.5" fill="none"/>
+            <path d="M304 136 V156 M294 146 H314"/>
+          </g>
+          <!-- 후보 패널 -->
+          <g>
+            <rect x="318" y="48" width="62" height="58" rx="2" fill="#0A0D10" stroke="#243038" stroke-width="0.9"/>
+            <rect x="323" y="54" width="52" height="5" fill="#33556B"/>
+            <rect x="323" y="64" width="52" height="16" fill="none" stroke="#C9A227" stroke-width="0.9"/>
+            <rect x="327" y="68" width="30" height="3" fill="#7C8891"/>
+            <rect x="327" y="74" width="20" height="3" fill="#465059"/>
+            <rect x="323" y="86" width="52" height="16" fill="none" stroke="#243038" stroke-width="0.9"/>
+            <rect x="327" y="90" width="30" height="3" fill="#7C8891"/>
+            <rect x="327" y="96" width="20" height="3" fill="#465059"/>
+          </g>
+          <!-- HUD 텍스트 -->
+          <text x="82" y="184" font-family="IBM Plex Mono, monospace" font-size="7" letter-spacing="1.5" fill="#5F707C">TGT 02 · CONF 0.94 · 36.35N 127.38E</text>
+          <!-- 스크린 반사 -->
+          <path d="M72 40 L200 40 L110 192 L72 192 Z" fill="#FFFFFF" opacity="0.03"/>
+          <!-- 스탠드 -->
+          <path d="M208 204 L252 204 L246 214 L214 214 Z" fill="#16181D"/>
         </svg>
-        <p>수집 데이터를 보정하고 표적을 탐지·위치화하여 위성 지도 위에 좌표와 신뢰도로 표시합니다. 실험실이 아니라 임무의 관점에서 설계된 운용 화면입니다.</p>
+        <p>Mission software that compensates platform interference, detects and localizes anomalies, and renders every candidate as coordinates and confidence on a satellite map — built for operators, not laboratories.</p>
         <ul class="spec-list">
-          <li><span class="k">Processing</span><span class="v">플랫폼·환경 보정 파이프라인</span></li>
-          <li><span class="k">Detection</span><span class="v">물리 해석 + 기계학습 탐지</span></li>
-          <li><span class="k">Output</span><span class="v">위성 지도 · 좌표 · 신뢰도</span></li>
-          <li><span class="k">Export</span><span class="v">임무 보고서 · 좌표 데이터</span></li>
+          <li><span class="k">Processing</span><span class="v">Platform &amp; environment compensation</span></li>
+          <li><span class="k">Detection</span><span class="v">Physics-informed + machine-learned</span></li>
+          <li><span class="k">Output</span><span class="v">Satellite map · coordinates · confidence</span></li>
+          <li><span class="k">Export</span><span class="v">Mission reports · target data</span></li>
         </ul>
       </div>
     </div>
@@ -342,97 +453,69 @@
 </section>
 
 <section id="technology">
-  <div class="container">
-    <div class="sec-head">
-      <h2 class="display">Quantum Sensing:<br>Sixth-Sense for the Battlespace</h2>
-      <span class="mono">03 / Technology</span>
+  <div class="container pad">
+    <div class="sec-head reveal">
+      <h2 class="display">Quantum Is the Core.<br>Detection Is the Identity.</h2>
+      <span class="mono">04 / Technology</span>
     </div>
-    <p class="sec-intro">양자 센싱은 전장의 여섯 번째 감각이 됩니다. OAQ는 고감도 양자 자기장 센싱과 자체 탐지 알고리즘을 하나의 제품으로 통합합니다.</p>
-    <div class="tech-grid">
+    <p class="sec-intro reveal">Quantum sensing is the sixth sense of the battlespace. MAEGNAS integrates it into complete systems — sensor, platform, algorithm, and map — under one roof.</p>
+    <div class="tech-grid reveal">
       <div class="tech-cell">
         <span class="num">T-01</span>
-        <h3>고감도 자기장 센싱</h3>
-        <p>미세한 자기장의 흔들림까지 읽어내는 양자 기반 고감도 계측. 센서부터 시스템까지 자체 기술로 통제합니다.</p>
+        <h3>Quantum Magnetometry</h3>
+        <p>Quantum-grade sensitivity that reads the faintest disturbance in Earth's magnetic field — the signature no metallic object can suppress.</p>
       </div>
       <div class="tech-cell">
         <span class="num">T-02</span>
-        <h3>플랫폼 보정</h3>
-        <p>드론 자체의 자기 간섭과 환경 변화를 분리·제거하여, 움직이는 플랫폼 위에서도 신뢰할 수 있는 데이터를 만듭니다.</p>
+        <h3>Platform Compensation</h3>
+        <p>The platform is its own worst noise source. Our compensation stack separates vehicle interference from target signal — in motion, in the field.</p>
       </div>
       <div class="tech-cell">
         <span class="num">T-03</span>
-        <h3>지능형 탐지</h3>
-        <p>물리 기반 해석과 기계학습을 결합한 자체 알고리즘이 표적 후보를 자동 검출하고 위치와 신뢰도를 산출합니다.</p>
+        <h3>Intelligent Detection</h3>
+        <p>Physics-informed models fused with machine learning detect, localize, and score targets automatically — coordinates, not guesswork.</p>
       </div>
       <div class="tech-cell">
         <span class="num">T-04</span>
-        <h3>임무 중심 소프트웨어</h3>
-        <p>판단에 필요한 정보를, 판단할 수 있는 형태로. 현장의 관점에서 설계된 운용 화면과 보고 체계.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="operations">
-  <div class="container">
-    <div class="sec-head">
-      <h2 class="display">Plan to Report,<br>One Continuous Flow</h2>
-      <span class="mono">04 / Operations</span>
-    </div>
-    <p class="sec-intro">운용자는 영역을 지정하고 비행시키는 것으로 충분합니다. 나머지는 시스템이 처리합니다.</p>
-    <div class="flow-grid">
-      <div class="flow-cell"><span class="num">01</span><h3>Plan</h3><p>탐사 영역·경로·고도 계획</p></div>
-      <div class="flow-cell"><span class="num">02</span><h3>Fly</h3><p>드론 자동 서베이 비행</p></div>
-      <div class="flow-cell"><span class="num">03</span><h3>Acquire</h3><p>자기장·위치·자세 동기 취득</p></div>
-      <div class="flow-cell"><span class="num">04</span><h3>Compensate</h3><p>플랫폼·환경 영향 보정</p></div>
-      <div class="flow-cell"><span class="num">05</span><h3>Detect</h3><p>표적 후보 검출·위치화</p></div>
-      <div class="flow-cell"><span class="num">06</span><h3>Display</h3><p>위성 지도 위 좌표·신뢰도</p></div>
-      <div class="flow-cell"><span class="num">07</span><h3>Export</h3><p>보고서·좌표 데이터 출력</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="applications">
-  <div class="container">
-    <div class="sec-head">
-      <h2 class="display">Machines First,<br>People Safe</h2>
-      <span class="mono">05 / Applications</span>
-    </div>
-    <div class="app-row">
-      <div class="app-item">
-        <span class="mono">A-01</span>
-        <h3>Landmine / UXO</h3>
-        <p>매설된 금속성 위협을 비접촉으로 탐지하여 지뢰·불발탄 제거 작업의 안전과 효율을 높입니다.</p>
-      </div>
-      <div class="app-item">
-        <span class="mono">A-02</span>
-        <h3>Maritime</h3>
-        <p>수중 금속 구조물·침몰체 탐지 등 해양 환경으로 확장되는 동일 아키텍처.</p>
-      </div>
-      <div class="app-item">
-        <span class="mono">A-03</span>
-        <h3>Security / Infrastructure</h3>
-        <p>지하 매설물과 금속 구조물의 위치 파악이 필요한 조사·보안 임무를 지원합니다.</p>
+        <h3>Mission Software</h3>
+        <p>Designed from the operator's seat: satellite map, target list, confidence, report. Information shaped for decisions.</p>
       </div>
     </div>
   </div>
 </section>
 
 <section class="contact" id="contact">
-  <div class="container">
-    <span class="mono">06 / Contact</span>
-    <h2 class="display" style="margin-top:1rem;">Work With Us</h2>
-    <p>제품 도입, 실증 협력, 투자에 관한 문의를 환영합니다. 공식 문의 채널은 준비 중입니다.</p>
+  <div class="container reveal">
+    <span class="mono">05 / Contact</span>
+    <h2 class="display">Work With Us</h2>
+    <p>Partnerships, field trials, and investment inquiries are welcome. Official contact channels are being established.</p>
   </div>
 </section>
 
 <footer>
-  <div class="container foot-inner">
-    <span class="mono" style="letter-spacing:0.42em; color:var(--text-dim);">OAQ</span>
-    <span>Reveal the unseen battlespace through magnetic sensing.</span>
-    <span>© 2026 OAQ Corp.</span>
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="fm">Maegnas</div>
+        <p style="margin-top:0.7rem; max-width:24rem;">Quantum detection systems for land, sea, air — and beyond.</p>
+      </div>
+      <div style="max-width:26rem;">
+        <p class="mono" style="margin-bottom:0.5rem;">Company</p>
+        <p>MAEGNAS is a defense technology brand developed and operated by <a href="oaq.html">OAQ Corp.</a>, a quantum sensing company.</p>
+      </div>
+    </div>
+    <div class="foot-note">
+      <span>© 2026 OAQ Corp. All rights reserved.</span>
+      <span class="mono" style="letter-spacing:0.14em;">36.3504° N, 127.3845° E</span>
+    </div>
   </div>
 </footer>
 
+<script>
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
 </body>
 </html>

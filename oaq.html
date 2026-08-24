@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OAQ Corp. — Quantum Sensing</title>
+<meta name="description" content="OAQ Corp. is the quantum sensing company behind MAEGNAS. We own the stack from quantum magnetometer to detection system.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23060608'/%3E%3Cpath d='M6 20 Q16 10 26 20' stroke='%23E8EAED' stroke-width='2.5' fill='none'/%3E%3Ccircle cx='16' cy='14' r='2.5' fill='%23C9A227'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
+<style>
+  :root {
+    --bg: #060608; --bg-2: #0B0C0F; --hairline: #1F2126; --hairline-2: #2E3136;
+    --text: #EDEFF2; --text-dim: #9BA1A9; --text-faint: #565B62;
+    --target: #C9A227; --signal: #5FB3DA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: "Inter", sans-serif; font-weight: 300; line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 62rem; margin: 0 auto; padding: 0 2.2rem; }
+  .display { font-family: "Archivo", sans-serif; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em; line-height: 1.05; }
+  .mono { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.24em; text-transform: uppercase; color: var(--text-dim); }
+  header.nav {
+    position: fixed; inset: 0 0 auto; z-index: 100;
+    background: rgba(6,6,8,0.85); border-bottom: 1px solid var(--hairline); backdrop-filter: blur(10px);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.6rem; }
+  .wordmark { font-family: "Archivo", sans-serif; font-weight: 900; font-size: 1.02rem; letter-spacing: 0.34em; color: var(--text); text-decoration: none; text-transform: uppercase; }
+  .nav a.back { font-family: "IBM Plex Mono", monospace; color: var(--text-dim); text-decoration: none; font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase; border: 1px solid var(--hairline-2); padding: 0.45rem 1rem; }
+  .nav a.back:hover { border-color: var(--text-dim); color: var(--text); }
+  .hero { padding: 11rem 0 5rem; border-bottom: 1px solid var(--hairline); }
+  .hero h1 { font-size: clamp(2.2rem, 6.5vw, 4.6rem); }
+  .hero .sub { margin-top: 1.8rem; max-width: 38rem; color: var(--text-dim); }
+  section { padding: 5.5rem 0; border-bottom: 1px solid var(--hairline); }
+  h2 { font-family: "Archivo", sans-serif; font-weight: 800; text-transform: uppercase; font-size: clamp(1.4rem, 3.4vw, 2.2rem); margin: 1rem 0 1.4rem; }
+  p.body { color: var(--text-dim); max-width: 40rem; margin-bottom: 1rem; }
+  .stack { border: 1px solid var(--hairline); margin-top: 2.4rem; }
+  .stack-row { display: grid; grid-template-columns: 9rem 1fr; gap: 1.5rem; padding: 1.4rem 1.8rem; border-bottom: 1px solid var(--hairline); align-items: baseline; }
+  .stack-row:last-child { border-bottom: none; }
+  @media (max-width: 640px) { .stack-row { grid-template-columns: 1fr; gap: 0.3rem; } }
+  .stack-row h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.95rem; }
+  .stack-row p { font-size: 0.88rem; color: var(--text-dim); }
+  .brandcard {
+    border: 1px solid var(--hairline-2); padding: 2.4rem; margin-top: 2.4rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 2rem; flex-wrap: wrap;
+    text-decoration: none;
+  }
+  .brandcard:hover { border-color: var(--text-dim); }
+  .brandcard .bm { font-family: "Archivo", sans-serif; font-weight: 900; letter-spacing: 0.34em; text-transform: uppercase; color: var(--text); font-size: 1.5rem; }
+  .brandcard p { color: var(--text-dim); font-size: 0.9rem; max-width: 26rem; }
+  .brandcard .go { font-family: "IBM Plex Mono", monospace; font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--text); }
+  .contact { border-bottom: none; }
+  footer { border-top: 1px solid var(--hairline); padding: 2.6rem 0; color: var(--text-faint); font-size: 0.78rem; }
+  .foot-note { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="container nav-inner">
+    <a class="wordmark" href="oaq.html">OAQ</a>
+    <a class="back" href="index.html">Maegnas ↗</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container">
+    <p class="mono">OAQ Corp. · Quantum Sensing Company</p>
+    <h1 class="display" style="margin-top:1.4rem;">We Build the Sensors.<br>We Build the Systems.</h1>
+    <p class="sub">OAQ Corp. is a quantum sensing company. We develop quantum magnetometers and turn them into complete detection systems — owning the stack from atomic physics to the operator's map.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="mono">01 / What We Own</span>
+    <h2>The Full Stack of Detection</h2>
+    <p class="body">Most integrators buy their sensors. OAQ builds them — and builds everything above them. Controlling the entire chain is what lets our systems be tuned end-to-end for one job: finding what hides.</p>
+    <div class="stack">
+      <div class="stack-row"><h3>Quantum Sensor</h3><p>Self-developed quantum magnetometers — the core instrument, engineered in-house.</p></div>
+      <div class="stack-row"><h3>Payload</h3><p>Non-magnetic packaging, precision timing, and platform integration for airborne operation.</p></div>
+      <div class="stack-row"><h3>Algorithms</h3><p>Compensation, detection, and localization — physics-informed and machine-learned.</p></div>
+      <div class="stack-row"><h3>Mission Software</h3><p>Satellite-map operations software built from the operator's point of view.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="mono">02 / Brand</span>
+    <h2>Maegnas</h2>
+    <p class="body">MAEGNAS is OAQ's defense technology brand — quantum detection systems for land, sea, air, and beyond. One identity: detection. One edge: quantum.</p>
+    <a class="brandcard" href="index.html">
+      <span class="bm">Maegnas</span>
+      <p>The unseen has nowhere to hide. Explore the domains and the system.</p>
+      <span class="go">Visit Brand Site →</span>
+    </a>
+  </div>
+</section>
+
+<section class="contact">
+  <div class="container">
+    <span class="mono">03 / Contact</span>
+    <h2>Work With OAQ</h2>
+    <p class="body">Partnerships, field trials, and investment inquiries are welcome. Official contact channels are being established.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="container foot-note">
+    <span>© 2026 OAQ Corp. All rights reserved.</span>
+    <span class="mono" style="letter-spacing:0.14em;">Daejeon, Republic of Korea</span>
+  </div>
+</footer>
+
+</body>
+</html>

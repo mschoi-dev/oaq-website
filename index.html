@@ -85,11 +85,14 @@
   }
   .hero .bg {
     position: absolute; inset: 0;
-    background: url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=2400&q=82") center 30% / cover no-repeat;
-    animation: slowzoom 30s ease-out forwards;
-    filter: saturate(0.75) brightness(0.85);
+    background: url("assets/hero-poster.jpg") center / cover no-repeat;
+    filter: saturate(0.8) brightness(0.85);
   }
-  @keyframes slowzoom { from { transform: scale(1.06); } to { transform: scale(1); } }
+  .hero video.bgv {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) brightness(0.82);
+  }
   .hero .veil {
     position: absolute; inset: 0;
     background:
@@ -290,7 +293,7 @@
   .foot-note { margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    .hero .bg { animation: none; }
+    .hero video.bgv { display: none; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .domain .bg, .domain:hover .bg { transition: none; transform: none; }
     .car-slide { transition: none; }
@@ -316,6 +319,9 @@
 
 <section class="hero" id="top">
   <div class="bg" aria-hidden="true"></div>
+  <video class="bgv" autoplay muted loop playsinline poster="assets/hero-poster.jpg" aria-hidden="true">
+    <source src="assets/hero-film.mp4" type="video/mp4">
+  </video>
   <div class="veil" aria-hidden="true"></div>
   <div class="scan" aria-hidden="true"></div>
   <div class="pings" aria-hidden="true">

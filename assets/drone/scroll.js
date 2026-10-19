@@ -117,7 +117,7 @@ function initialize(section) {
         });
       }, {once: true});
       section.dataset.mode = mode;
-      viewer.src = asset('oaq-drone-web.glb');
+      viewer.src = asset('oaq-drone-web.glb?v=sensor64');
     } catch { activateVideo(); }
   }
 

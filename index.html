@@ -297,19 +297,6 @@
     z-index: 1; pointer-events: none; opacity: 0.5;
     mix-blend-mode: screen;
   }
-  /* ─ 스크롤 조립 시퀀스 (draft) ─ */
-  .assemble { position: relative; height: 300vh; background: var(--bg-2); border-bottom: 1px solid var(--hairline); }
-  .assemble .sticky {
-    position: sticky; top: 0; height: 100vh;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.4rem;
-  }
-  .assemble canvas {
-    width: min(56rem, 92vw); aspect-ratio: 16/9;
-    border: 1px solid var(--hairline); background: #000;
-  }
-  .assemble .cap { text-align: center; }
-  .assemble .bar-track { width: min(56rem, 92vw); height: 2px; background: var(--hairline); }
-  .assemble .bar-fill { height: 100%; width: 0; background: var(--target); }
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     .hero video.bgv { display: none; }
@@ -321,6 +308,7 @@
     .mount .mring, .ping .ring { animation: none; opacity: 0.6; }
   }
 </style>
+<link rel="stylesheet" href="assets/drone/scroll.css">
 </head>
 <body>
 
@@ -447,97 +435,9 @@
     <h2 class="display product-name">Quantum Sensing<br>Payload</h2>
     <p class="product-sub">QSP-01. A non-magnetic pod carrying the quantum magnetometer, reference sensors, and precision timing — one synchronized stream of field, position, and attitude, in flight.</p>
     <div class="render-wrap">
-      <svg viewBox="0 0 900 460" fill="none" role="img" aria-label="QSP-01 quantum sensing payload — studio product render">
-        <defs>
-          <linearGradient id="podBody" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#484C55"/>
-            <stop offset="0.22" stop-color="#2B2E35"/>
-            <stop offset="0.55" stop-color="#16181D"/>
-            <stop offset="0.82" stop-color="#0B0C0F"/>
-            <stop offset="1" stop-color="#121419"/>
-          </linearGradient>
-          <linearGradient id="podNose" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#33363E"/>
-            <stop offset="1" stop-color="#15171B"/>
-          </linearGradient>
-          <radialGradient id="glowCyan" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#C4EAFB" stop-opacity="1"/>
-            <stop offset="0.35" stop-color="#5FB3DA" stop-opacity="0.6"/>
-            <stop offset="1" stop-color="#5FB3DA" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="floorSh" cx="0.5" cy="0.5" r="0.5">
-            <stop offset="0" stop-color="#000" stop-opacity="0.65"/>
-            <stop offset="1" stop-color="#000" stop-opacity="0"/>
-          </radialGradient>
-          <radialGradient id="stageLight" cx="0.5" cy="0.32" r="0.72">
-            <stop offset="0" stop-color="#1C222B" stop-opacity="0.95"/>
-            <stop offset="1" stop-color="#0A0B0F" stop-opacity="0"/>
-          </radialGradient>
-          <linearGradient id="specular" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.5"/>
-            <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="rimlight" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#8FB6CC" stop-opacity="0.55"/>
-            <stop offset="1" stop-color="#8FB6CC" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="reflFade" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.16"/>
-            <stop offset="0.7" stop-color="#FFFFFF" stop-opacity="0"/>
-          </linearGradient>
-          <pattern id="carbon" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-            <rect width="7" height="7" fill="none"/>
-            <rect width="3.5" height="3.5" fill="#FFFFFF" opacity="0.016"/>
-            <rect x="3.5" y="3.5" width="3.5" height="3.5" fill="#FFFFFF" opacity="0.016"/>
-          </pattern>
-          <filter id="soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="9"/></filter>
-          <filter id="soft2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3"/></filter>
-          <mask id="reflMask"><rect x="0" y="0" width="900" height="460" fill="url(#reflFade)"/></mask>
-        </defs>
-        <ellipse cx="450" cy="200" rx="400" ry="160" fill="url(#stageLight)"/>
-        <!-- 포드 그룹 -->
-        <g id="podG">
-          <!-- 마운트 파일런 -->
-          <path d="M414 96 L486 96 L474 158 L426 158 Z" fill="#17191E"/>
-          <path d="M414 96 L486 96 L484 104 L417 104 Z" fill="#2B2E35"/>
-          <rect x="406" y="82" width="88" height="16" rx="3" fill="#22252B"/>
-          <circle cx="420" cy="90" r="3" fill="#0B0C0F"/><circle cx="480" cy="90" r="3" fill="#0B0C0F"/>
-          <!-- 본체 -->
-          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#podBody)"/>
-          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="url(#carbon)"/>
-          <path d="M170 228 Q170 168 236 168 L610 168 Q706 168 744 228 Q706 288 610 288 L236 288 Q170 288 170 228 Z" fill="none" stroke="#565B64" stroke-width="1.4"/>
-          <!-- 상단 림라이트 -->
-          <path d="M236 170 L610 170 Q690 170 730 220 L726 214 Q688 174 610 174 L236 174 Q206 174 190 194 Q206 170 236 170 Z" fill="url(#rimlight)" filter="url(#soft2)"/>
-          <!-- 노즈 -->
-          <path d="M170 228 Q170 172 232 168 Q200 196 200 228 Q200 260 232 288 Q170 284 170 228 Z" fill="url(#podNose)"/>
-          <ellipse cx="212" cy="228" rx="22" ry="36" fill="#0A0C0F" stroke="#565B64" stroke-width="1.2"/>
-          <ellipse cx="212" cy="228" rx="12" ry="22" fill="url(#glowCyan)"/>
-          <!-- 패널 컷라인 -->
-          <line x1="330" y1="171" x2="330" y2="285" stroke="#07080B" stroke-width="2.6"/>
-          <line x1="336" y1="171" x2="336" y2="285" stroke="#5E636C" stroke-width="0.9" opacity="0.55"/>
-          <line x1="540" y1="170" x2="540" y2="286" stroke="#07080B" stroke-width="2.6"/>
-          <line x1="546" y1="170" x2="546" y2="286" stroke="#5E636C" stroke-width="0.9" opacity="0.55"/>
-          <!-- 액세스 패널 -->
-          <rect x="590" y="206" width="82" height="40" rx="5" fill="#0C0E11" stroke="#464B53" stroke-width="1.1"/>
-          <rect x="590" y="206" width="82" height="6" rx="3" fill="#22252B"/>
-          <circle cx="608" cy="228" r="4" fill="#C9A227"/>
-          <circle cx="626" cy="228" r="4" fill="#2E3136"/>
-          <circle cx="644" cy="228" r="4" fill="#2E3136"/>
-          <!-- 환경 반사 스트릭 -->
-          <path d="M250 178 Q450 166 724 202 L724 212 Q450 180 250 188 Z" fill="url(#specular)"/>
-          <path d="M280 274 Q470 284 700 258 L700 264 Q470 290 280 280 Z" fill="#FFFFFF" opacity="0.05"/>
-          <!-- 각인 -->
-          <text x="292" y="262" font-family="IBM Plex Mono, monospace" font-size="17" letter-spacing="6" fill="#7C828B">MAEGNAS</text>
-          <text x="292" y="236" font-family="IBM Plex Mono, monospace" font-size="10" letter-spacing="2.6" fill="#535861">QSP-01 · QUANTUM SENSING PAYLOAD</text>
-        </g>
-        <!-- 바닥 그림자 + 글로우 -->
-        <ellipse cx="450" cy="330" rx="300" ry="22" fill="url(#floorSh)"/>
-        <g filter="url(#soft)" opacity="0.5"><ellipse cx="216" cy="238" rx="44" ry="30" fill="url(#glowCyan)"/></g>
-        <!-- 바닥 반사 -->
-        <g mask="url(#reflMask)" transform="translate(0 616) scale(1 -1)">
-          <use href="#podG"/>
-        </g>
-      </svg>
+      <a href="#deploy" aria-label="Explore the OAQ drone and folding arm in 3D">
+        <img src="assets/drone/poster.jpg" width="1920" height="1080" loading="lazy" decoding="async" alt="OAQ drone with its integrated drive box and folding detection arm" style="display:block;width:100%;height:auto;">
+      </a>
     </div>
     <div class="spec-strip">
       <div class="sp"><span class="k">Sensing</span><span class="v">Quantum magnetometer · reference vector · IMU</span></div>
@@ -548,20 +448,26 @@
   </div>
 </section>
 
-<!-- ═══ 스크롤 조립 시퀀스 (draft) ═══ -->
-<section class="assemble" id="deploy">
-  <div class="sticky">
-    <div class="cap">
-      <span class="mono">03 / System — Deployment</span>
-      <h2 class="display" style="font-size:clamp(1.6rem,4vw,2.8rem); margin-top:0.8rem;">Scroll. The Boom Deploys.</h2>
-    </div>
-    <canvas id="scrub" width="800" height="450" role="img" aria-label="QSP-01 boom deployment sequence controlled by scroll"></canvas>
-    <div class="bar-track"><div class="bar-fill" id="scrubbar"></div></div>
+<!-- OAQ product motion: the page scroll controls both the camera and the arm. -->
+<section class="drone-scroll" id="deploy" aria-label="OAQ drone and folding arm in motion">
+  <div class="drone-stage">
+    <img class="drone-poster" src="assets/drone/poster.jpg" width="1920" height="1080" loading="lazy" alt="OAQ drone with its arm extended">
+    <model-viewer class="drone-model" alt="OAQ drone. Scroll to rotate the view and fold or extend the arm."
+      interaction-prompt="none" environment-image="neutral" exposure="1.2" shadow-intensity="0"
+      field-of-view="30deg" min-field-of-view="20deg" max-field-of-view="60deg"
+      min-camera-orbit="auto 5deg 0.15m" max-camera-orbit="auto 175deg 9m"
+      interpolation-decay="30" touch-action="pan-y"></model-viewer>
+    <video class="drone-video" muted playsinline preload="none" poster="assets/drone/poster.jpg" aria-label="OAQ product motion controlled by scroll"></video>
+    <div class="drone-loading" role="status" aria-live="polite">Preparing the product<span aria-hidden="true"></span></div>
+    <div class="drone-cue" aria-hidden="true"><span>Scroll to explore</span><i></i></div>
+    <a class="drone-continue" href="#platforms" aria-label="Skip the 3D experience and continue to platforms">Continue <span aria-hidden="true">↓</span></a>
+    <div class="drone-progress" aria-hidden="true"><i></i></div>
+    <noscript><p class="drone-noscript"><a href="assets/drone/fallback.mp4">Watch the product film</a></p></noscript>
   </div>
 </section>
 
 <!-- ═══ 플랫폼 통합 캐러셀 (실사) ═══ -->
-<section class="platforms">
+<section class="platforms" id="platforms">
   <div class="container pad">
     <div class="sec-head reveal">
       <h2 class="display">One Payload.<br>Every Platform.</h2>
@@ -898,37 +804,7 @@
     }).observe(hero);
   })();
 
-  // ─ 스크롤 조립 시퀀스 (draft): 기존 클립 50프레임 스크럽 ─
-  (function () {
-    const cv = document.getElementById('scrub');
-    if (!cv) return;
-    const ctx = cv.getContext('2d');
-    const bar = document.getElementById('scrubbar');
-    const sec = document.querySelector('.assemble');
-    const FRAMES = 50;
-    const imgs = [];
-    let loaded = 0, current = -1;
-    for (let i = 1; i <= FRAMES; i++) {
-      const im = new Image();
-      im.src = 'assets/scrub/f_' + String(i).padStart(2, '0') + '.jpg';
-      im.onload = () => { loaded++; if (loaded === 1) draw(0); };
-      imgs.push(im);
-    }
-    function draw(idx) {
-      if (idx === current || !imgs[idx].complete) return;
-      current = idx;
-      ctx.drawImage(imgs[idx], 0, 0, cv.width, cv.height);
-    }
-    function onScroll() {
-      const r = sec.getBoundingClientRect();
-      const total = r.height - window.innerHeight;
-      const prog = Math.min(1, Math.max(0, -r.top / total));
-      draw(Math.min(FRAMES - 1, Math.floor(prog * FRAMES)));
-      if (bar) bar.style.width = (prog * 100) + '%';
-    }
-    window.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-  })();
 </script>
+<script type="module" src="assets/drone/scroll.js"></script>
 </body>
 </html>

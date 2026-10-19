@@ -1,0 +1,25 @@
+/* Scoped to the product section; the rest of the homepage keeps its existing layout. */
+.drone-scroll{--drone-nav:3.6rem;position:relative;height:560vh;height:560svh;background:var(--bg,#060608);scroll-margin-top:var(--drone-nav)}
+.drone-stage{position:sticky;top:var(--drone-nav);height:calc(100vh - var(--drone-nav));height:calc(100svh - var(--drone-nav));overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 50% 48%,#182027 0%,#0b1117 48%,#060608 100%)}
+.drone-model,.drone-poster,.drone-video{position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:contain}
+.drone-model{z-index:1;opacity:0;pointer-events:none;--poster-color:transparent;transition:opacity .6s}
+.drone-poster{z-index:2;pointer-events:none;background:#060608;transition:opacity .6s}
+.drone-video{display:none;z-index:1;pointer-events:none;background:#060608}
+.drone-scroll[data-ready="true"] .drone-poster{opacity:0}
+.drone-scroll[data-ready="true"][data-mode="3d"] .drone-model{opacity:1}
+.drone-scroll[data-mode="video"] .drone-video{display:block}
+.drone-loading{position:absolute;z-index:3;left:50%;bottom:88px;transform:translateX(-50%);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.06em;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .3s}
+.drone-scroll[data-started="true"][data-ready="false"] .drone-loading{opacity:1}
+.drone-loading span{display:block;width:60px;height:1px;margin:10px auto 0;background:linear-gradient(90deg,transparent,#9ba1a9,transparent)}
+.drone-loading a,.drone-noscript a{color:inherit}
+.drone-cue{position:absolute;z-index:3;left:50%;bottom:32px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--text-dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.15em;text-transform:uppercase;pointer-events:none}
+.drone-cue i{height:20px;width:1px;background:linear-gradient(#9ba1a9,transparent)}
+.drone-progress{position:absolute;z-index:4;bottom:0;left:0;right:0;height:2px;background:#ffffff09}
+.drone-progress i{display:block;width:100%;height:100%;transform:scaleX(0);transform-origin:left;background:var(--text-dim,#9ba1a9)}
+.drone-continue{position:absolute;z-index:4;right:28px;bottom:27px;color:var(--text-dim);font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.1em;text-decoration:none;padding:10px}
+.drone-continue:hover{color:var(--text)}
+.drone-continue:focus-visible{outline:1px solid var(--text);outline-offset:3px}
+.drone-noscript{position:absolute;z-index:5;bottom:75px;left:0;right:0;text-align:center;font-size:12px;color:var(--text-dim)}
+#platforms{scroll-margin-top:3.6rem}
+@media(max-width:700px){.drone-scroll{height:520vh;height:520svh}.drone-continue{right:12px;bottom:23px}.drone-cue{bottom:32px;font-size:9px;letter-spacing:.1em}}
+@media(prefers-reduced-motion:reduce){.drone-scroll *{transition:none!important;animation:none!important}}

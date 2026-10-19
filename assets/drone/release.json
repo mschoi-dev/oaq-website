@@ -1,0 +1,16 @@
+{
+  "product": "OAQ Mine Detection Drone System",
+  "version": "1.0",
+  "display_version": "v1.0",
+  "status": "approved_design_baseline",
+  "approved_on": "2026-10-19",
+  "internal_revision": "v64",
+  "model_source_commit": "fd7868a7562634c1709e657f46e344d8a49b1b7e",
+  "git_tag": "drone-v1.0",
+  "assets": {
+    "model": "oaq-drone-web.glb",
+    "model_sha256": "84162b5a2d31eda2f7626da5a5c47889ebc36c9332eb78a38030b7c58ef26709",
+    "motion": "motion.json",
+    "motion_sha256": "5cb91fd96fb3127205259b76ef851c15b3f78790e4ab8f7ca352faa1762236cc"
+  }
+}

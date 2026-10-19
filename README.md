@@ -12,6 +12,10 @@ python -m http.server 8000
 
 `http://localhost:8000/index.html#deploy`에서 스크롤 시연을 볼 수 있습니다.
 
+## 승인 디자인 v1.0
+
+2026-10-19 사용자 승인. v64의 현재 디자인을 **v1.0 최종 디자인 기준본**으로 확정했습니다. 모델과 모션은 변경하지 않았습니다. Git 태그는 `drone-v1.0`, 승인·파일 해시 정보는 `assets/drone/release.json`에 기록합니다. 후속 디자인 수정은 별도 버전으로 관리합니다.
+
 ## 드론 스크롤 구간
 
 - `index.html#system`: 최신 모델로 렌더링한 제품 이미지.

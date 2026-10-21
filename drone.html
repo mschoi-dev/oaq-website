@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#eef0ed">
+  <title>OAQ Drone v1.0 — Interactive 3D</title>
+  <meta name="description" content="OAQ 드론 v1.0. 전체 디자인을 360°로 살펴보고, Arm이 접히고 펴지는 동작을 직접 확인하세요.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="OAQ Drone v1.0 — Interactive 3D">
+  <meta property="og:description" content="360° 디자인 보기 · Arm 접기/펴기 · OAQ 드라이브 박스">
+  <meta property="og:image" content="https://mschoi-dev.github.io/oaq-website/assets/drone/poster.jpg">
+  <meta property="og:url" content="https://mschoi-dev.github.io/oaq-website/drone.html">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%231c2527'/%3E%3Ctext x='32' y='40' text-anchor='middle' font-family='Arial' font-size='22' fill='white'%3EOAQ%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/drone/viewer.css">
+  <script type="module" src="assets/drone/viewer.js"></script>
+</head>
+<body>
+<div class="viewer-app" id="app" data-ready="false">
+  <header class="topbar">
+    <a class="brand" href="index.html" aria-label="OAQ 홈페이지">OAQ<span class="brand-rule" aria-hidden="true"></span><span class="brand-caption">DRONE SYSTEM</span></a>
+    <div class="header-actions">
+      <span class="version">DESIGN v1.0</span>
+      <button id="share" class="quiet-button" type="button">링크 공유 <span aria-hidden="true">↗</span></button>
+    </div>
+  </header>
+  <main class="workspace">
+    <div class="view-heading">
+      <div><p class="eyebrow">INTERACTIVE DESIGN REVIEW</p><h1>OAQ Drone <span>v1.0</span></h1></div>
+      <p class="intro">디자인부터 움직임까지.<br>직접 돌려보고 확인하세요.</p>
+    </div>
+    <nav class="view-tabs" aria-label="주요 부위 보기">
+      <button type="button" data-view="overall" aria-pressed="true" disabled>전체 디자인</button>
+      <button type="button" data-view="side" aria-pressed="false" disabled>측면 · Arm</button>
+      <button type="button" data-view="drive" aria-pressed="false" disabled>OAQ 드라이브</button>
+      <button type="button" data-view="top" aria-pressed="false" disabled>상부 형상</button>
+    </nav>
+    <section class="stage" aria-label="인터랙티브 3D 드론">
+      <model-viewer id="drone" alt="OAQ 드론 v1.0의 전체 모델. 마우스 또는 터치로 회전하고 확대할 수 있습니다."
+        camera-controls interaction-prompt="none" touch-action="none"
+        environment-image="neutral" exposure="1.2" shadow-intensity="0"
+        field-of-view="30deg" min-field-of-view="30deg" max-field-of-view="30deg"
+        camera-target="0m 0.3476m 0m" camera-orbit="25deg 76deg 1.7m"
+        min-camera-orbit="auto 2deg 0.07m" max-camera-orbit="auto 178deg 4.5m"
+        interpolation-decay="100" loading="eager" reveal="auto" tabindex="0">
+        <div slot="progress-bar" aria-hidden="true"></div>
+      </model-viewer>
+      <div class="loading" id="loading" role="status" aria-live="polite">
+        <span class="loading-mark" aria-hidden="true">OAQ</span>
+        <p id="loading-label">3D 모델을 불러오는 중</p>
+        <progress id="load-progress" max="1" value="0" aria-label="모델 불러오기 진행률"></progress>
+        <small>첫 실행 시 약 23 MB를 불러옵니다.</small>
+      </div>
+      <div id="fallback" class="fallback" hidden>
+        <p>이 브라우저에서는 3D 화면을 불러오지 못했습니다.</p>
+        <video controls playsinline preload="none" poster="assets/drone/poster.jpg" aria-label="OAQ 드론 동작 영상"><source src="assets/drone/fallback.mp4" type="video/mp4"></video>
+        <a href="drone.html">3D 다시 불러오기</a>
+      </div>
+      <div class="stage-label" aria-hidden="true"><span class="status-dot"></span>360° EXPLORER</div>
+      <div class="stage-actions">
+        <button type="button" id="rotate" title="자동 회전" aria-label="자동 회전" aria-pressed="false" disabled>↻ <span>자동 회전</span></button>
+        <button type="button" id="reset" title="시점 초기화" aria-label="시점 초기화" disabled>⟲ <span>초기화</span></button>
+        <button type="button" id="fullscreen" title="전체 화면" aria-label="전체 화면" aria-pressed="false">⛶</button>
+      </div>
+    </section>
+    <div class="interaction-help"><span>드래그 · 회전<span class="desktop-help">　 Shift + 드래그 · 이동　 휠 · 확대</span><span class="touch-help">　 두 손가락 · 확대 / 이동</span></span><span id="view-label">전체 디자인</span></div>
+    <section class="motion-panel" aria-label="Arm 동작 제어">
+      <div class="motion-title"><p class="eyebrow">FOLDING ARM</p><h2>접히고, 펼쳐지는 구조.</h2><p class="motion-caption">v1.0에 저장된 실제 모델 애니메이션</p></div>
+      <div class="motion-controls">
+        <div class="motion-status"><span id="pose-label">펼쳐진 상태</span><output id="pose-percent" for="fold">0%</output></div>
+        <label class="sr-only" for="fold">Arm 접힘 비율</label>
+        <input id="fold" type="range" min="0" max="1000" step="1" value="0" aria-valuetext="0% 접힘" disabled>
+        <div class="motion-endpoints"><button id="deploy" type="button" disabled>완전히 펴기</button><span>드래그하여 동작 확인</span><button id="stow" type="button" disabled>완전히 접기</button></div>
+      </div>
+      <button id="play" class="play-button" type="button" aria-pressed="false" disabled><span id="play-icon" aria-hidden="true">▶</span><span id="play-label">동작 재생</span></button>
+    </section>
+    <footer class="page-footer"><span>승인 디자인 v1.0 · Blender 원본 기반 웹 모델</span><a href="index.html#deploy">홈페이지에서 보기 ↗</a></footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <dialog id="share-dialog"><form method="dialog"><h2>이 링크를 공유하세요</h2><p>받는 사람은 별도 설치 없이 브라우저에서 열 수 있습니다.</p><label class="sr-only" for="share-url">공유 주소</label><input id="share-url" type="url" readonly><button type="submit">닫기</button></form></dialog>
+</div>
+<noscript><p class="no-script">3D 모델은 JavaScript를 사용합니다. <a href="assets/drone/fallback.mp4">동작 영상 보기</a></p></noscript>
+</body>
+</html>

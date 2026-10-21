@@ -23,3 +23,5 @@
 #platforms{scroll-margin-top:3.6rem}
 @media(max-width:700px){.drone-scroll{height:520vh;height:520svh}.drone-continue{right:12px;bottom:23px}.drone-cue{bottom:32px;font-size:9px;letter-spacing:.1em}}
 @media(prefers-reduced-motion:reduce){.drone-scroll *{transition:none!important;animation:none!important}}
+
+.drone-open{position:absolute;z-index:4;top:22px;right:24px;color:#edefef;border:1px solid #ffffff40;border-radius:4px;background:#10191dbb;padding:11px 15px;font:12px Arial,sans-serif;text-decoration:none}.drone-open:hover{background:#223238}.drone-open:focus-visible{outline:2px solid white;outline-offset:4px}

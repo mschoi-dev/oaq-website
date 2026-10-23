@@ -14,11 +14,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="assets/air/base.css?v=air1">
-<link rel="stylesheet" href="assets/magnav/integration.css?v=route9">
+<link rel="stylesheet" href="assets/magnav/integration.css?v=route10">
 <link rel="stylesheet" href="assets/air/navigation.css?v=air1">
 <link rel="stylesheet" href="assets/air/air.css?v=air1">
 <script defer src="assets/air/navigation.js?v=air1"></script>
-<script defer src="assets/magnav/integration.js?v=route9"></script>
+<script defer src="assets/magnav/integration.js?v=route10"></script>
 </head>
 <body class="air-page">
 <a class="air-skip" href="#main">Skip to content</a>
@@ -62,7 +62,7 @@
   <div class="container mn-heading">
     <span class="mono">01 / INTERACTIVE FLIGHT</span>
     <h2 id="mn-title" class="display">No signal.<br><span>Still a way forward.</span></h2>
-    <p>Leave the runway and head out over open water. Compare the aircraft’s actual position with its navigation estimate. Switch between INS only and Quantum Navigation to watch the position error shrink, the aircraft rejoin its route, and the flight continue along it.</p>
+    <p>Leave the runway and head out over open water. Use the dashed target route as your reference. Switch between INS only and Quantum Navigation to compare their flight traces, watch a faster, smooth return to the target route, and keep following it.</p>
     <a class="mn-skip" href="#principle">Read the principle ↓</a>
   </div>
 <div class="container mn-layout">
@@ -70,16 +70,16 @@
   <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> QUANTUM NAVIGATION</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="전체 화면">전체 화면 ⛶</button></header>
   <div class="mn-content">
    <div class="mn-screen">
-    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=route9" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=route10" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
     <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 출발합니다.</small></div>
     <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 준비하지 못했습니다.</b><button id="mn-retry">다시 불러오기</button></div>
     <div class="mn-warning" id="mn-warning" role="alert" hidden><b>⚠ GPS 신호 두절</b><span>이제 INS만으로 위치를 추정합니다.</span></div>
     <div class="mn-scene-caption" id="mn-scene-caption">활주로 출발 · 초기 위치 확보</div>
    </div>
-   <aside class="mn-comparison" aria-label="위치 오차와 목표 경로 이탈 거리">
+   <aside class="mn-comparison" aria-label="목표 경로 이탈 거리와 항법 오차">
     <div class="mn-panel-title"><span id="mn-nav-title">INS 단독</span><small>LIVE</small></div>
-    <div class="mn-metric"><span>실제 ↔ 추정 위치 오차</span><strong id="mn-error">0.00 <em>km</em></strong><small id="mn-error-note">초기 위치를 확보하고 출발합니다.</small></div>
-    <div class="mn-metric route"><span>목표 경로 이탈 거리</span><strong id="mn-cross">0.00 <em>km</em></strong><small>실제 기체에서 목표 경로까지</small></div>
+    <div class="mn-metric route"><span>목표 경로에서 벗어난 거리</span><strong id="mn-cross">0.00 <em>km</em></strong><small>점선 경로까지의 가장 가까운 거리</small></div>
+    <div class="mn-metric"><span>항법 위치 오차</span><strong id="mn-error">0.00 <em>km</em></strong><small id="mn-error-note">초기 위치 확보</small></div>
     <div class="mn-chart-wrap"><span>최근 오차 변화</span><canvas id="mn-chart" role="img" aria-label="시간에 따른 위치 오차와 경로 이탈 거리"></canvas><div class="mn-legend"><span class="estimate">━ 위치 오차</span><span>━ 경로 이탈</span></div></div>
     <div class="mn-recovery" id="mn-recovery"><b id="mn-recovery-title">이륙 준비</b><span id="mn-recovery-note">먼바다에서 두 항법 모드를 비교하세요.</span></div>
    </aside>
@@ -98,7 +98,7 @@
 
 
 <div class="container"><div class="mn-storyline">
-      <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Take off from the coast, pass scattered clouds, and cross a broad stretch of open ocean. GPS provides an external position reference as the coastline recedes.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
+      <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Start stationary on the runway, accelerate, lift off, and retract the landing gear in a short departure sequence before crossing open ocean. GPS provides an external position reference as the coastline recedes.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="1"><div class="mn-step-body"><span class="mono">02 / THE HIDDEN DRIFT</span><h3>The view stays calm.<br>The estimate drifts.</h3><p>In this fictional interference scenario, GPS becomes unavailable. INS continues estimating motion, but errors accumulate without an external correction.</p><p class="mn-callout">Open water offers few visual position references. Clouds do not cause the GPS outage.</p><button data-mn-jump=".42">Reveal the drift <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="2"><div class="mn-step-body"><span class="mono">03 / A DIFFERENT REFERENCE</span><h3>Read the field.<br>Compare the pattern.</h3><p>A quantum magnetic sensor observes the field along the flight. Comparing a sequence with a prepared magnetic map provides another clue to position.</p><p class="mn-callout">MagNav corrects the position estimate. A separate autopilot can use that estimate to guide the aircraft; this page shows an authored route-return preview.</p><button data-mn-jump=".70">Compare magnetic patterns <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="3"><div class="mn-step-body"><span class="mono">04 / A CORRECTED ESTIMATE</span><h3>Correct the estimate.<br>Rejoin. Keep following.</h3><p>The aircraft turns smoothly from its current position, rejoins the intended route, and keeps following it across open water. Switch back to INS only to see drift build again. Position error and distance from the route are shown separately.</p><button data-mn-jump="1">Follow the route <span>↗</span></button><a href="index.html#contact">Discuss magnetic navigation →</a></div></article>

@@ -1,18 +1,18 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ Quantum Navigation</title><link rel="stylesheet" href="integration.css?v=route9"><script defer src="integration.js?v=route9"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ Quantum Navigation</title><link rel="stylesheet" href="integration.css?v=route10"><script defer src="integration.js?v=route10"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
  <div class="mn-stage" id="mn-stage" lang="ko" aria-label="OAQ 항로 복귀 체험">
   <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> QUANTUM NAVIGATION</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="전체 화면">전체 화면 ⛶</button></header>
   <div class="mn-content">
    <div class="mn-screen">
-    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="experience.html?embed=1&amp;v=route9" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=route10" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
     <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 출발합니다.</small></div>
     <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 준비하지 못했습니다.</b><button id="mn-retry">다시 불러오기</button></div>
     <div class="mn-warning" id="mn-warning" role="alert" hidden><b>⚠ GPS 신호 두절</b><span>이제 INS만으로 위치를 추정합니다.</span></div>
     <div class="mn-scene-caption" id="mn-scene-caption">활주로 출발 · 초기 위치 확보</div>
    </div>
-   <aside class="mn-comparison" aria-label="위치 오차와 목표 경로 이탈 거리">
+   <aside class="mn-comparison" aria-label="목표 경로 이탈 거리와 항법 오차">
     <div class="mn-panel-title"><span id="mn-nav-title">INS 단독</span><small>LIVE</small></div>
-    <div class="mn-metric"><span>실제 ↔ 추정 위치 오차</span><strong id="mn-error">0.00 <em>km</em></strong><small id="mn-error-note">초기 위치를 확보하고 출발합니다.</small></div>
-    <div class="mn-metric route"><span>목표 경로 이탈 거리</span><strong id="mn-cross">0.00 <em>km</em></strong><small>실제 기체에서 목표 경로까지</small></div>
+    <div class="mn-metric route"><span>목표 경로에서 벗어난 거리</span><strong id="mn-cross">0.00 <em>km</em></strong><small>점선 경로까지의 가장 가까운 거리</small></div>
+    <div class="mn-metric"><span>항법 위치 오차</span><strong id="mn-error">0.00 <em>km</em></strong><small id="mn-error-note">초기 위치 확보</small></div>
     <div class="mn-chart-wrap"><span>최근 오차 변화</span><canvas id="mn-chart" role="img" aria-label="시간에 따른 위치 오차와 경로 이탈 거리"></canvas><div class="mn-legend"><span class="estimate">━ 위치 오차</span><span>━ 경로 이탈</span></div></div>
     <div class="mn-recovery" id="mn-recovery"><b id="mn-recovery-title">이륙 준비</b><span id="mn-recovery-note">먼바다에서 두 항법 모드를 비교하세요.</span></div>
    </aside>

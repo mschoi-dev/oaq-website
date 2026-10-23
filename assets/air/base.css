@@ -1,0 +1,297 @@
+/* Existing MAEGNAS design, retained for the Air domain page. */
+
+  :root {
+    --bg: #060608;
+    --bg-2: #0B0C0F;
+    --panel: #101114;
+    --hairline: #1F2126;
+    --hairline-2: #2E3136;
+    --text: #EDEFF2;
+    --text-dim: #9BA1A9;
+    --text-faint: #565B62;
+    --target: #C9A227;
+    --signal: #5FB3DA;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", "Archivo", sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 82rem; margin: 0 auto; padding: 0 2.2rem; }
+  ::selection { background: var(--text); color: var(--bg); }
+  .display {
+    font-family: "Archivo", sans-serif;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.0;
+  }
+  .mono {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+  }
+  img { max-width: 100%; }
+
+  /* ─ NAV ─ */
+  header.nav {
+    position: fixed; inset: 0 0 auto; z-index: 100;
+    background: rgba(6, 6, 8, 0.82);
+    border-bottom: 1px solid var(--hairline);
+    backdrop-filter: blur(10px);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; height: 3.6rem; }
+  .wordmark {
+    font-family: "Archivo", sans-serif; font-weight: 900;
+    font-size: 1.02rem; letter-spacing: 0.34em; color: var(--text);
+    text-decoration: none; text-transform: uppercase;
+  }
+  nav.menu { display: flex; gap: 2.1rem; align-items: center; }
+  nav.menu a {
+    font-family: "IBM Plex Mono", monospace;
+    color: var(--text-dim); text-decoration: none;
+    font-size: 0.66rem; letter-spacing: 0.2em; text-transform: uppercase;
+  }
+  nav.menu a:hover { color: var(--text); }
+  nav.menu a.corp { border: 1px solid var(--hairline-2); padding: 0.45rem 1rem; }
+  nav.menu a.corp:hover { border-color: var(--text-dim); }
+  @media (max-width: 760px) { nav.menu a:not(.corp) { display: none; } }
+
+  /* ─ HERO ─ */
+  .hero {
+    min-height: 100vh; position: relative; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: flex-end;
+    padding: 8rem 0 5rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .hero .bg {
+    position: absolute; inset: 0;
+    background: url("assets/hero-poster.jpg") center / cover no-repeat;
+    filter: saturate(0.8) brightness(0.85);
+  }
+  .hero video.bgv {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover;
+    filter: saturate(0.8) brightness(0.82);
+  }
+  .hero .veil {
+    position: absolute; inset: 0;
+    background:
+      linear-gradient(180deg, rgba(6,6,8,0.72) 0%, rgba(6,6,8,0.22) 40%, rgba(6,6,8,0.92) 88%),
+      radial-gradient(ellipse 90% 60% at 50% 110%, rgba(6,6,8,0.9), transparent);
+  }
+  .hero .scan {
+    position: absolute; inset: 0; pointer-events: none; opacity: 0.5;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(6,6,8,0.16) 4px);
+  }
+  /* 위치 핑 */
+  .pings { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .ping { position: absolute; }
+  .ping .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--signal); box-shadow: 0 0 10px rgba(95,179,218,0.9);
+  }
+  .ping .ring {
+    position: absolute; left: 50%; top: 50%; width: 64px; height: 64px;
+    margin: -32px 0 0 -29px; border: 1px solid rgba(95,179,218,0.8); border-radius: 50%;
+    animation: pingring 3.2s ease-out infinite;
+  }
+  .ping .lbl {
+    position: absolute; left: 14px; top: -6px; white-space: nowrap;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.6rem;
+    letter-spacing: 0.16em; color: rgba(155,180,196,0.85);
+  }
+  @keyframes pingring {
+    0% { transform: scale(0.18); opacity: 1; }
+    75% { transform: scale(1); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
+  }
+  .ping.gold .dot { background: var(--target); box-shadow: 0 0 12px rgba(201,162,39,0.95); }
+  .ping.gold .ring { border-color: rgba(201,162,39,0.85); }
+  .ping.gold .lbl { color: rgba(215,190,110,0.95); }
+  .ping.gold .box {
+    position: absolute; left: 50%; top: 50%; width: 46px; height: 46px;
+    margin: -23px 0 0 -23px; border: 1px solid rgba(201,162,39,0.8);
+  }
+  .ping.gold .box::before, .ping.gold .box::after {
+    content: ""; position: absolute; background: var(--target);
+  }
+  .ping.gold .box::before { left: 50%; top: -8px; width: 1px; height: 12px; margin-left: -0.5px; box-shadow: 0 60px 0 0 var(--target); }
+  .ping.gold .box::after { top: 50%; left: -8px; height: 1px; width: 12px; margin-top: -0.5px; box-shadow: 60px 0 0 0 var(--target); }
+  .hero .container { position: relative; z-index: 2; }
+  .hero .eyebrow { display: flex; align-items: center; gap: 1.1rem; margin-bottom: 1.8rem; }
+  .hero .eyebrow::before { content: ""; width: 2.6rem; height: 1px; background: var(--text-dim); }
+  .hero h1 { font-size: clamp(2.7rem, 8.6vw, 7rem); max-width: 68rem; }
+  .hero h1 .dim { color: rgba(237,239,242,0.42); }
+  .hero .sub { margin-top: 2rem; max-width: 37rem; font-size: 1.02rem; color: var(--text-dim); }
+  .hero .cta-row { margin-top: 2.8rem; display: flex; gap: 1px; flex-wrap: wrap; }
+  .btn {
+    font-family: "IBM Plex Mono", monospace;
+    display: inline-block; padding: 0.9rem 2.1rem;
+    font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+    text-decoration: none; border: 1px solid var(--hairline-2);
+  }
+  .btn-solid { background: var(--text); color: var(--bg); border-color: var(--text); }
+  .btn-solid:hover { background: #fff; }
+  .btn-line { color: var(--text); }
+  .btn-line:hover { border-color: var(--text); }
+
+  /* ─ 공통 ─ */
+  section { border-bottom: 1px solid var(--hairline); }
+  .pad { padding-top: 6.5rem; padding-bottom: 6.5rem; }
+  .sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 2rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .sec-head h2 { font-size: clamp(1.8rem, 4.4vw, 3.4rem); }
+  .sec-intro { color: var(--text-dim); max-width: 42rem; font-size: 0.98rem; margin-bottom: 3.2rem; }
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ─ MISSION ─ */
+  .mission { padding: 7.5rem 0; }
+  .mission .statement {
+    font-family: "Archivo", sans-serif; font-weight: 700;
+    font-size: clamp(1.6rem, 4vw, 3rem); line-height: 1.18;
+    max-width: 62rem; text-transform: uppercase; letter-spacing: -0.005em;
+  }
+  .mission .statement .dim { color: var(--text-faint); }
+
+  /* ─ DOMAINS ─ */
+  .domain {
+    position: relative; min-height: 78vh; overflow: hidden;
+    display: flex; align-items: flex-end;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .domain .bg { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.55) brightness(0.72) contrast(1.05); transition: transform 1.2s ease; }
+  .domain:hover .bg { transform: scale(1.03); }
+  .domain .veil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.55) 0%, rgba(6,6,8,0.18) 45%, rgba(6,6,8,0.94) 92%); }
+  .domain .content { position: relative; z-index: 2; width: 100%; padding-top: 3.4rem; padding-bottom: 3.4rem; }
+  .domain .row { display: flex; align-items: flex-end; justify-content: space-between; gap: 2.5rem; flex-wrap: wrap; }
+  .domain h3.big { font-size: clamp(3rem, 10vw, 8rem); line-height: 0.95; }
+  .domain .info { max-width: 26rem; padding-bottom: 0.8rem; }
+  .domain .info h4 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 1.02rem; letter-spacing: 0.04em; margin: 0.7rem 0 0.6rem; }
+  .domain .info p { font-size: 0.9rem; color: var(--text-dim); }
+  .chip {
+    display: inline-block; font-family: "IBM Plex Mono", monospace;
+    font-size: 0.62rem; letter-spacing: 0.22em; text-transform: uppercase;
+    border: 1px solid var(--hairline-2); padding: 0.32rem 0.85rem; color: var(--text-dim);
+  }
+  .chip.now { border-color: var(--target); color: var(--target); }
+
+  /* ─ 제품 쇼케이스: 페이로드 ─ */
+  .showcase {
+    position: relative; min-height: 100vh; overflow: hidden;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 7rem 0 5rem;
+    background:
+      radial-gradient(ellipse 70% 55% at 50% 42%, rgba(95, 179, 218, 0.07), transparent 70%),
+      radial-gradient(ellipse 90% 70% at 50% 50%, #0B0C10, var(--bg) 80%);
+  }
+  .showcase .center { text-align: center; }
+  .showcase .product-name { font-size: clamp(2rem, 5.6vw, 4.2rem); margin: 0.9rem 0 0.6rem; }
+  .showcase .product-sub { color: var(--text-dim); max-width: 36rem; margin: 0 auto; font-size: 0.98rem; }
+  .showcase .render-wrap { max-width: 58rem; margin: 2rem auto 0; }
+  .spec-strip {
+    display: flex; justify-content: center; gap: 1px; flex-wrap: wrap;
+    background: var(--hairline); border: 1px solid var(--hairline);
+    max-width: 60rem; margin: 2.4rem auto 0;
+  }
+  .spec-strip .sp { background: var(--bg-2); padding: 1.1rem 1.6rem; flex: 1 1 12rem; text-align: left; }
+  .spec-strip .sp .k { font-family: "IBM Plex Mono", monospace; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-faint); display: block; margin-bottom: 0.25rem; }
+  .spec-strip .sp .v { font-size: 0.85rem; color: var(--text); }
+
+  /* ─ 플랫폼 캐러셀 (실사) ─ */
+  .platforms { background: var(--bg-2); }
+  .carousel { position: relative; border: 1px solid var(--hairline); background: var(--bg); overflow: hidden; }
+  .car-stage { position: relative; height: clamp(24rem, 52vw, 34rem); }
+  .car-slide {
+    position: absolute; inset: 0;
+    opacity: 0; transform: scale(1.03); transition: opacity 1s ease, transform 1.2s ease;
+    pointer-events: none;
+  }
+  .car-slide.active { opacity: 1; transform: none; pointer-events: auto; }
+  .car-slide .photo { position: absolute; inset: 0; background-size: cover; background-position: center; filter: saturate(0.6) brightness(0.62) contrast(1.08); }
+  .car-slide .pveil { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,6,8,0.42), rgba(6,6,8,0.12) 45%, rgba(6,6,8,0.78)); }
+  .mount { position: absolute; z-index: 3; }
+  .mount .core {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--target); box-shadow: 0 0 14px rgba(201,162,39,0.95);
+    position: absolute; left: 50%; top: 50%; margin: -5px 0 0 -5px;
+  }
+  .mount .mring {
+    position: absolute; left: 50%; top: 50%; width: 120px; height: 120px;
+    margin: -60px 0 0 -60px; border: 1.6px solid var(--target); border-radius: 50%;
+    animation: mountpulse 2s ease-out infinite;
+  }
+  .mount .mring.static { animation: none; opacity: 0.55; width: 74px; height: 74px; margin: -37px 0 0 -37px; }
+  @keyframes mountpulse { 0% { transform: scale(0.5); opacity: 1; } 75% { transform: scale(1.1); opacity: 0; } 100% { transform: scale(1.1); opacity: 0; } }
+  .callout {
+    position: absolute; z-index: 3;
+    border-left: 1px solid var(--target); padding-left: 0.9rem;
+  }
+  .callout .c1 { font-family: "IBM Plex Mono", monospace; font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--target); }
+  .callout .c2 { font-family: "IBM Plex Mono", monospace; font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.25rem; }
+  .car-tabs { display: flex; gap: 1px; background: var(--hairline); border-top: 1px solid var(--hairline); }
+  .car-tab {
+    flex: 1; background: var(--bg); border: none; cursor: pointer;
+    font-family: "IBM Plex Mono", monospace; font-size: 0.62rem;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-faint);
+    padding: 1rem 0.5rem; position: relative; overflow: hidden;
+  }
+  .car-tab:hover { color: var(--text-dim); }
+  .car-tab.active { color: var(--text); }
+  .car-tab .bar { position: absolute; left: 0; bottom: 0; height: 2px; width: 0; background: var(--target); }
+  .car-tab.active .bar { animation: fillbar 6s linear forwards; }
+  @keyframes fillbar { from { width: 0; } to { width: 100%; } }
+
+  /* ─ 미션 소프트웨어 ─ */
+  .console-sec {
+    position: relative; overflow: hidden;
+    background:
+      radial-gradient(ellipse 75% 60% at 50% 45%, rgba(201, 162, 39, 0.05), transparent 70%),
+      var(--bg);
+  }
+  .console-wrap { max-width: 54rem; margin: 2rem auto 0; }
+  .spec-list { list-style: none; border-top: 1px solid var(--hairline); max-width: 60rem; margin: 2.4rem auto 0; }
+  .spec-list li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.6rem 0; border-bottom: 1px solid var(--hairline); font-size: 0.84rem; }
+  .spec-list .k { font-family: "IBM Plex Mono", monospace; font-size: 0.64rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-faint); padding-top: 0.15rem; }
+  .spec-list .v { color: var(--text); text-align: right; font-weight: 400; }
+
+  /* ─ TECH ─ */
+  .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); }
+  .tech-cell { background: var(--bg-2); padding: 2.1rem 1.9rem; }
+  .tech-cell .num { font-family: "IBM Plex Mono", monospace; font-size: 0.66rem; color: var(--text-faint); letter-spacing: 0.22em; }
+  .tech-cell h3 { font-family: "Archivo", sans-serif; font-weight: 700; text-transform: uppercase; font-size: 0.98rem; margin: 0.9rem 0 0.6rem; letter-spacing: 0.03em; }
+  .tech-cell p { font-size: 0.85rem; color: var(--text-dim); }
+
+  /* ─ CONTACT / FOOTER ─ */
+  .contact { padding: 7.5rem 0; border-bottom: none; }
+  .contact h2 { font-size: clamp(2rem, 5.6vw, 4rem); margin: 1rem 0 1.6rem; }
+  .contact p { color: var(--text-dim); max-width: 35rem; }
+  footer { border-top: 1px solid var(--hairline); padding: 3rem 0; color: var(--text-faint); font-size: 0.78rem; }
+  .foot-grid { display: flex; justify-content: space-between; gap: 2rem; flex-wrap: wrap; align-items: flex-start; }
+  .foot-grid .fm { font-family: "Archivo", sans-serif; font-weight: 900; letter-spacing: 0.34em; text-transform: uppercase; color: var(--text-dim); font-size: 0.95rem; }
+  .foot-grid a { color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--hairline-2); }
+  .foot-grid a:hover { color: var(--text); }
+  .foot-note { margin-top: 2.2rem; padding-top: 1.4rem; border-top: 1px solid var(--hairline); display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; }
+  /* ─ 히어로 자기장 레이어 (draft) ─ */
+  canvas.fieldfx {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    z-index: 1; pointer-events: none; opacity: 0.5;
+    mix-blend-mode: screen;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .hero video.bgv { display: none; }
+    canvas.fieldfx { display: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .domain .bg, .domain:hover .bg { transition: none; transform: none; }
+    .car-slide { transition: none; }
+    .car-tab.active .bar { animation: none; width: 100%; }
+    .mount .mring, .ping .ring { animation: none; opacity: 0.6; }
+  }

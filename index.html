@@ -309,14 +309,18 @@
   }
 </style>
 <link rel="stylesheet" href="assets/drone/scroll.css">
+<link rel="stylesheet" href="assets/air/navigation.css?v=air1">
+<script defer src="assets/air/navigation.js?v=air1"></script>
 </head>
 <body>
 
 <header class="nav">
   <div class="container nav-inner">
     <a class="wordmark" href="#top">Maegnas</a>
-    <nav class="menu">
+    <button class="site-menu-toggle" aria-expanded="false" aria-controls="site-menu">Menu <span aria-hidden="true">+</span></button>
+    <nav class="menu" id="site-menu" aria-label="Main navigation">
       <a href="#domains">Domains</a>
+      <a href="air.html">Air</a>
       <a href="#system">System</a>
       <a href="#technology">Technology</a>
       <a href="#contact">Contact</a>
@@ -405,7 +409,8 @@
         <div class="info">
           <span class="chip">Roadmap</span>
           <h4>MagNav — GPS-Denied Navigation</h4>
-          <p>When GPS is jammed, spoofed, or gone, Earth's magnetic field remains. Quantum magnetic navigation gives aircraft a map that cannot be switched off — in any theater, under any denial.</p>
+          <p>When GPS is unavailable, Earth's magnetic field offers another reference. Explore how quantum magnetic sensing and map matching can help constrain inertial navigation drift.</p>
+          <a class="air-domain-link" href="air.html">Explore Air &amp; MagNav <span aria-hidden="true">↗</span></a>
         </div>
       </div>
     </div>

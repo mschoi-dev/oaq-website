@@ -1,0 +1,8 @@
+Photo textures: Poly Haven, CC0 1.0 public domain.
+Downloaded 2026-10-23 from official 1k JPG assets, used as original images.
+https://polyhaven.com/license
+https://polyhaven.com/a/rock_boulder_dry
+https://polyhaven.com/a/rocky_terrain_02
+https://polyhaven.com/a/asphalt_02
+Diffuse / OpenGL normal maps displayed; roughness maps retained with source set.
+Geometry, placement and lighting are fictional artistic interpretations.

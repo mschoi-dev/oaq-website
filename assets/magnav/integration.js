@@ -23,13 +23,15 @@ window.addEventListener('message',event=>{
  if(m.type!=='state')return;lastState=m.state;const s=lastState;root.dataset.loss=String(s.time>=31.2);
  $('mn-signal').textContent=s.time<31.2?'GPS AVAILABLE':s.blend>.95?'INS + MAGNAV':'GPS UNAVAILABLE · INS ONLY';
  $('mn-ins').innerHTML=(s.reveal?s.error.toFixed(2):'—')+'<small> km</small>';$('mn-mag').innerHTML=(s.reveal&&s.magEnabled&&s.time>=31.2?s.corrected.toFixed(2):'—')+'<small> km</small>';
- $('mn-caption').textContent=s.time<10.2?'The flight starts on the runway.':s.time<31.2?'GPS still provides a position reference.':!s.reveal?'The view alone does not reveal accumulated error.':s.blend>.95?'The estimate is corrected. Residual error remains.':s.magEnabled?'Observing the field → comparing the map → correcting the estimate.':'INS drift grows while the aircraft continues on the same path.';
+ $('mn-goal-distance').textContent=s.goalDistance.toFixed(2)+' km';$('mn-goal-unguided').textContent=s.unguidedDistance.toFixed(2)+' km';$('mn-guidance').setAttribute('aria-pressed',s.guidance);$('mn-guidance').textContent=s.guidance?'Route preview on':'Route preview off';$('mn-arrival').setAttribute('aria-pressed',s.view==='arrival');
+ $('mn-caption').textContent=s.time<10.2?'The flight starts on the runway.':s.time<31.2?'GPS still provides a position reference.':!s.reveal?'The view alone does not reveal accumulated error.':s.blend>.95?(s.guidance?'Corrected estimate → authored autopilot route preview.':'The estimate is corrected. Route preview is off.'):s.magEnabled?'Observing the field → comparing the map → correcting the estimate.':'Without an external reference, the estimated and actual positions diverge.';
  $('mn-play').textContent=s.playing?'Pause flight':s.time>=120?'Replay flight':'Play flight';$('mn-play').setAttribute('aria-label',$('mn-play').textContent);
  $('mn-truth').setAttribute('aria-pressed',s.reveal);$('mn-truth').textContent=s.reveal?'Hide true position':'Reveal true position';$('mn-correct').setAttribute('aria-pressed',s.magEnabled);$('mn-correct').textContent=s.magEnabled?'Disable MagNav':'Enable MagNav';
  if(document.activeElement!==$('mn-time'))$('mn-time').value=s.time;$('mn-clock').textContent=Math.round(s.time/120*100)+'%';
 });
 $('mn-explore').onclick=()=>{load();setMode('explore',true);};$('mn-story').onclick=()=>{load();if(reduced){jump(0);$('mn-hint').textContent='Reduced motion is on. Choose the chapter buttons to advance.';}else setMode('story');};
 $('mn-play').onclick=()=>send('play');$('mn-truth').onclick=()=>send('truth');$('mn-correct').onclick=()=>send('correct');$('mn-time').oninput=e=>send('seek',Number(e.target.value));
+$('mn-guidance').onclick=()=>send('guidance');$('mn-arrival').onclick=()=>send('arrival');
 $('mn-camera').onclick=()=>{orbit=!orbit;root.dataset.orbit=String(orbit);$('mn-camera').setAttribute('aria-pressed',orbit);frame.tabIndex=orbit?0:-1;$('mn-hint').textContent=orbit?'Camera active: drag to orbit, wheel to zoom. Turn Orbit camera off to scroll over the scene.':'Page scrolling is active over the scene.';};
 $('mn-retry').onclick=()=>{clearTimeout(timer);ready=false;started=false;root.dataset.ready='false';frame.removeAttribute('src');load();};
 root.querySelectorAll('[data-mn-jump]').forEach(b=>b.onclick=()=>jump(Number(b.dataset.mnJump)));

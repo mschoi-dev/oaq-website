@@ -74,3 +74,13 @@ python -m http.server 8000
 - 해안과 섬에 비대칭 만/돌출부, 능선/골짜기, 암벽과 일부 모래 해변을 추가했습니다. 바다의 얕은 수역과 해안 지형은 같은 물가 경계를 사용하며 기존 활주로 평탄면은 유지합니다.
 - 참고: [NASA의 Sunglint](https://science.nasa.gov/earth/earth-observatory/the-science-of-sunglint-84333/), [NPS Channel Islands 항공 사진](https://www.nps.gov/places/000/shag-rock-overlook.htm), [NPS Rocky Coast Landforms](https://home.nps.gov/articles/rocky-coast-landforms.htm). 사진은 시각 참고만 사용했습니다. 실제 특정 장소의 지형 또는 유체 시뮬레이션이 아닙니다.
 - `poster-coastal4.jpg` / `app.js?v=coastal4`. 원본/검증은 `MAEGNAS_Air_Page_v04_CoastalSurface`. v03의 항법/경로/구름/프로펠러/앱 코드와 원본 기체 파일은 유지합니다.
+
+
+### Air 도착 해안·목표 비교 v05 (2026-10-23)
+
+- 근·원거리 수면의 동일한 투영 기준으로 잔물결을 필터링하고, 사라지는 미세 파면의 에너지를 반사 거칠기에 반영해 수평선 방향의 갑작스러운 매끈한 띠를 줄였습니다.
+- Poly Haven CC0 사진 기반 바위/지표/아스팔트 diffuse·normal 재질, 암벽 노출·암석과 식생 인스턴스, 활주로 09/27·문턱·중심선·목표점 표식·타이어 흔적·유도로·격납고 디테일. 공항은 가상이며 FAA 표식을 시각 참고했습니다.
+- 도착 해안의 낮은 고도 안개, ARRIVAL 목표/ACTUAL 위치 표시, 목표까지 실제 수평거리와 경로 미보정 비교. 도착 보기에서는 목표를 함께 볼 수 있도록 카메라가 이동합니다.
+- MagNav 위치 추정 보정과 별도 자동조종 연동을 구분한 사전 제작 경로 복귀 모션. Route preview를 끄면 추정만 보정되고 이동 경로는 복귀하지 않습니다. 실기 항법/제어 알고리즘 또는 측정 제품 성능이 아닙니다. 기본 예시의 종료 시 목표 거리 12.00 → 0.40km는 연출 수치입니다.
+- 모바일에서는 거리 패널을 3D 장면 아래에 배치했습니다. `app.js?v=arrival5`, `poster-arrival5.jpg`, `textures-v5/`는 같은 사이트에서 로드합니다. 텍스처 출처/CC0는 `textures-v5/LICENSE_SOURCES.txt`에 있습니다.
+- 원본 MQ-9A v26 모델/랜딩기어, 64개 연안 구름, 기본1.5배속/프로펠러140rad/s 유지. 편집본/검증/스크린샷은 `MAEGNAS_Air_Page_v05_Arrival`에 보존합니다. 이전 오프라인 단일 HTML은 이번 웹 변경과 별개이며 덮어쓰지 않았습니다.

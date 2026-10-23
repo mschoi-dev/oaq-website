@@ -14,11 +14,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="assets/air/base.css?v=air1">
-<link rel="stylesheet" href="assets/magnav/integration.css?v=air1">
+<link rel="stylesheet" href="assets/magnav/integration.css?v=arrival5?v=air1">
 <link rel="stylesheet" href="assets/air/navigation.css?v=air1">
 <link rel="stylesheet" href="assets/air/air.css?v=air1">
 <script defer src="assets/air/navigation.js?v=air1"></script>
-<script defer src="assets/magnav/integration.js?v=air1"></script>
+<script defer src="assets/magnav/integration.js?v=arrival5?v=air1"></script>
 </head>
 <body class="air-page">
 <a class="air-skip" href="#main">Skip to content</a>
@@ -49,7 +49,7 @@
           <div class="air-cta"><a class="btn btn-solid" href="#magnav">Experience the flight ↓</a><a class="air-text-link" href="#principle">Understand the principle ↗</a></div>
         </div>
         <figure class="air-visual">
-          <img src="assets/magnav/poster-coastal4.jpg" alt="MQ-9A above an open ocean with sparse coastal clouds, used to illustrate magnetic navigation" width="1280" height="720" fetchpriority="high">
+          <img src="assets/magnav/poster-arrival5.jpg" alt="MQ-9A above an open ocean with sparse coastal clouds, used to illustrate magnetic navigation" width="1280" height="720" fetchpriority="high">
           <div class="air-visual-label mono" aria-hidden="true"><span>01 / AIR DOMAIN</span><span>MAGNAV</span></div>
           <figcaption><span class="air-status"></span> A flight beyond visual reference <span>Interactive concept</span></figcaption>
         </figure>
@@ -68,29 +68,29 @@
   <div class="container mn-layout">
     <div class="mn-stage" id="mn-stage">
       <div class="mn-screen">
-        <img class="mn-poster" src="assets/magnav/poster-coastal4.jpg" alt="MQ-9A flying over a broad open ocean with sparse clouds near the coast" loading="lazy" width="1280" height="720">
-        <iframe id="mn-frame" title="Interactive magnetic navigation flight" data-src="assets/magnav/experience.html?embed=1&amp;v=coastal4" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+        <img class="mn-poster" src="assets/magnav/poster-arrival5.jpg" alt="MQ-9A flying over a broad open ocean with sparse clouds near the coast" loading="lazy" width="1280" height="720">
+        <iframe id="mn-frame" title="Interactive magnetic navigation flight" data-src="assets/magnav/experience.html?embed=1&amp;v=arrival5" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
         <div class="mn-screen-top"><span>MAEGNAS <i>/</i> MAGNAV</span><span id="mn-signal">GPS AVAILABLE</span></div>
         <div class="mn-loading" id="mn-loading" role="status"><span class="mn-load-line"></span><b>Preparing your flight</b><small>The 3D scene loads only when you reach this section.</small></div>
         <div class="mn-failure" id="mn-failure" hidden><b>The 3D scene could not start.</b><p>Try again in a browser with WebGL 2 support.</p><button id="mn-retry">Retry 3D</button><a href="assets/magnav/experience.html" target="_blank" rel="noopener">Open full experience ↗</a></div>
-        <div class="mn-readout"><div><span>INS position error</span><strong id="mn-ins">—<small> km</small></strong></div><div><span>After MagNav correction</span><strong id="mn-mag">—<small> km</small></strong></div><p id="mn-caption">The flight starts on the runway.</p></div>
+        <div class="mn-readout"><div><span>INS position error</span><strong id="mn-ins">—<small> km</small></strong></div><div><span>After MagNav correction</span><strong id="mn-mag">—<small> km</small></strong></div><div class="mn-goal"><span>Actual distance to arrival <b id="mn-goal-distance">—</b></span><span>Without route correction <b id="mn-goal-unguided">—</b></span></div><p id="mn-caption">The flight starts on the runway.</p></div>
       </div>
       <div class="mn-toolbar">
         <div class="mn-modes" aria-label="Experience mode"><button id="mn-story" aria-pressed="true">Scroll story</button><button id="mn-explore" aria-pressed="false">Explore freely</button></div>
         <a class="mn-full" href="assets/magnav/experience.html" target="_blank" rel="noopener">Full experience ↗</a>
         <div class="mn-manual" id="mn-manual" hidden>
-          <button id="mn-play" aria-label="Play flight">Play flight</button><button id="mn-truth" aria-pressed="false">Reveal true position</button><button id="mn-correct" aria-pressed="false">Enable MagNav</button><button id="mn-camera" aria-pressed="false">Orbit camera</button>
+          <button id="mn-play" aria-label="Play flight">Play flight</button><button id="mn-truth" aria-pressed="false">Reveal true position</button><button id="mn-correct" aria-pressed="false">Enable MagNav</button><button id="mn-guidance" aria-pressed="true">Route preview on</button><button id="mn-arrival" aria-pressed="false">View arrival</button><button id="mn-camera" aria-pressed="false">Orbit camera</button>
           <label for="mn-time">Flight progress</label><input id="mn-time" type="range" min="0" max="120" step=".1" value="0"><output id="mn-clock" for="mn-time">0%</output>
         </div>
         <p class="mn-hint" id="mn-hint">Scroll to move through the flight. Or choose a chapter.</p>
       </div>
-      <p class="mn-disclaimer">Illustrative scenario · enlarged drift for explanation · not measured aircraft or MAEGNAS performance.</p>
+      <p class="mn-disclaimer">Illustrative scenario · authored route preview · not measured aircraft or MAEGNAS performance. Distances are horizontal scene distances.</p>
     </div>
     <div class="mn-storyline">
       <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Take off from the coast, pass scattered clouds, and cross a broad stretch of open ocean. GPS provides an external position reference as the coastline recedes.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="1"><div class="mn-step-body"><span class="mono">02 / THE HIDDEN DRIFT</span><h3>The view stays calm.<br>The estimate drifts.</h3><p>In this fictional interference scenario, GPS becomes unavailable. INS continues estimating motion, but errors accumulate without an external correction.</p><p class="mn-callout">Open water offers few visual position references. Clouds do not cause the GPS outage.</p><button data-mn-jump=".42">Reveal the drift <span>↗</span></button></div></article>
-      <article class="mn-step" data-chapter="2"><div class="mn-step-body"><span class="mono">03 / A DIFFERENT REFERENCE</span><h3>Read the field.<br>Compare the pattern.</h3><p>A quantum magnetic sensor observes the field along the flight. Comparing a sequence with a prepared magnetic map provides another clue to position.</p><p class="mn-callout">The aircraft stays on the same path. The estimated position is what changes.</p><button data-mn-jump=".70">Compare magnetic patterns <span>↗</span></button></div></article>
-      <article class="mn-step" data-chapter="3"><div class="mn-step-body"><span class="mono">04 / A CORRECTED ESTIMATE</span><h3>Reduce the drift.<br>Retain the uncertainty.</h3><p>Magnetic aiding can reduce accumulated INS error when the map and measurements are suitable. Residual error remains; map quality and magnetic interference still matter.</p><button data-mn-jump="1">See the comparison <span>↗</span></button><a href="index.html#contact">Discuss magnetic navigation →</a></div></article>
+      <article class="mn-step" data-chapter="2"><div class="mn-step-body"><span class="mono">03 / A DIFFERENT REFERENCE</span><h3>Read the field.<br>Compare the pattern.</h3><p>A quantum magnetic sensor observes the field along the flight. Comparing a sequence with a prepared magnetic map provides another clue to position.</p><p class="mn-callout">MagNav corrects the position estimate. A separate autopilot can use that estimate to guide the aircraft; this page shows an authored route-return preview.</p><button data-mn-jump=".70">Compare magnetic patterns <span>↗</span></button></div></article>
+      <article class="mn-step" data-chapter="3"><div class="mn-step-body"><span class="mono">04 / A CORRECTED ESTIMATE</span><h3>Correct the estimate.<br>Return toward arrival.</h3><p>A marked coastal waypoint remains visible through the arrival haze. Compare the actual distance to it, then preview a return route using a corrected position estimate. This animation is illustrative, not measured product performance.</p><button data-mn-jump="1">See the comparison <span>↗</span></button><a href="index.html#contact">Discuss magnetic navigation →</a></div></article>
     </div>
   </div>
 </section>
@@ -98,7 +98,7 @@
   <section class="air-principle pad" id="principle" aria-labelledby="principle-title">
     <div class="container">
       <p class="mono">02 / THE PRINCIPLE</p>
-      <div class="air-principle-heading"><h2 class="display" id="principle-title">Another reference.<br><span>A better estimate.</span></h2><p>MagNav aids the position estimate. It does not move the aircraft back onto a line or make uncertainty disappear.</p></div>
+      <div class="air-principle-heading"><h2 class="display" id="principle-title">Another reference.<br><span>A better estimate.</span></h2><p>MagNav aids the position estimate. A separate autopilot would act on that estimate. The route preview here is a pre-authored comparison, not a flight-control simulation.</p></div>
       <ol class="air-principle-grid">
         <li><span class="mono">01 / SENSE</span><h3>Read the magnetic field.</h3><p>A quantum magnetic sensor measures the field along the flight. A sequence of observations contains more position information than a single reading.</p></li>
         <li><span class="mono">02 / MATCH</span><h3>Compare with a map.</h3><p>The observed pattern is compared with a prepared magnetic map. Distinctive patterns help narrow down the possible location.</p></li>

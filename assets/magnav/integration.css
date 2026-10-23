@@ -5,3 +5,7 @@
 
 .mn-loading[hidden]{display:none}.hero .cta-row{flex-wrap:wrap}
 
+
+.mn-goal{grid-column:1/-1;display:flex!important;gap:16px;margin-top:9px!important;padding-top:8px;border-top:1px solid #b2cfce33}.mn-goal span{font-size:8px!important;line-height:1.5;max-width:150px}.mn-goal b{display:block;color:#b2eddb;font-size:16px;font-weight:500}.mn-manual{flex-wrap:wrap}@media(max-width:600px){.mn-goal{gap:9px}.mn-goal span{font-size:7px!important}.mn-goal b{font-size:12px}}
+
+@media(max-width:760px){.mn-screen{height:420px;min-height:420px;max-height:none}.mn-screen iframe,.mn-screen .mn-poster{height:275px}.mn-readout{left:0;right:0;bottom:0;min-height:144px;max-width:none;background:#0d1c29;border-width:1px 0 0;padding:10px 12px}.mn-readout p{margin:4px 0 0;padding-top:5px}.mn-goal{margin-top:4px!important;padding-top:5px}}

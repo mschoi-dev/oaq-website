@@ -1,14 +1,14 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ MagNav — Interactive Flight</title><link rel="stylesheet" href="integration.css?v=guided7b"><script defer src="integration.js?v=guided7b"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ MagNav — Interactive Flight</title><link rel="stylesheet" href="integration.css?v=overhead8"><script defer src="integration.js?v=overhead8"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
   <div class="mn-stage" id="mn-stage" lang="ko" aria-label="OAQ 자기항법 비행 체험">
     <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> MAGNAV</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="비행 화면 전체 화면으로 보기">전체 화면 ⛶</button></header>
     <div class="mn-content">
       <div class="mn-screen">
         <img class="mn-poster" src="poster-arrival5.jpg" alt="해안에서 이륙해 넓은 바다를 비행하는 MQ-9A" width="1280" height="720">
-        <iframe id="mn-frame" title="OAQ 자기항법 3D 비행" data-src="experience.html?embed=1&amp;v=guided7b" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+        <iframe id="mn-frame" title="OAQ 자기항법 3D 비행" data-src="experience.html?embed=1&amp;v=overhead8" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
         <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 자동 출발합니다.</small></div>
         <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 열지 못했습니다.</b><p>WebGL 2를 지원하는 최신 브라우저에서 다시 시도해주세요.</p><button id="mn-retry">다시 불러오기</button></div>
         <div id="mn-warning" class="mn-warning" role="alert" hidden><b>⚠ GPS 신호가 끊겼습니다</b><span>INS 오차가 누적됩니다. OAQ MagNav를 켜서 경로를 비교해보세요.</span></div>
-        <div class="mn-scene-caption" id="mn-scene-caption">해안 비행장 · 활주로 출발</div>
+        <div class="mn-scene-caption" id="mn-scene-caption">상공 시점 · 활주로 출발</div>
       </div>
       <aside class="mn-comparison" aria-label="전체 비행 경로와 거리 비교">
         <div class="mn-map-area"><div class="mn-panel-title"><span id="mn-map-title">전체 경로 비교</span><small>TOP VIEW</small></div><canvas id="mn-route-map" width="640" height="420" role="img" aria-label="출발점, 목표, MagNav 사용 전후 경로와 현재 위치"></canvas><div class="mn-legend"><span class="without">┄ 미사용 경로</span><span class="with" id="mn-map-mag">━ MagNav 예상</span><span>● 실제 위치</span></div></div>
@@ -21,7 +21,7 @@
       </aside>
     </div>
     <div class="mn-controls">
-      <div class="mn-actions"><button id="mn-play" aria-label="비행 일시정지">Ⅱ 일시정지</button><button id="mn-correct" class="mn-primary" aria-pressed="false">OAQ MagNav 켜기 <span>↗</span></button><button id="mn-restart">↺ 다시하기</button><div class="mn-views"><button id="mn-follow" aria-pressed="true">기체 추적</button><button id="mn-arrival" aria-pressed="false">목표 보기</button><button id="mn-airfield" aria-pressed="false">공항</button><button id="mn-camera" aria-pressed="false">회전</button></div></div>
+      <div class="mn-actions"><button id="mn-play" aria-label="비행 일시정지">Ⅱ 일시정지</button><button id="mn-correct" class="mn-primary" aria-pressed="false">OAQ MagNav 켜기 <span>↗</span></button><button id="mn-restart">↺ 다시하기</button><div class="mn-views"><button id="mn-overview" aria-pressed="true">상공 보기</button><button id="mn-follow" aria-pressed="false">기체 추적</button><button id="mn-arrival" aria-pressed="false">목표 보기</button><button id="mn-airfield" aria-pressed="false">공항</button><button id="mn-camera" aria-pressed="false">회전</button></div></div>
       <div class="mn-timeline"><label for="mn-time">비행 진행</label><input id="mn-time" type="range" min="0" max="120" step=".1" value="0"><output id="mn-clock" for="mn-time">0%</output></div>
       <p id="mn-caption" class="mn-caption">자동 비행 → GPS 두절 → MagNav를 켜고 비교 → 목표 도착</p>
     </div>

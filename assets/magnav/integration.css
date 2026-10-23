@@ -5,3 +5,5 @@
 @media(prefers-reduced-motion:reduce){.mn-stage *{transition:none!important}}
 .mn-stage{overflow-anchor:none}
 .mn-stage[data-outcome=success] .mn-errors,.mn-stage[data-outcome=failure] .mn-errors{display:none}.mn-result>span{display:none}.mn-result h3{font-size:18px;margin:0 0 5px}.mn-result{padding:10px 12px}@media(max-width:700px){.mn-result{padding:5px 7px}.mn-result h3{font-size:14px;margin:0}}
+
+.mn-stage[data-view=overview] .mn-scene-caption{left:auto;right:12px;bottom:14px}@media(max-width:700px){.mn-stage[data-view=overview] .mn-scene-caption{display:none}.mn-views button{font-size:8px;padding:5px 2px}}

@@ -20,7 +20,7 @@ function drawRoutes(route){if(!route)return;const canvas=$('mn-route-map'),r=can
  dot(route.without[0],'#9eb8c2','출발',2.5);dot(route.without.at(-1),'#f4b66d','미사용',3);dot(route.goal,'#96efd0','목표',4);const g=xy(route.goal);c.strokeStyle='#94dfc9';c.beginPath();c.arc(...g,7,0,Math.PI*2);c.stroke();dot(route.current,'#f3fbff','',4);if(!ended){const estimate=xy(route.estimate);c.strokeStyle='#eeb779';c.strokeRect(estimate[0]-3,estimate[1]-3,6,6);}
  canvas.dataset.flownPoints=route.flown.length;canvas.dataset.preview=String(route.preview);canvas.setAttribute('aria-label',`전체 경로 비교. 주황색 점선과 끝점: MagNav 미사용. 초록색: ${route.preview?'MagNav 예상 복귀':'MagNav 복귀'}. 흰색: 실제 비행 경로. 하얀 점: 현재 위치.${ended?'':' 주황색 사각형: INS 추정 위치.'}`);
 }
-function update(s){lastState=s;const loss=s.time>=31.2,outcome=s.outcome||'';stage.dataset.outcome=outcome;stage.dataset.playing=String(s.playing);stage.dataset.time=s.time.toFixed(2);stage.dataset.position=JSON.stringify(s.routes?.current);stage.dataset.phase=outcome?'ended':loss?(s.magEnabled?'correcting':'gps-lost'):'departing';
+function update(s){lastState=s;const loss=s.time>=31.2,outcome=s.outcome||'';stage.dataset.outcome=outcome;stage.dataset.playing=String(s.playing);stage.dataset.time=s.time.toFixed(2);stage.dataset.position=JSON.stringify(s.routes?.current);stage.dataset.view=s.view;stage.dataset.reference=JSON.stringify(s.reference);stage.dataset.deviation=String(s.deviation);stage.dataset.tracePoints=String(s.tracePoints);stage.dataset.phase=outcome?'ended':loss?(s.magEnabled?'correcting':'gps-lost'):'departing';
  if(loss&&!lastLoss&&!outcome){warningUntil=performance.now()+6500;}if(!loss)warningUntil=0;lastLoss=loss;$('mn-warning').hidden=outcome||!loss||performance.now()>warningUntil;
  const signal=$('mn-signal');signal.dataset.lost=String(loss);signal.textContent=outcome?'비행 종료':!loss?'● GPS 정상':s.magEnabled?(s.process<1?'GPS 두절 · 자기장 패턴 비교 중':'GPS 두절 · MagNav 보정 중'):'⚠ GPS 두절 · INS 단독';
  text('mn-play',s.playing?'Ⅱ 일시정지':outcome?'▶ 다시 재생':'▶ 재생');$('mn-play').setAttribute('aria-label',s.playing?'비행 일시정지':'비행 재생');
@@ -28,11 +28,11 @@ function update(s){lastState=s;const loss=s.time>=31.2,outcome=s.outcome||'';sta
  text('mn-ins',`${s.error.toFixed(2)} km`);text('mn-mag',!s.magEnabled?'꺼짐':!loss?'대기':`${s.corrected.toFixed(2)} km`);
  text('mn-goal-distance',`${s.goalDistance.toFixed(2)} km`);text('mn-goal-unguided',`${s.unguidedDistance.toFixed(2)} km`);text('mn-map-mag',s.routes?.preview?'┄ MagNav 예상':'━ MagNav 경로');text('mn-map-title',outcome?'최종 비행 경로':'전체 경로 비교');
  const caption=outcome?(outcome==='success'?'목표에 도착했습니다. 다시하기로 미사용 결과와 비교해보세요.':'목표에 도착하지 못했습니다. 다시하기 후 OAQ MagNav를 켜보세요.'):
- !loss?'활주로에서 자동 출발합니다. GPS가 끊기면 OAQ MagNav를 켜보세요.':!s.magEnabled?'GPS가 끊겼습니다. OAQ MagNav를 켜면 위치 보정과 복귀가 시작됩니다.':s.process<1?'지금까지 관측한 자기장 패턴과 지도를 비교하고 있습니다.':'기체가 부드럽게 선회하며 목표로 돌아갑니다. 목표까지의 거리를 확인하세요.';
- text('mn-caption',caption);text('mn-scene-caption',s.view==='airfield'?'해안 비행장 · 공항 보기':outcome?'최종 기체 위치 · 경로와 거리는 오른쪽 지도에 표시':!loss?(s.time<10?'활주로 출발':'이륙 · 먼바다로 이동'):s.motion==='return'?'OAQ MagNav · 목표로 복귀 중':'GPS 없는 비행 · 누적되는 오차');
+ !loss?'활주로에서 자동 출발합니다. GPS가 끊기면 OAQ MagNav를 켜보세요.':!s.magEnabled?(s.view==='overview'?'GPS가 끊겼습니다. 점선은 원래 경로입니다. 선명한 실제 기체와 반투명 계획 기체를 비교하고 MagNav를 켜보세요.':'GPS가 끊겼습니다. 상공 보기에서 원래 경로와 실제 위치를 비교하거나 OAQ MagNav를 켜보세요.'):s.process<1?'지금까지 관측한 자기장 패턴과 지도를 비교하고 있습니다.':'기체가 부드럽게 선회하며 목표로 돌아갑니다. 목표까지의 거리를 확인하세요.';
+ text('mn-caption',caption);text('mn-scene-caption',s.view==='airfield'?'해안 비행장 · 공항 보기':outcome?'최종 실제 위치 · 비행 궤적과 목표 거리':!loss?(s.time<10?'활주로 출발':'이륙 · 먼바다로 이동'):s.motion==='return'?'OAQ MagNav · 목표로 복귀 중':(s.view==='overview'?`실제 위치 ↔ 원래 경로 ${s.deviation.toFixed(2)} km`:'GPS 없는 비행 · 누적되는 오차'));
  text('mn-turn-status',s.startDistance===null?(outcome?'미사용 경로의 끝점과 목표를 비교해보세요.':'흰 점: 실제 위치 · □: INS 추정 위치'):`보정 시작 ${s.startDistance.toFixed(2)} → 현재 ${s.goalDistance.toFixed(2)} km`);
  $('mn-time').value=s.time;$('mn-time').disabled=!!outcome;text('mn-clock',`${Math.round(s.time/120*100)}%`);
- for(const [id,view]of [['mn-follow','flight'],['mn-arrival','arrival'],['mn-airfield','airfield']])$(id).setAttribute('aria-pressed',s.view===view);
+ for(const [id,view]of [['mn-overview','overview'],['mn-follow','flight'],['mn-arrival','arrival'],['mn-airfield','airfield']])$(id).setAttribute('aria-pressed',s.view===view);
  $('mn-result').hidden=!outcome;$('mn-result').dataset.outcome=outcome;text('mn-result-title',outcome==='success'?'목표 완수':'실패');text('mn-result-en',outcome==='success'?'MISSION COMPLETE':'MISSION FAILED');text('mn-result-detail',outcome==='success'?'비행 종료 · 목표에 도착했습니다.':`비행 종료 · 목표까지 ${s.goalDistance.toFixed(2)} km`);
  if(outcome&&!lastOutcome)wantPlay=false;lastOutcome=outcome;drawRoutes(s.routes);
 }
@@ -41,8 +41,8 @@ $('mn-play').onclick=()=>{if(!ready)return;if(lastState?.outcome){wantPlay=true;
 $('mn-correct').onclick=()=>{wantPlay=true;send('correct');};
 $('mn-restart').onclick=()=>{wantPlay=true;clearWarning();send('restart');};
 $('mn-time').oninput=e=>{wantPlay=false;send('seek',Number(e.target.value));showStage();};
-$('mn-follow').onclick=()=>send('follow');$('mn-arrival').onclick=()=>send('arrival');$('mn-airfield').onclick=()=>{wantPlay=false;clearWarning();send('airfield');};
-$('mn-camera').onclick=()=>{orbit=!orbit;stage.dataset.orbit=String(orbit);$('mn-camera').setAttribute('aria-pressed',orbit);text('mn-camera',orbit?'회전 중':'회전');frame.tabIndex=orbit?0:-1;};
+$('mn-overview').onclick=()=>{orbit=false;stage.dataset.orbit='false';$('mn-camera').setAttribute('aria-pressed','false');text('mn-camera','회전');send('overview');};$('mn-follow').onclick=()=>send('follow');$('mn-arrival').onclick=()=>send('arrival');$('mn-airfield').onclick=()=>{wantPlay=false;clearWarning();send('airfield');};
+$('mn-camera').onclick=()=>{if(lastState?.view==='overview')send('follow');orbit=!orbit;stage.dataset.orbit=String(orbit);$('mn-camera').setAttribute('aria-pressed',orbit);text('mn-camera',orbit?'회전 중':'회전');frame.tabIndex=orbit?0:-1;};
 $('mn-retry').onclick=()=>{ready=false;started=false;stage.dataset.ready='false';$('mn-loading').hidden=false;$('mn-failure').hidden=true;frame.removeAttribute('src');load();};
 function fullLabel(){const full=document.fullscreenElement||stage.classList.contains('mn-expanded');text('mn-fullscreen',full?'화면 복귀 ↙':'전체 화면 ⛶');$('mn-fullscreen').setAttribute('aria-label',full?'전체 화면 종료':'비행 화면 전체 화면으로 보기');}
 $('mn-fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(stage.classList.contains('mn-expanded'))stage.classList.remove('mn-expanded');else if(stage.requestFullscreen)await stage.requestFullscreen();else stage.classList.add('mn-expanded');}catch{stage.classList.toggle('mn-expanded');}fullLabel();};

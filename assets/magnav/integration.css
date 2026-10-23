@@ -4,3 +4,4 @@
 @media(max-height:620px) and (min-width:701px){.mn-stage{height:calc(100dvh - 82px)}.mn-comparison{padding:9px;gap:7px}.mn-summary{gap:6px}.mn-distance>strong{font-size:21px;margin:0}.mn-errors{padding-top:6px}.mn-turn-status{font-size:8px!important}.mn-result{padding:6px 9px}.mn-result h3{font-size:16px}.mn-result p{font-size:8px}.mn-controls{padding:7px 12px}.mn-caption{font-size:9px!important}.mn-statusbar{font-size:10px}.mn-map-area{min-height:90px}}
 @media(prefers-reduced-motion:reduce){.mn-stage *{transition:none!important}}
 .mn-stage{overflow-anchor:none}
+.mn-stage[data-outcome=success] .mn-errors,.mn-stage[data-outcome=failure] .mn-errors{display:none}.mn-result>span{display:none}.mn-result h3{font-size:18px;margin:0 0 5px}.mn-result{padding:10px 12px}@media(max-width:700px){.mn-result{padding:5px 7px}.mn-result h3{font-size:14px;margin:0}}

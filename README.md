@@ -54,3 +54,10 @@ python -m http.server 8000
 - `assets/air/`: 전용 페이지 스타일과 두 페이지의 접근 가능한 모바일 메뉴. 기존 메인 페이지의 드론 모델·스크롤 모션은 유지합니다.
 - 기체 모델과 랜딩기어 클립은 기존 v26을 그대로 사용합니다. 확대된 오차, 시간, 지형, 자기장 패턴은 원리 설명용 가상 예시이며 제품 실측 성능이나 실기 항법 알고리즘이 아닙니다.
 - `assets/magnav/experience.html`은 전체 조작 화면입니다. 웹 버전은 파일을 분리해 보내는 방식이 아닌 HTTP 호스팅용입니다.
+
+### Air 해양·구름 v02 (2026-10-23)
+
+- 실제 NCAR/EOL RICO 항공 사진을 참고해 연속 운해를 바다가 넓게 드러나는 산발 적운으로 변경했습니다. 구름의 높낮이·입체 음영·거리 안개와 해수면 잔물결·태양 반사·구름 그림자를 표현합니다.
+- 참고: https://archive.eol.ucar.edu/docs/isf/projects/RICO/spol/photos/special/tropical_cu.stereo.html (S. Krueger 촬영). 사진은 시각 참고에만 사용하며 제품에는 독자적인 절차 생성 3D 환경을 사용합니다.
+- 대표 화면은 `assets/magnav/poster-atmosphere2.jpg`, 새 체험 번들은 `app.js?v=atmosphere2`입니다. 기체 모델·랜딩기어·항법 시뮬레이션·메인 홈페이지는 유지합니다.
+- 편집 원본, 변경 전 백업, 검증 기록은 별도 버전 폴더 `MAEGNAS_Air_Page_v02_Atmosphere`에 보존합니다.

@@ -14,11 +14,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="assets/air/base.css?v=air1">
-<link rel="stylesheet" href="assets/magnav/integration.css?v=turn6?v=air1">
+<link rel="stylesheet" href="assets/magnav/integration.css?v=guided7">
 <link rel="stylesheet" href="assets/air/navigation.css?v=air1">
 <link rel="stylesheet" href="assets/air/air.css?v=air1">
 <script defer src="assets/air/navigation.js?v=air1"></script>
-<script defer src="assets/magnav/integration.js?v=turn6?v=air1"></script>
+<script defer src="assets/magnav/integration.js?v=guided7"></script>
 </head>
 <body class="air-page">
 <a class="air-skip" href="#main">Skip to content</a>
@@ -62,39 +62,46 @@
   <div class="container mn-heading">
     <span class="mono">01 / INTERACTIVE FLIGHT</span>
     <h2 id="mn-title" class="display">No signal.<br><span>Still a way forward.</span></h2>
-    <p>A calm flight can hide a growing position error. Follow the flight, reveal the drift, and see how magnetic map matching can help correct the estimate.</p>
+    <p>A calm flight can hide a growing position error. The flight starts automatically. Watch GPS disappear, then switch on OAQ MagNav to compare the paths and follow the return toward the goal.</p>
     <a class="mn-skip" href="#principle">Read the principle ↓</a>
   </div>
-  <div class="container mn-layout">
-    <div class="mn-stage" id="mn-stage">
+<div class="container mn-layout">
+  <div class="mn-stage" id="mn-stage" lang="ko" aria-label="OAQ 자기항법 비행 체험">
+    <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> MAGNAV</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="비행 화면 전체 화면으로 보기">전체 화면 ⛶</button></header>
+    <div class="mn-content">
       <div class="mn-screen">
-        <img class="mn-poster" src="assets/magnav/poster-arrival5.jpg" alt="MQ-9A flying over a broad open ocean with sparse clouds near the coast" loading="lazy" width="1280" height="720">
-        <iframe id="mn-frame" title="Interactive magnetic navigation flight" data-src="assets/magnav/experience.html?embed=1&amp;v=turn6" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
-        <div class="mn-screen-top"><span>MAEGNAS <i>/</i> MAGNAV</span><span id="mn-signal">GPS AVAILABLE</span></div>
-        <div class="mn-loading" id="mn-loading" role="status"><span class="mn-load-line"></span><b>Preparing your flight</b><small>The 3D scene loads only when you reach this section.</small></div>
-        <div class="mn-failure" id="mn-failure" hidden><b>The 3D scene could not start.</b><p>Try again in a browser with WebGL 2 support.</p><button id="mn-retry">Retry 3D</button><a href="assets/magnav/experience.html" target="_blank" rel="noopener">Open full experience ↗</a></div>
-        <section id="mn-result" class="mn-result" role="status" aria-live="polite" hidden><span id="mn-result-en">FLIGHT COMPLETE</span><h3 id="mn-result-title"></h3><p id="mn-result-detail"></p><button id="mn-restart">다시하기 <span>↗</span></button></section>
-        <div class="mn-route-key" id="mn-route-key" hidden><span>┄ Previous course</span><span>━ Return path</span><span>━ Flown path</span></div>
-        <div class="mn-readout"><div><span>INS position error</span><strong id="mn-ins">—<small> km</small></strong></div><div><span>After MagNav correction</span><strong id="mn-mag">—<small> km</small></strong></div><div class="mn-goal"><span>Actual distance to arrival <b id="mn-goal-distance">—</b></span><span>Previous course continued <b id="mn-goal-unguided">—</b></span></div><div class="mn-return"><span id="mn-turn-status">Follow the aircraft · watch its distance to arrival</span><div class="mn-turn-track"><i id="mn-turn-progress"></i></div></div><p id="mn-caption">The flight starts on the runway.</p></div>
+        <img class="mn-poster" src="assets/magnav/poster-arrival5.jpg" alt="해안에서 이륙해 넓은 바다를 비행하는 MQ-9A" width="1280" height="720">
+        <iframe id="mn-frame" title="OAQ 자기항법 3D 비행" data-src="assets/magnav/experience.html?embed=1&amp;v=guided7" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+        <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 자동 출발합니다.</small></div>
+        <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 열지 못했습니다.</b><p>WebGL 2를 지원하는 최신 브라우저에서 다시 시도해주세요.</p><button id="mn-retry">다시 불러오기</button></div>
+        <div id="mn-warning" class="mn-warning" role="alert" hidden><b>⚠ GPS 신호가 끊겼습니다</b><span>INS 오차가 누적됩니다. OAQ MagNav를 켜서 경로를 비교해보세요.</span></div>
+        <div class="mn-scene-caption" id="mn-scene-caption">해안 비행장 · 활주로 출발</div>
       </div>
-      <div class="mn-toolbar">
-        <div class="mn-modes" aria-label="Experience mode"><button id="mn-story" aria-pressed="true">Scroll story</button><button id="mn-explore" aria-pressed="false">Explore freely</button></div>
-        <a class="mn-full" href="assets/magnav/experience.html" target="_blank" rel="noopener">Full experience ↗</a>
-        <div class="mn-manual" id="mn-manual" hidden>
-          <button id="mn-play" aria-label="Play flight">Play flight</button><button id="mn-truth" aria-pressed="false">Reveal true position</button><button id="mn-correct" aria-pressed="false">Enable MagNav</button><button id="mn-guidance" aria-pressed="true">Return motion on</button><button id="mn-airfield">View airfield</button><button id="mn-follow" aria-pressed="true">Follow aircraft</button><button id="mn-arrival" aria-pressed="false">View arrival</button><button id="mn-camera" aria-pressed="false">Orbit camera</button>
-          <label for="mn-time">Flight progress</label><input id="mn-time" type="range" min="0" max="120" step=".1" value="0"><output id="mn-clock" for="mn-time">0%</output>
+      <aside class="mn-comparison" aria-label="전체 비행 경로와 거리 비교">
+        <div class="mn-map-area"><div class="mn-panel-title"><span id="mn-map-title">전체 경로 비교</span><small>TOP VIEW</small></div><canvas id="mn-route-map" width="640" height="420" role="img" aria-label="출발점, 목표, MagNav 사용 전후 경로와 현재 위치"></canvas><div class="mn-legend"><span class="without">┄ 미사용 경로</span><span class="with" id="mn-map-mag">━ MagNav 예상</span><span>● 실제 위치</span></div></div>
+        <div class="mn-summary">
+          <section id="mn-result" class="mn-result" role="status" aria-live="polite" hidden><span id="mn-result-en">FLIGHT COMPLETE</span><h3 id="mn-result-title"></h3><p id="mn-result-detail"></p></section>
+          <div class="mn-distance"><span>현재 목표까지</span><strong id="mn-goal-distance">— km</strong><small>같은 시점 · MagNav 미사용 <b id="mn-goal-unguided">— km</b></small></div>
+          <div class="mn-errors"><div><span>INS 위치 오차</span><b id="mn-ins">— km</b></div><div><span>MagNav 보정 후</span><b id="mn-mag">꺼짐</b></div></div>
+          <p id="mn-turn-status" class="mn-turn-status">하얀 점은 현재 기체 위치입니다.</p>
         </div>
-        <p class="mn-hint" id="mn-hint">Scroll to move through the flight. Or choose a chapter.</p>
-      </div>
-      <p class="mn-disclaimer">Illustrative scenario · authored route preview · not measured aircraft or MAEGNAS performance. Distances are horizontal scene distances.</p>
+      </aside>
     </div>
-    <div class="mn-storyline">
+    <div class="mn-controls">
+      <div class="mn-actions"><button id="mn-play" aria-label="비행 일시정지">Ⅱ 일시정지</button><button id="mn-correct" class="mn-primary" aria-pressed="false">OAQ MagNav 켜기 <span>↗</span></button><button id="mn-restart">↺ 다시하기</button><div class="mn-views"><button id="mn-follow" aria-pressed="true">기체 추적</button><button id="mn-arrival" aria-pressed="false">목표 보기</button><button id="mn-airfield" aria-pressed="false">공항</button><button id="mn-camera" aria-pressed="false">회전</button></div></div>
+      <div class="mn-timeline"><label for="mn-time">비행 진행</label><input id="mn-time" type="range" min="0" max="120" step=".1" value="0"><output id="mn-clock" for="mn-time">0%</output></div>
+      <p id="mn-caption" class="mn-caption">자동 비행 → GPS 두절 → MagNav를 켜고 비교 → 목표 도착</p>
+    </div>
+  </div>
+  <p class="mn-disclaimer">원리 설명을 위한 가상 비행·확대된 오차입니다. 제품 실측 성능이 아닙니다. MagNav 위치 보정 뒤 별도 자동조종과 연동되는 복귀 과정을 모션으로 표현합니다.</p>
+</div>
+
+<div class="container"><div class="mn-storyline">
       <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Take off from the coast, pass scattered clouds, and cross a broad stretch of open ocean. GPS provides an external position reference as the coastline recedes.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="1"><div class="mn-step-body"><span class="mono">02 / THE HIDDEN DRIFT</span><h3>The view stays calm.<br>The estimate drifts.</h3><p>In this fictional interference scenario, GPS becomes unavailable. INS continues estimating motion, but errors accumulate without an external correction.</p><p class="mn-callout">Open water offers few visual position references. Clouds do not cause the GPS outage.</p><button data-mn-jump=".42">Reveal the drift <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="2"><div class="mn-step-body"><span class="mono">03 / A DIFFERENT REFERENCE</span><h3>Read the field.<br>Compare the pattern.</h3><p>A quantum magnetic sensor observes the field along the flight. Comparing a sequence with a prepared magnetic map provides another clue to position.</p><p class="mn-callout">MagNav corrects the position estimate. A separate autopilot can use that estimate to guide the aircraft; this page shows an authored route-return preview.</p><button data-mn-jump=".70">Compare magnetic patterns <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="3"><div class="mn-step-body"><span class="mono">04 / A CORRECTED ESTIMATE</span><h3>Correct the estimate.<br>Return toward arrival.</h3><p>The aircraft banks from its current position and returns along a continuous curve. Follow the old course and the new path together, and watch the remaining distance fall. Arrival ends the flight; missing the waypoint ends in failure. Replay to compare both outcomes.</p><button data-mn-jump="1">See the arrival <span>↗</span></button><a href="index.html#contact">Discuss magnetic navigation →</a></div></article>
-    </div>
-  </div>
+    </div></div>
 </section>
 
   <section class="air-principle pad" id="principle" aria-labelledby="principle-title">

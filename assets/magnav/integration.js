@@ -1,51 +1,55 @@
-/* MAEGNAS-local integration: no external library, account, or navigation data. */
 (()=>{'use strict';
-const root=document.getElementById('magnav');if(!root)return;
-const $=id=>document.getElementById(id),frame=$('mn-frame'),stage=$('mn-stage'),layout=root.querySelector('.mn-layout');
-const CHANNEL='maegnas-magnav-v1',reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-let ready=false,started=false,active=false,mode=reduced?'explore':'story',orbit=false,progress=0,timer=0,raf=0,lastState=null,loadAt=0;
-root.dataset.mode=mode;root.dataset.ready='false';root.dataset.orbit='false';
-const clamp=x=>Math.max(0,Math.min(1,x));
-function send(command,value){if(ready)frame.contentWindow.postMessage({channel:CHANNEL,type:'command',command,value},location.origin);}
-function fail(message){root.dataset.failed='true';$('mn-loading').hidden=true;$('mn-failure').hidden=false;$('mn-failure').querySelector('p').textContent=message;}
-function load(){if(started)return;started=true;loadAt=performance.now();root.dataset.started='true';$('mn-loading').hidden=false;$('mn-failure').hidden=true;frame.src=frame.dataset.src;timer=setTimeout(()=>fail('Loading is taking longer than expected. Retry or open the full experience.'),90000);}
-function showStage(){requestAnimationFrame(()=>window.scrollTo({top:scrollY+layout.getBoundingClientRect().top-82,behavior:reduced?'instant':'smooth'}));}
-function setMode(value,focus=false){mode=value;root.dataset.mode=mode;$('mn-story').setAttribute('aria-pressed',mode==='story');$('mn-explore').setAttribute('aria-pressed',mode==='explore');$('mn-manual').hidden=mode!=='explore';orbit=false;root.dataset.orbit='false';$('mn-camera').setAttribute('aria-pressed','false');frame.tabIndex=-1;send('mode',mode);$('mn-hint').textContent=mode==='story'?'Scroll to move through the flight. Or choose a chapter.':reduced?'Reduced motion: choose a chapter, move the slider, or press Play.':'Use the controls below. Enable Orbit camera to drag or zoom the aircraft.';if(mode==='story')measure();if(focus)showStage();}
-function chapter(p){root.querySelectorAll('.mn-step').forEach((el,i)=>el.classList.toggle('active',i===(p<.22?0:p<.55?1:p<.84?2:3)));}
-function measure(){raf=0;if(mode!=='story')return;const top=parseFloat(getComputedStyle(stage).top)||82;const travel=Math.max(1,layout.offsetHeight-stage.offsetHeight);progress=clamp((top-layout.getBoundingClientRect().top)/travel);root.dataset.progress=progress.toFixed(4);chapter(progress);send('story',progress);}
-function wake(){if(!raf)raf=requestAnimationFrame(measure);}
-function jump(p){load();progress=p;chapter(p);if(mode==='story'&&!reduced){const top=parseFloat(getComputedStyle(stage).top)||82;const travel=Math.max(1,layout.offsetHeight-stage.offsetHeight);window.scrollTo({top:scrollY+layout.getBoundingClientRect().top+travel*p-top,behavior:'smooth'});}else{send('story',p);send('mode','explore');showStage();}}
-window.addEventListener('message',event=>{
- if(event.source!==frame.contentWindow||event.origin!==location.origin||event.data?.channel!==CHANNEL)return;
- const m=event.data;
- if(m.type==='ready'){ready=true;clearTimeout(timer);root.dataset.ready='true';root.dataset.loadMs=Math.round(performance.now()-loadAt);$('mn-failure').hidden=true;send('active',active&&!document.hidden);send('mode',mode);if(mode==='story')measure();else send('story',progress);if(mode==='explore')send('mode','explore');return;}
- if(m.type==='error'){clearTimeout(timer);fail(m.message||'This browser could not start WebGL 2. Try Chrome or Edge.');return;}
- if(m.type!=='state')return;lastState=m.state;const s=lastState;root.dataset.outcome=s.outcome||'';root.dataset.motion=s.motion;root.dataset.loss=String(s.time>=31.2);
- $('mn-signal').textContent=s.time<31.2?'GPS AVAILABLE':s.blend>.95?'INS + MAGNAV':'GPS UNAVAILABLE · INS ONLY';
- $('mn-ins').innerHTML=(s.reveal?s.error.toFixed(2):'—')+'<small> km</small>';$('mn-mag').innerHTML=(s.reveal&&s.magEnabled&&s.time>=31.2?s.corrected.toFixed(2):'—')+'<small> km</small>';
- $('mn-goal-distance').textContent=s.goalDistance.toFixed(2)+' km';$('mn-goal-unguided').textContent=s.unguidedDistance.toFixed(2)+' km';$('mn-guidance').setAttribute('aria-pressed',s.guidance);$('mn-guidance').textContent=s.guidance?'Return motion on':'Return motion off';$('mn-arrival').setAttribute('aria-pressed',s.view==='arrival');$('mn-follow').setAttribute('aria-pressed',s.view==='flight');
- $('mn-route-key').hidden=s.startDistance===null;$('mn-turn-status').textContent=s.startDistance===null?'Follow the aircraft · watch its distance to arrival':`Turn started ${s.startDistance.toFixed(2)} km → now ${s.goalDistance.toFixed(2)} km`;$('mn-turn-progress').style.width=(s.returnProgress*100)+'%';
- const firstResult=!!s.outcome&&$('mn-result').hidden;$('mn-result').hidden=!s.outcome;if(firstResult&&mode==='explore')showStage();$('mn-result-title').textContent=s.outcome==='success'?'목표 완수':'실패';$('mn-result-en').textContent=s.outcome==='success'?'DESTINATION REACHED':'DESTINATION MISSED';$('mn-result-detail').textContent=s.outcome==='success'?'목표 지점에 도착했습니다. 비행을 종료합니다.':`목표까지 ${s.goalDistance.toFixed(2)} km 남은 상태로 비행이 종료되었습니다.`;
- for(const id of ['mn-correct','mn-guidance'])$(id).disabled=!!s.outcome;
-
- $('mn-caption').textContent=s.outcome?(s.outcome==='success'?'Destination reached. Flight stopped. Replay to try another scenario.':'Destination missed. Flight stopped. Replay and enable MagNav to compare.'):s.time<10.2?'The flight starts on the runway.':s.time<31.2?'GPS still provides a position reference.':!s.reveal?'The view alone does not reveal accumulated error.':s.blend>.95?(s.guidance?(s.motion==='return'?'Banking onto the return path. Watch the distance decrease.':'Position estimate corrected. The aircraft continues from its current position.'):'The estimate is corrected. Route preview is off.'):s.magEnabled?'Observing the field → comparing the map → correcting the estimate.':'Without an external reference, the estimated and actual positions diverge.';
- $('mn-play').textContent=s.playing?'Pause flight':s.outcome?'Replay flight':'Play flight';$('mn-play').setAttribute('aria-label',$('mn-play').textContent);
- $('mn-truth').setAttribute('aria-pressed',s.reveal);$('mn-truth').textContent=s.reveal?'Hide true position':'Reveal true position';$('mn-correct').setAttribute('aria-pressed',s.magEnabled);$('mn-correct').textContent=s.magEnabled?'Disable MagNav':'Enable MagNav';
- if(document.activeElement!==$('mn-time'))$('mn-time').value=s.time;$('mn-clock').textContent=Math.round(s.time/120*100)+'%';
-});
-$('mn-explore').onclick=()=>{load();setMode('explore',true);};$('mn-story').onclick=()=>{load();if(reduced){jump(0);$('mn-hint').textContent='Reduced motion is on. Choose the chapter buttons to advance.';}else setMode('story');};
-$('mn-play').onclick=()=>send('play');$('mn-truth').onclick=()=>send('truth');$('mn-correct').onclick=()=>send('correct');$('mn-time').oninput=e=>send('seek',Number(e.target.value));
-$('mn-restart').onclick=()=>{setMode('explore');send('restart');showStage();};$('mn-follow').onclick=()=>send('follow');
-$('mn-guidance').onclick=()=>send('guidance');$('mn-arrival').onclick=()=>send('arrival');
-$('mn-camera').onclick=()=>{orbit=!orbit;root.dataset.orbit=String(orbit);$('mn-camera').setAttribute('aria-pressed',orbit);frame.tabIndex=orbit?0:-1;$('mn-hint').textContent=orbit?'Camera active: drag to orbit, wheel to zoom. Turn Orbit camera off to scroll over the scene.':'Page scrolling is active over the scene.';};
-$('mn-retry').onclick=()=>{clearTimeout(timer);ready=false;started=false;root.dataset.ready='false';frame.removeAttribute('src');load();};
-root.querySelectorAll('[data-mn-jump]').forEach(b=>b.onclick=()=>jump(Number(b.dataset.mnJump)));
-new IntersectionObserver(entries=>{if(entries[0].isIntersecting)load();},{rootMargin:'500px 0px'}).observe(stage);
-new IntersectionObserver(entries=>{active=entries[0].isIntersecting;send('active',active&&!document.hidden);},{threshold:.02}).observe(root.querySelector('.mn-screen'));
-document.addEventListener('visibilitychange',()=>send('active',active&&!document.hidden));
-window.addEventListener('scroll',wake,{passive:true});window.addEventListener('resize',wake,{passive:true});
-const hero=document.querySelector('.hero'),video=hero?.querySelector('video');if(video)new IntersectionObserver(es=>{if(es[0].isIntersecting&&!reduced)video.play().catch(()=>{});else video.pause();}).observe(hero);
-setMode(mode);chapter(0);
-window.__MAEGNAS_MAGNAV={snapshot:()=>({ready,started,active,mode,orbit,progress,loadMs:Number(root.dataset.loadMs)||null,state:lastState}),jump,setMode};
+const $=id=>document.getElementById(id),section=$('magnav');if(!section)return;
+const stage=$('mn-stage'),frame=$('mn-frame'),CHANNEL='maegnas-magnav-v1',reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let ready=false,active=false,started=false,wantPlay=!reduced,orbit=false,lastState=null,lastLoss=false,warningUntil=0,lastOutcome='',loadTimer;
+const send=(command,value)=>{if(frame.contentWindow)frame.contentWindow.postMessage({channel:CHANNEL,type:'command',command,value},location.origin);};
+const text=(id,value)=>$(id).textContent=value;
+function load(){if(frame.hasAttribute('src'))return;frame.src=frame.dataset.src;clearTimeout(loadTimer);loadTimer=setTimeout(()=>{if(!ready){$('mn-loading').hidden=true;$('mn-failure').hidden=false;}},60000);}
+function syncPlayback(){if(!ready)return;send('active',active&&!document.hidden);if(active&&!document.hidden){if(!started){started=true;send('mode','explore');}send('playing',wantPlay);}}
+new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting))load();},{rootMargin:'500px'}).observe(stage);
+new IntersectionObserver(entries=>{active=entries[0].isIntersecting&&entries[0].intersectionRatio>.65;syncPlayback();},{threshold:[0,.25,.65,1]}).observe(stage);
+document.addEventListener('visibilitychange',syncPlayback);
+function showStage(){if(document.fullscreenElement||stage.classList.contains('mn-expanded'))return;const top=stage.getBoundingClientRect().top+scrollY-78;window.scrollTo({top,behavior:'instant'});}
+function clearWarning(){warningUntil=0;lastLoss=false;$('mn-warning').hidden=true;}
+function drawRoutes(route){if(!route)return;const canvas=$('mn-route-map'),r=canvas.getBoundingClientRect();if(r.width<1||r.height<1)return;const w=r.width,h=r.height,dpr=Math.min(devicePixelRatio||1,2);if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);
+ const rotate=p=>[p[0]*.82-p[1]*.572,p[0]*.572+p[1]*.82],sets=[route.without,route.with,route.flown,[route.goal,route.current,route.estimate]],all=sets.flat().map(rotate);let xmin=Infinity,xmax=-Infinity,ymin=Infinity,ymax=-Infinity;for(const p of all){xmin=Math.min(xmin,p[0]);xmax=Math.max(xmax,p[0]);ymin=Math.min(ymin,p[1]);ymax=Math.max(ymax,p[1]);}const margin=Math.min(27,w*.12),scale=Math.min((w-2*margin)/(xmax-xmin||1),(h-2*margin)/(ymax-ymin||1));const xy=p=>{const q=rotate(p);return [w/2+(q[0]-(xmin+xmax)/2)*scale,h/2+(q[1]-(ymin+ymax)/2)*scale];};
+ c.strokeStyle='#a9d6dd10';c.lineWidth=1;c.beginPath();for(let x=15;x<w;x+=25){c.moveTo(x,0);c.lineTo(x,h);}for(let y=10;y<h;y+=25){c.moveTo(0,y);c.lineTo(w,y);}c.stroke();
+ const line=(points,color,dash,width)=>{if(points.length<2)return;c.beginPath();points.forEach((p,i)=>i?c.lineTo(...xy(p)):c.moveTo(...xy(p)));c.strokeStyle=color;c.lineWidth=width;c.setLineDash(dash);c.lineJoin='round';c.stroke();c.setLineDash([]);};
+ line(route.without,'#eab378',[4,4],1.6);line(route.with,route.preview?'#8de6c899':'#8de6c8',route.preview?[2,3]:[],2);line(route.flown,'#e9f7ff',[],1.4);line([route.current,route.estimate],'#efb67877',[2,3],1);
+ const dot=(p,color,label,radius=3)=>{const [x,y]=xy(p);c.fillStyle=color;c.beginPath();c.arc(x,y,radius,0,Math.PI*2);c.fill();if(label){c.font='9px Arial, sans-serif';c.textAlign=x>w*.7?'right':'left';c.fillText(label,x+(x>w*.7?-7:7),y-7);}};
+ dot(route.without[0],'#9eb8c2','출발',2.5);dot(route.goal,'#96efd0','목표',4);const g=xy(route.goal);c.strokeStyle='#94dfc9';c.beginPath();c.arc(...g,7,0,Math.PI*2);c.stroke();dot(route.current,'#f3fbff','',4);const estimate=xy(route.estimate);c.strokeStyle='#eeb779';c.strokeRect(estimate[0]-3,estimate[1]-3,6,6);
+ canvas.dataset.flownPoints=route.flown.length;canvas.dataset.preview=String(route.preview);canvas.setAttribute('aria-label',`전체 경로 비교. 주황색 점선: MagNav 미사용. 초록색: ${route.preview?'MagNav 예상 복귀':'MagNav 복귀'}. 흰색: 실제 비행 경로. 하얀 점: 현재 위치. 주황색 사각형: INS 추정 위치.`);
+}
+function update(s){lastState=s;const loss=s.time>=31.2,outcome=s.outcome||'';stage.dataset.outcome=outcome;stage.dataset.playing=String(s.playing);stage.dataset.time=s.time.toFixed(2);stage.dataset.position=JSON.stringify(s.routes?.current);stage.dataset.phase=outcome?'ended':loss?(s.magEnabled?'correcting':'gps-lost'):'departing';
+ if(loss&&!lastLoss&&!outcome){warningUntil=performance.now()+6500;}if(!loss)warningUntil=0;lastLoss=loss;$('mn-warning').hidden=outcome||!loss||performance.now()>warningUntil;
+ const signal=$('mn-signal');signal.dataset.lost=String(loss);signal.textContent=outcome?'비행 종료':!loss?'● GPS 정상':s.magEnabled?(s.process<1?'GPS 두절 · 자기장 패턴 비교 중':'GPS 두절 · MagNav 보정 중'):'⚠ GPS 두절 · INS 단독';
+ text('mn-play',s.playing?'Ⅱ 일시정지':outcome?'▶ 다시 재생':'▶ 재생');$('mn-play').setAttribute('aria-label',s.playing?'비행 일시정지':'비행 재생');
+ $('mn-correct').setAttribute('aria-pressed',s.magEnabled);text('mn-correct',s.magEnabled?'OAQ MagNav 켜짐 ✓':'OAQ MagNav 켜기 ↗');$('mn-correct').disabled=!!outcome;
+ text('mn-ins',`${s.error.toFixed(2)} km`);text('mn-mag',!s.magEnabled?'꺼짐':!loss?'대기':`${s.corrected.toFixed(2)} km`);
+ text('mn-goal-distance',`${s.goalDistance.toFixed(2)} km`);text('mn-goal-unguided',`${s.unguidedDistance.toFixed(2)} km`);text('mn-map-mag',s.routes?.preview?'┄ MagNav 예상':'━ MagNav 경로');text('mn-map-title',outcome?'최종 비행 경로':'전체 경로 비교');
+ const caption=outcome?(outcome==='success'?'목표에 도착했습니다. 다시하기로 미사용 결과와 비교해보세요.':'목표에 도착하지 못했습니다. 다시하기 후 OAQ MagNav를 켜보세요.'):
+ !loss?'활주로에서 자동 출발합니다. GPS가 끊기면 OAQ MagNav를 켜보세요.':!s.magEnabled?'GPS가 끊겼습니다. OAQ MagNav를 켜면 위치 보정과 복귀가 시작됩니다.':s.process<1?'지금까지 관측한 자기장 패턴과 지도를 비교하고 있습니다.':'기체가 부드럽게 선회하며 목표로 돌아갑니다. 목표까지의 거리를 확인하세요.';
+ text('mn-caption',caption);text('mn-scene-caption',s.view==='airfield'?'해안 비행장 · 공항 보기':outcome?'최종 기체 위치 · 경로와 거리는 오른쪽 지도에 표시':!loss?(s.time<10?'활주로 출발':'이륙 · 먼바다로 이동'):s.motion==='return'?'OAQ MagNav · 목표로 복귀 중':'GPS 없는 비행 · 누적되는 오차');
+ text('mn-turn-status',s.startDistance===null?'흰 점: 실제 위치 · □: INS 추정 위치':`보정 시작 ${s.startDistance.toFixed(2)} → 현재 ${s.goalDistance.toFixed(2)} km`);
+ $('mn-time').value=s.time;$('mn-time').disabled=!!outcome;text('mn-clock',`${Math.round(s.time/120*100)}%`);
+ for(const [id,view]of [['mn-follow','flight'],['mn-arrival','arrival'],['mn-airfield','airfield']])$(id).setAttribute('aria-pressed',s.view===view);
+ $('mn-result').hidden=!outcome;$('mn-result').dataset.outcome=outcome;text('mn-result-title',outcome==='success'?'목표 완수':'실패');text('mn-result-en',outcome==='success'?'MISSION COMPLETE':'MISSION FAILED');text('mn-result-detail',outcome==='success'?'비행 종료 · 목표에 도착했습니다.':`비행 종료 · 목표까지 ${s.goalDistance.toFixed(2)} km`);
+ if(outcome&&!lastOutcome)wantPlay=false;lastOutcome=outcome;drawRoutes(s.routes);
+}
+window.addEventListener('message',e=>{if(e.source!==frame.contentWindow||e.origin!==location.origin||e.data?.channel!==CHANNEL)return;if(e.data.type==='ready'){ready=true;stage.dataset.ready='true';$('mn-loading').hidden=true;$('mn-failure').hidden=true;clearTimeout(loadTimer);if(['#magnav','#mn-stage'].includes(location.hash))showStage();syncPlayback();}else if(e.data.type==='state')update(e.data.state);else if(e.data.type==='error'){$('mn-loading').hidden=true;$('mn-failure').hidden=false;}});
+$('mn-play').onclick=()=>{if(!ready)return;if(lastState?.outcome){wantPlay=true;clearWarning();send('restart');}else{wantPlay=!lastState?.playing;send('playing',wantPlay);}};
+$('mn-correct').onclick=()=>{wantPlay=true;send('correct');};
+$('mn-restart').onclick=()=>{wantPlay=true;clearWarning();send('restart');};
+$('mn-time').oninput=e=>{wantPlay=false;send('seek',Number(e.target.value));showStage();};
+$('mn-follow').onclick=()=>send('follow');$('mn-arrival').onclick=()=>send('arrival');$('mn-airfield').onclick=()=>{wantPlay=false;clearWarning();send('airfield');};
+$('mn-camera').onclick=()=>{orbit=!orbit;stage.dataset.orbit=String(orbit);$('mn-camera').setAttribute('aria-pressed',orbit);text('mn-camera',orbit?'회전 중':'회전');frame.tabIndex=orbit?0:-1;};
+$('mn-retry').onclick=()=>{ready=false;started=false;stage.dataset.ready='false';$('mn-loading').hidden=false;$('mn-failure').hidden=true;frame.removeAttribute('src');load();};
+function fullLabel(){const full=document.fullscreenElement||stage.classList.contains('mn-expanded');text('mn-fullscreen',full?'화면 복귀 ↙':'전체 화면 ⛶');$('mn-fullscreen').setAttribute('aria-label',full?'전체 화면 종료':'비행 화면 전체 화면으로 보기');}
+$('mn-fullscreen').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else if(stage.classList.contains('mn-expanded'))stage.classList.remove('mn-expanded');else if(stage.requestFullscreen)await stage.requestFullscreen();else stage.classList.add('mn-expanded');}catch{stage.classList.toggle('mn-expanded');}fullLabel();};
+document.addEventListener('fullscreenchange',()=>{fullLabel();if(!document.fullscreenElement)requestAnimationFrame(()=>requestAnimationFrame(showStage));});document.addEventListener('keydown',e=>{if(e.key==='Escape'){stage.classList.remove('mn-expanded');fullLabel();}});
+stage.addEventListener('click',e=>{if(e.target.closest('.mn-controls button'))showStage();});
+new ResizeObserver(()=>{if(lastState)drawRoutes(lastState.routes);}).observe($('mn-route-map'));
+document.querySelectorAll('[data-mn-jump]').forEach(b=>b.onclick=()=>{showStage();wantPlay=false;const p=Number(b.dataset.mnJump);clearWarning();send('seek',p===0?0:p<.5?55:p<1?80:108);if(p>=.7){wantPlay=true;send('mag',true);}else send('mag',false);});
+document.querySelectorAll('a[href="#magnav"],a[href="#mn-stage"]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();history.replaceState(null,'','#mn-stage');showStage();}));
+if(['#magnav','#mn-stage'].includes(location.hash))requestAnimationFrame(showStage);
 })();
-document.getElementById('mn-airfield').onclick=()=>document.getElementById('mn-frame').contentWindow.postMessage({channel:'maegnas-magnav-v1',type:'command',command:'airfield'},location.origin);

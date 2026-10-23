@@ -67,3 +67,10 @@ python -m http.server 8000
 - 구름을 240→64개로 줄여 해안/연안 섬 주변에 배치하고 중앙 항로는 비웠습니다. 비대칭 밀도·흩어진 가장자리·내부 투과/음영과, 더 미세한 해수면·시점에 따른 은빛 반사를 적용합니다. 연안 구름과 맑은 먼바다를 선택한 가상 날씨입니다.
 - 해상 구간을 확장해 항로 길이는 약2.51배, 직접 재생 기본 배속은1.5배, 프로펠러 표시는4배 회전+잔상으로 변경했습니다. 활주로 출발·원본 기어 클립·항법 오차 수식·보정6초는 유지합니다. 빠른 이동에 맞춰 카메라 추적을 보정했습니다.
 - `poster-opensea3.jpg` / `app.js?v=opensea3` 사용. 소스와 검증/이전 파일은 `MAEGNAS_Air_Page_v03_OpenSea`에 보존합니다. 웹용 설명 모션이며 실기 비행 속도 또는 기상 시뮬레이션을 나타내지 않습니다.
+
+### Air 수면·해안 지형 v04 (2026-10-23)
+
+- 가까운 수면은 실제 정점 높낮이를 가지는 불규칙 파면으로 변경하고, 여러 크기의 잔물결·파면 기울기·시점에 따른 반사를 적용했습니다. 먼 수면의 미세 무늬는 거리별로 걸러 깜박임을 줄입니다.
+- 해안과 섬에 비대칭 만/돌출부, 능선/골짜기, 암벽과 일부 모래 해변을 추가했습니다. 바다의 얕은 수역과 해안 지형은 같은 물가 경계를 사용하며 기존 활주로 평탄면은 유지합니다.
+- 참고: [NASA의 Sunglint](https://science.nasa.gov/earth/earth-observatory/the-science-of-sunglint-84333/), [NPS Channel Islands 항공 사진](https://www.nps.gov/places/000/shag-rock-overlook.htm), [NPS Rocky Coast Landforms](https://home.nps.gov/articles/rocky-coast-landforms.htm). 사진은 시각 참고만 사용했습니다. 실제 특정 장소의 지형 또는 유체 시뮬레이션이 아닙니다.
+- `poster-coastal4.jpg` / `app.js?v=coastal4`. 원본/검증은 `MAEGNAS_Air_Page_v04_CoastalSurface`. v03의 항법/경로/구름/프로펠러/앱 코드와 원본 기체 파일은 유지합니다.

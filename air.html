@@ -14,11 +14,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="assets/air/base.css?v=air1">
-<link rel="stylesheet" href="assets/magnav/integration.css?v=detail19">
+<link rel="stylesheet" href="assets/magnav/integration.css?v=aids20">
 <link rel="stylesheet" href="assets/air/navigation.css?v=air1">
 <link rel="stylesheet" href="assets/air/air.css?v=air1">
 <script defer src="assets/air/navigation.js?v=air1"></script>
-<script defer src="assets/magnav/integration.js?v=detail19"></script>
+<script defer src="assets/magnav/integration.js?v=aids20"></script>
 </head>
 <body class="air-page">
 <a class="air-skip" href="#main">Skip to content</a>
@@ -62,7 +62,7 @@
   <div class="container mn-heading">
     <span class="mono">01 / INTERACTIVE FLIGHT</span>
     <h2 id="mn-title" class="display">No signal.<br><span>Still a way forward.</span></h2>
-    <p>Start close to the nose and underside sensor, rise over the coastal airbase, then follow the aircraft into open water. GPS provides the initial reference; its button becomes unavailable when the signal is lost over open water. Choose INS only or Quantum Navigation. Compare the accumulating INS drift with a smooth return to the dashed target route, while a translucent aircraft shows what would happen if INS continued alone.</p>
+    <p>Follow a continuous close tour around the aircraft, including the retracting landing gear. INS remains active throughout. Add GPS or Quantum as an aiding source. In this authored scenario, GPS is first jammed; after 10 seconds of playback, a spoofed signal becomes selectable and reports a false position. Compare the accumulating INS drift with a smooth return to the dashed target route, while a translucent aircraft shows what would happen if INS continued alone.</p>
     <a class="mn-skip" href="#principle">Read the principle ↓</a>
   </div>
 <div class="container mn-layout">
@@ -70,7 +70,7 @@
   <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> QUANTUM NAVIGATION</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="전체 화면">전체 화면 ⛶</button></header>
   <div class="mn-content">
    <div class="mn-screen">
-    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=detail19" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=aids20" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
     <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 출발합니다.</small></div>
     <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 준비하지 못했습니다.</b><button id="mn-retry">다시 불러오기</button></div>
     <div class="mn-warning" id="mn-warning" role="alert" hidden><b>WARNING</b><span>GPS 신호 두절 · 항법 방식을 선택하세요.</span></div>
@@ -85,10 +85,10 @@
    </aside>
   </div>
   <div class="mn-controls">
-   <div class="mn-mode-row" role="group" aria-label="항법 방식 선택">
-    <button id="mn-ins" aria-pressed="false"><b>INS only</b><small>관성항법만 사용</small></button>
-    <button id="mn-gps" aria-pressed="true" disabled><b>GPS</b><small id="mn-gps-status">신호 확인 중</small></button>
-    <button id="mn-quantum" aria-pressed="false"><b>Quantum Navigation</b><small>Non-GPS Navigation</small></button>
+   <div class="mn-mode-row" role="group" aria-label="INS 기본과 보조 항법 선택">
+    <button id="mn-ins" aria-pressed="true"><b>INS</b><small>기본 · 항상 사용</small></button>
+    <button id="mn-gps" aria-pressed="false" disabled><b>+ GPS</b><small id="mn-gps-status">신호 확인 중</small></button>
+    <button id="mn-quantum" aria-pressed="false"><b>+ Quantum</b><small>Non-GPS Navigation</small></button>
    </div>
    <div class="mn-actions"><button id="mn-play">Ⅱ 일시정지</button><button id="mn-restart">↺ 다시 출발</button><button id="mn-cruise">먼바다로 건너뛰기 ↗</button><div class="mn-views"><button id="mn-overview" aria-pressed="false" disabled>상공 비교</button><button id="mn-follow" aria-pressed="true">기체 둘러보기</button></div><output id="mn-clock">00:00</output></div>
    <p class="mn-caption" id="mn-caption">활주로 출발 후 먼바다에서 INS 단독과 Quantum Navigation을 직접 전환해보세요.</p>
@@ -99,8 +99,8 @@
 
 
 <div class="container"><div class="mn-storyline">
-      <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Start stationary on the runway, accelerate, lift off, and retract the landing gear in a gradual departure sequence before crossing open ocean. GPS provides an external position reference as the coastline recedes.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
-      <article class="mn-step" data-chapter="1"><div class="mn-step-body"><span class="mono">02 / THE HIDDEN DRIFT</span><h3>The view stays calm.<br>The estimate drifts.</h3><p>In this fictional interference scenario, GPS becomes unavailable. INS continues estimating motion, but errors accumulate without an external correction.</p><p class="mn-callout">Open water offers few visual position references. Clouds do not cause the GPS outage.</p><button data-mn-jump=".42">Reveal the drift <span>↗</span></button></div></article>
+      <article class="mn-step" data-chapter="0"><div class="mn-step-body"><span class="mono">01 / A KNOWN START</span><h3>Leave the runway.<br>Keep a reference.</h3><p>Start stationary on the runway, accelerate, lift off, and retract the landing gear in a gradual departure sequence before crossing open ocean. INS starts from a known runway position. GPS or Quantum can be added as an external reference.</p><button data-mn-jump="0">View departure <span>↗</span></button></div></article>
+      <article class="mn-step" data-chapter="1"><div class="mn-step-body"><span class="mono">02 / THE HIDDEN DRIFT</span><h3>The view stays calm.<br>The estimate drifts.</h3><p>In this fictional scenario, jamming first prevents GPS reception. Ten seconds later, spoofed GPS reports a false position. INS continues throughout; compare adding the corrupted GPS source with adding a magnetic reference.</p><p class="mn-callout">Open water offers few visual position references. Clouds do not cause the GPS outage.</p><button data-mn-jump=".42">Reveal the drift <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="2"><div class="mn-step-body"><span class="mono">03 / A DIFFERENT REFERENCE</span><h3>Read the field.<br>Compare the pattern.</h3><p>A quantum magnetic sensor observes the field along the flight. Comparing a sequence with a prepared magnetic map provides another clue to position.</p><p class="mn-callout">MagNav corrects the position estimate. A separate autopilot can use that estimate to guide the aircraft; this page shows an authored route-return preview.</p><button data-mn-jump=".70">Compare magnetic patterns <span>↗</span></button></div></article>
       <article class="mn-step" data-chapter="3"><div class="mn-step-body"><span class="mono">04 / A CORRECTED ESTIMATE</span><h3>Correct the estimate.<br>Rejoin. Keep following.</h3><p>The aircraft turns smoothly from its current position, rejoins the intended route, and keeps following it across open water. Switch back to INS only to see drift build again. The translucent comparison shows what would happen if INS alone continued from the moment Quantum was enabled.</p><button data-mn-jump="1">Follow the route <span>↗</span></button><a href="index.html#contact">Discuss magnetic navigation →</a></div></article>
     </div></div>
@@ -115,7 +115,7 @@
         <li><span class="mono">02 / MATCH</span><h3>Compare with a map.</h3><p>The observed pattern is compared with a prepared magnetic map. Distinctive patterns help narrow down the possible location.</p></li>
         <li><span class="mono">03 / AID</span><h3>Constrain inertial drift.</h3><p>The magnetic reference can help correct INS estimates. Accuracy depends on map quality, sensor measurements, and magnetic interference.</p></li>
       </ol>
-      <p class="air-context">This experience uses a fictional flight, magnetic map, and enlarged drift to explain the principle. It is not a measurement of MAEGNAS or aircraft performance. The GPS outage represents signal interference; clouds only obscure visual landmarks.</p>
+      <p class="air-context">This experience uses a fictional flight, magnetic map, and enlarged drift to explain the principle. It is not a measurement of MAEGNAS or aircraft performance. The jamming-to-spoofing sequence and ten-second timing are authored for this demonstration; they are not a prediction of real receiver behavior. Clouds only obscure visual landmarks.</p>
       <div class="air-contact"><div><p class="mono">AIR / NEXT STEPS</p><h3>Explore a different reference.</h3></div><a class="btn btn-line" href="index.html#contact">Discuss magnetic navigation ↗</a></div>
     </div>
   </section>

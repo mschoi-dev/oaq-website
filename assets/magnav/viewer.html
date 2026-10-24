@@ -1,9 +1,9 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ Quantum Navigation</title><link rel="stylesheet" href="integration.css?v=detail19"><script defer src="integration.js?v=detail19"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>OAQ Quantum Navigation</title><link rel="stylesheet" href="integration.css?v=aids20"><script defer src="integration.js?v=aids20"></script></head><body class="mn-standalone"><section id="magnav" class="mn-section"><div class="container mn-layout">
  <div class="mn-stage" id="mn-stage" lang="ko" aria-label="OAQ 항로 복귀 체험">
   <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> QUANTUM NAVIGATION</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="전체 화면">전체 화면 ⛶</button></header>
   <div class="mn-content">
    <div class="mn-screen">
-    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="experience.html?embed=1&amp;v=detail19" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="experience.html?embed=1&amp;v=aids20" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
     <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 출발합니다.</small></div>
     <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 준비하지 못했습니다.</b><button id="mn-retry">다시 불러오기</button></div>
     <div class="mn-warning" id="mn-warning" role="alert" hidden><b>WARNING</b><span>GPS 신호 두절 · 항법 방식을 선택하세요.</span></div>
@@ -18,10 +18,10 @@
    </aside>
   </div>
   <div class="mn-controls">
-   <div class="mn-mode-row" role="group" aria-label="항법 방식 선택">
-    <button id="mn-ins" aria-pressed="false"><b>INS only</b><small>관성항법만 사용</small></button>
-    <button id="mn-gps" aria-pressed="true" disabled><b>GPS</b><small id="mn-gps-status">신호 확인 중</small></button>
-    <button id="mn-quantum" aria-pressed="false"><b>Quantum Navigation</b><small>Non-GPS Navigation</small></button>
+   <div class="mn-mode-row" role="group" aria-label="INS 기본과 보조 항법 선택">
+    <button id="mn-ins" aria-pressed="true"><b>INS</b><small>기본 · 항상 사용</small></button>
+    <button id="mn-gps" aria-pressed="false" disabled><b>+ GPS</b><small id="mn-gps-status">신호 확인 중</small></button>
+    <button id="mn-quantum" aria-pressed="false"><b>+ Quantum</b><small>Non-GPS Navigation</small></button>
    </div>
    <div class="mn-actions"><button id="mn-play">Ⅱ 일시정지</button><button id="mn-restart">↺ 다시 출발</button><button id="mn-cruise">먼바다로 건너뛰기 ↗</button><div class="mn-views"><button id="mn-overview" aria-pressed="false" disabled>상공 비교</button><button id="mn-follow" aria-pressed="true">기체 추적</button></div><output id="mn-clock">00:00</output></div>
    <p class="mn-caption" id="mn-caption">활주로 출발 후 먼바다에서 INS 단독과 Quantum Navigation을 직접 전환해보세요.</p>

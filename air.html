@@ -14,11 +14,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@300;400;500&display=swap">
 <link rel="stylesheet" href="assets/air/base.css?v=air1">
-<link rel="stylesheet" href="assets/magnav/integration.css?v=ascent17">
+<link rel="stylesheet" href="assets/magnav/integration.css?v=airbase18">
 <link rel="stylesheet" href="assets/air/navigation.css?v=air1">
 <link rel="stylesheet" href="assets/air/air.css?v=air1">
 <script defer src="assets/air/navigation.js?v=air1"></script>
-<script defer src="assets/magnav/integration.js?v=ascent17"></script>
+<script defer src="assets/magnav/integration.js?v=airbase18"></script>
 </head>
 <body class="air-page">
 <a class="air-skip" href="#main">Skip to content</a>
@@ -62,7 +62,7 @@
   <div class="container mn-heading">
     <span class="mono">01 / INTERACTIVE FLIGHT</span>
     <h2 id="mn-title" class="display">No signal.<br><span>Still a way forward.</span></h2>
-    <p>Leave the runway and head out over open water. Use the dashed target route as your reference. Switch between INS only and Quantum Navigation to see the corrected aircraft return to the route while a translucent INS-only aircraft continues drifting from the same switch point. The live 3D aircraft bank through each turn while keeping a consistent visual size. Gentle heading variations do not cancel the accumulated INS drift. The gap grows gradually; Quantum Navigation makes small corrections near the target route. GPS remains available through takeoff and the coastal crossing, then drops out over open water. The camera pushes in during takeoff, tracks behind the engine, then rises smoothly into the navigation comparison. GPS drops out sooner over open water, and gentle INS divergence becomes visible earlier without cancelling its accumulated drift. A small overview retains the full split and return path; previous comparisons remain as faint traces when switching back.</p>
+    <p>Start face-to-face with the aircraft at a coastal airbase. GPS provides the initial reference; its button becomes unavailable when the signal is lost over open water. Choose INS only or Quantum Navigation. Compare the accumulating INS drift with a smooth return to the dashed target route, while a translucent aircraft shows what would happen if INS continued alone.</p>
     <a class="mn-skip" href="#principle">Read the principle ↓</a>
   </div>
 <div class="container mn-layout">
@@ -70,7 +70,7 @@
   <header class="mn-statusbar"><span class="mn-brand">OAQ <i>/</i> QUANTUM NAVIGATION</span><span id="mn-signal" role="status">비행 준비 중</span><button id="mn-fullscreen" aria-label="전체 화면">전체 화면 ⛶</button></header>
   <div class="mn-content">
    <div class="mn-screen">
-    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=ascent17" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
+    <iframe id="mn-frame" title="활주로 출발과 먼바다 항법 비교" data-src="assets/magnav/experience.html?embed=1&amp;v=airbase18" allow="fullscreen" referrerpolicy="same-origin" tabindex="-1"></iframe>
     <div class="mn-loading" id="mn-loading" role="status"><b>비행을 준비하고 있습니다</b><small>준비가 끝나면 활주로에서 출발합니다.</small></div>
     <div class="mn-failure" id="mn-failure" hidden><b>3D 화면을 준비하지 못했습니다.</b><button id="mn-retry">다시 불러오기</button></div>
     <div class="mn-warning" id="mn-warning" role="alert" hidden><b>WARNING</b><span>GPS 신호 두절 · 항법 방식을 선택하세요.</span></div>
@@ -86,7 +86,8 @@
   </div>
   <div class="mn-controls">
    <div class="mn-mode-row" role="group" aria-label="항법 방식 선택">
-    <button id="mn-ins" aria-pressed="true"><b>INS only</b><small>GPS 없이 기존 관성항법</small></button>
+    <button id="mn-ins" aria-pressed="false"><b>INS only</b><small>관성항법만 사용</small></button>
+    <button id="mn-gps" aria-pressed="true" disabled><b>GPS</b><small id="mn-gps-status">신호 확인 중</small></button>
     <button id="mn-quantum" aria-pressed="false"><b>Quantum Navigation</b><small>Non-GPS Navigation</small></button>
    </div>
    <div class="mn-actions"><button id="mn-play">Ⅱ 일시정지</button><button id="mn-restart">↺ 다시 출발</button><button id="mn-cruise">먼바다로 건너뛰기 ↗</button><div class="mn-views"><button id="mn-overview" aria-pressed="false" disabled>상공 비교</button><button id="mn-follow" aria-pressed="true">기체 둘러보기</button></div><output id="mn-clock">00:00</output></div>

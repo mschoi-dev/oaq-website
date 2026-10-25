@@ -1,0 +1,41 @@
+/* v54: language navigation, shared by Korean and English editions. */
+header .language-switch{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex:none;min-width:0}
+header .language-switch a{display:inline-flex;justify-content:center;align-items:center;min-width:32px;min-height:44px;font-size:11px;font-weight:500;letter-spacing:.04em;color:#aeb9c5;text-decoration:none;position:relative;opacity:1}
+header .language-switch span{font-size:10px;color:#697581}
+header .language-switch a[aria-current="true"]{color:#f2f5f7}
+header .language-switch a[aria-current="true"]:after{content:"";position:absolute;bottom:5px;left:8px;right:8px;height:1px;background:#dbe3eb}
+header .language-switch a:hover{color:#fff}
+header .language-switch a:focus-visible{outline:2px solid #dbe3eb;outline-offset:2px}
+@media(min-width:1024px){header .language-switch{grid-column:3;grid-row:1;justify-self:end}}
+@media(min-width:761px) and (max-width:1023px){header .language-switch{position:absolute;right:24px;top:12px}}
+@media(max-width:760px){
+ header .nav{column-gap:8px;row-gap:12px}
+ header .nav>.logo{order:0}
+ header .language-switch{order:1;margin-left:auto;gap:2px}
+ header .language-switch a{min-width:28px}
+ header #mobile-menu{order:2;min-width:64px;padding:8px 10px;gap:8px;margin:0}
+ header #primary-navigation{order:3}
+}
+html[lang="en"] main h1,html[lang="en"] main h2,html[lang="en"] main h3{word-break:normal;overflow-wrap:break-word;hyphens:none}
+html[lang="en"] .hp-main h1{font-size:clamp(40px,5vw,76px);letter-spacing:-.035em}
+html[lang="en"] .hp-main h2{font-size:clamp(32px,4vw,60px);letter-spacing:-.03em}
+html[lang="en"] .hp-main .hp-basis h2{font-size:13px;letter-spacing:0}
+html[lang="en"] .hp-main .hp-integration h2,html[lang="en"] .hp-main .hp-connect h2{font-size:clamp(28px,3vw,42px)}
+html[lang="en"] .hp-basis-inner{grid-template-columns:155px minmax(0,1fr) auto}
+html[lang="en"] .hp-basis li{font-size:12px}
+html[lang="en"] .hp-scene-note{max-width:430px;line-height:1.65}
+html[lang="en"] .nav-dropdown a{overflow-wrap:break-word;word-break:normal}
+html[lang="en"] #primary-navigation .mega-column a{font-size:clamp(17px,1.5vw,22px)}
+@media(min-width:761px) and (max-width:1100px){html[lang="en"] .hp-basis-inner{grid-template-columns:140px minmax(0,1fr)}}
+@media(max-width:760px){
+ html[lang="en"] .hp-main h1{font-size:clamp(32px,8vw,48px)}
+ html[lang="en"] .hp-main h2{font-size:clamp(29px,7.4vw,44px)}
+ html[lang="en"] .hp-main .hp-basis h2{font-size:13px}
+ html[lang="en"] .hp-main .hp-integration h2,html[lang="en"] .hp-main .hp-connect h2{font-size:clamp(27px,7vw,34px)}
+ html[lang="en"] .hp-basis-inner{grid-template-columns:1fr}
+ html[lang="en"] .hp-scene-note{max-width:100%}
+ html[lang="en"] .subnav{flex-wrap:wrap}
+}
+
+/* Keep table guidance in the selected language, including generated CSS text. */
+html[lang="en"] .cell-table-scroll:before,html[lang="en"] .compare-scroll:before{content:"Scroll horizontally to view all specifications."}

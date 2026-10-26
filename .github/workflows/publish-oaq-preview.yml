@@ -1,4 +1,5 @@
 name: Publish OAQ shared preview
+run-name: ${{ inputs.request_id && format('OAQ publish {0}', inputs.request_id) || 'Publish OAQ shared preview' }}
 
 on:
   workflow_dispatch:
@@ -7,6 +8,11 @@ on:
         description: '새 버전 번호 (auto = 다음 번호 자동 생성)'
         required: false
         default: auto
+        type: string
+      request_id:
+        description: '공동 편집 페이지의 게시 요청 ID'
+        required: false
+        default: ''
         type: string
   push:
     branches: [main]
@@ -40,7 +46,8 @@ jobs:
         id: snapshot
         env:
           REQUESTED_VERSION: ${{ inputs.version || 'auto' }}
-        run: python publishing/export_site.py --version "$REQUESTED_VERSION"
+          PUBLICATION_REQUEST: ${{ inputs.request_id }}
+        run: python publishing/export_site.py --version "$REQUESTED_VERSION" --request-id "$PUBLICATION_REQUEST"
       - name: Validate all generated pages and images
         env:
           VERSION: ${{ steps.snapshot.outputs.version }}
@@ -52,6 +59,7 @@ jobs:
           git config user.name "OAQ Preview Publisher"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- "preview/$VERSION" preview/index.html preview/latest.json preview/latest/index.html
+          if [ -d preview/requests ]; then git add -- preview/requests; fi
           if ! git diff --cached --quiet; then
             git commit -m "Publish $VERSION from saved shared content"
             git push origin HEAD:main

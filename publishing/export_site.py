@@ -180,8 +180,12 @@ def output_record(manifest):
             f.write('version='+manifest['version']+'\nurl='+manifest['url']+'\nsnapshot_hash='+manifest['snapshot_sha256']+'\n')
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--version',default='auto');parser.add_argument('--snapshot',type=Path)
+    parser=argparse.ArgumentParser();parser.add_argument('--version',default='auto');parser.add_argument('--snapshot',type=Path);parser.add_argument('--request-id',default='')
     args=parser.parse_args();preview=ROOT/'preview';run=os.environ.get('GITHUB_RUN_ID','')
+    request_id=args.request_id
+    if request_id and not re.fullmatch(r'[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}',request_id): raise ValueError('Invalid publication request ID.')
+    if request_id and (preview/'requests'/f'{request_id}.json').exists():
+        output_record(json.loads((preview/'requests'/f'{request_id}.json').read_text('utf-8')));return
     if run:
         for old in preview.glob('oaq-v*/publication.json'):
             record=json.loads(old.read_text(encoding='utf-8'))
@@ -190,7 +194,7 @@ def main():
     version='oaq-v'+str(version_number(preview,args.version));target=preview/version
     if target.exists(): raise ValueError('This version already exists. Choose a new version; previous versions are never overwritten.')
     registry=json.loads((TEMPLATE/'content-schema.json').read_text(encoding='utf-8'))
-    snapshot=json.loads(args.snapshot.read_text(encoding='utf-8')) if args.snapshot else json.loads(fetch(STUDIO+'/api/export',32*1024*1024))
+    snapshot=json.loads(args.snapshot.read_text(encoding='utf-8')) if args.snapshot else json.loads(fetch(STUDIO+('/api/publication-snapshot/'+request_id if request_id else '/api/export'),32*1024*1024))
     values=validate_snapshot(snapshot,registry)
     frozen={'format':snapshot['format'],'exported':snapshot.get('exported'),'pages':[{'scope':p['scope'],'revision':p['revision'],'data':p['data']} for p in sorted(snapshot['pages'],key=lambda p:p['scope'])]}
     snapshot_bytes=dump(frozen).encode('utf-8');snap_hash=hashlib.sha256(snapshot_bytes).hexdigest()
@@ -211,10 +215,14 @@ def main():
         shutil.copy2(TEMPLATE/'published-content.css',stage/'published-content.css')
         shutil.copy2(TEMPLATE/'news-published.js',stage/'en/news-published.js')
         (stage/'content-snapshot.json').write_bytes(snapshot_bytes)
-        manifest={'version':version,'url':f'https://mschoi-dev.github.io/oaq-website/preview/{version}/en/index.html','published_at':datetime.now(timezone.utc).isoformat(),'source':STUDIO,'snapshot_sha256':snap_hash,'github_run_id':run,'pages':len(list((TEMPLATE/'en').glob('*.html'))),'edited_fields':sum(len(v) for v in values.values()),'copied_images':len(images),'scope_revisions':{p['scope']:p['revision'] for p in frozen['pages']}}
+        manifest={'version':version,'url':f'https://mschoi-dev.github.io/oaq-website/preview/{version}/en/index.html','published_at':datetime.now(timezone.utc).isoformat(),'source':STUDIO,'snapshot_sha256':snap_hash,'github_run_id':run,'request_id':request_id,'pages':len(list((TEMPLATE/'en').glob('*.html'))),'edited_fields':sum(len(v) for v in values.values()),'copied_images':len(images),'scope_revisions':{p['scope']:p['revision'] for p in frozen['pages']}}
         (stage/'publication.json').write_text(dump(manifest),encoding='utf-8')
         # Commit to a new directory only after all downloads and renders succeed.
         shutil.copytree(stage,target)
-    write_catalog(preview);output_record(manifest)
+    write_catalog(preview)
+    if request_id:
+        (preview/'requests').mkdir(exist_ok=True)
+        (preview/'requests'/f'{request_id}.json').write_text(dump(manifest),encoding='utf-8')
+    output_record(manifest)
 
 if __name__=='__main__': main()

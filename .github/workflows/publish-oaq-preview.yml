@@ -1,0 +1,77 @@
+name: Publish OAQ shared preview
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '새 버전 번호 (auto = 다음 번호 자동 생성)'
+        required: false
+        default: auto
+        type: string
+  push:
+    branches: [main]
+    paths: [publishing/publish-request.json]
+
+concurrency:
+  group: oaq-preview-publication
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install HTML renderer
+        run: python -m pip install --disable-pip-version-check lxml==6.1.0
+      - name: Test publication and preservation rules
+        run: python -m unittest discover -s publishing/tests -v
+      - name: Freeze shared content into a new version
+        id: snapshot
+        env:
+          REQUESTED_VERSION: ${{ inputs.version || 'auto' }}
+        run: python publishing/export_site.py --version "$REQUESTED_VERSION"
+      - name: Validate all generated pages and images
+        env:
+          VERSION: ${{ steps.snapshot.outputs.version }}
+        run: python publishing/verify_site.py "preview/$VERSION"
+      - name: Commit only the new preview and version directory
+        env:
+          VERSION: ${{ steps.snapshot.outputs.version }}
+        run: |
+          git config user.name "OAQ Preview Publisher"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "preview/$VERSION" preview/index.html preview/latest.json preview/latest/index.html
+          if ! git diff --cached --quiet; then
+            git commit -m "Publish $VERSION from saved shared content"
+            git push origin HEAD:main
+          fi
+      - name: Request GitHub Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
+      - name: Wait for this version to be publicly available
+        env:
+          VERSION: ${{ steps.snapshot.outputs.version }}
+          SNAPSHOT_HASH: ${{ steps.snapshot.outputs.snapshot_hash }}
+        run: python publishing/wait_for_pages.py "$VERSION" "$SNAPSHOT_HASH"
+      - name: Show published link
+        if: always() && steps.snapshot.outputs.url != ''
+        env:
+          VERSION: ${{ steps.snapshot.outputs.version }}
+          PREVIEW_URL: ${{ steps.snapshot.outputs.url }}
+        run: |
+          echo "## $VERSION" >> "$GITHUB_STEP_SUMMARY"
+          echo "[새 버전 열기]($PREVIEW_URL)" >> "$GITHUB_STEP_SUMMARY"
+          echo "[전체 버전 보기](https://mschoi-dev.github.io/oaq-website/preview/)" >> "$GITHUB_STEP_SUMMARY"
+          echo "기존 시안은 보존됩니다. 실패 표시가 있다면 실패한 단계를 확인한 뒤 Re-run jobs를 실행하세요." >> "$GITHUB_STEP_SUMMARY"

@@ -132,7 +132,9 @@ def render_page(source, values, images, version):
         img=pixels[0] if pixels else add(target,'img',**{'class':'studio-added-image'})
         img.set('src',images[value['src']]);img.set('alt',value['alt'])
         img.attrib.pop('srcset',None)
-        img.set('style',(img.get('style','')+';object-fit:'+ (value['fit'] or 'cover')+';object-position:'+value['position']).lstrip(';'))
+        styles=[part for part in img.get('style','').split(';') if part.strip() and part.split(':',1)[0].strip().lower() not in ('object-fit','object-position')]
+        if value['fit']: styles.append('object-fit:'+value['fit'])
+        styles.append('object-position:'+value['position']);img.set('style',';'.join(styles))
         target.set('class',(target.get('class','')+' studio-has-image').strip())
         credits=members(target,'reference-credit')+members(target,'studio-new-credit')
         if credits: replace_text(credits[0],value['credit'])

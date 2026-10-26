@@ -39,6 +39,13 @@ class ExportTests(unittest.TestCase):
         self.assertEqual(len(d.xpath('//img')),1)
         self.assertTrue(d.xpath('//*[@data-cms-placeholder]'))
 
+    def test_existing_image_layout_option_retains_stylesheet_fit(self):
+        source='<html><head></head><body><img data-cms-image="global:logo" src="old.png" style="object-fit:contain;opacity:.8"></body></html>'
+        value={'src':'https://example.com/logo.png','alt':'OAQ','credit':'','fit':'','position':'center'}
+        doc=html.fromstring(export.render_page(source,{'global':{'logo':value}},{value['src']:'../assets/shared/logo.png'},'oaq-v57'))
+        style=doc.find('.//img').get('style')
+        self.assertNotIn('object-fit',style);self.assertIn('opacity:.8',style)
+
     def test_shared_menu_changes_reach_every_page(self):
         source='<html><head></head><body><a data-cms-text="global:menu">Old</a></body></html>'
         for _ in range(2): self.assertIn('New menu',export.render_page(source,{'global':{'menu':'New menu'}},{},'oaq-v57'))

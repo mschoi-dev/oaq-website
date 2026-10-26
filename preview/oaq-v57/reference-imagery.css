@@ -1,0 +1,84 @@
+/* V55: externally sourced reference photography. Source pixels remain unchanged. */
+.photographic-preview{--photo-ink:#090d12}
+.reference-photo{position:relative;overflow:hidden;background:#101419;isolation:isolate;min-width:0}
+.reference-photo>.reference-image{position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:var(--photo-position,center);filter:grayscale(1) brightness(.76) contrast(1.06);z-index:0}
+.reference-photo>.reference-credit{position:absolute;bottom:0;left:0;right:0;z-index:3;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 15px;padding:10px 16px;background:rgba(5,9,14,.89);color:#dee3e8;font:400 10px/1.6 Arial,sans-serif;letter-spacing:0;text-align:left}
+.reference-credit a{color:#f3f5f7!important;text-decoration:underline;text-underline-offset:3px;min-height:26px;display:inline-flex;align-items:center;max-width:100%;overflow-wrap:anywhere}
+.reference-credit a:focus-visible{outline:2px solid white;outline-offset:3px}
+.hp-scene.reference-photo>.reference-image{z-index:-2;filter:grayscale(1) brightness(.65) contrast(1.05)}
+.hp-scene.reference-photo:after{content:'';display:block;position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(5,9,14,.76),rgba(5,9,14,.25) 62%,rgba(5,9,14,.04)),linear-gradient(0deg,rgba(5,9,14,.5),transparent 65%);pointer-events:none}
+.hp-scene.reference-photo .hp-copy{position:relative;z-index:1;padding-bottom:85px;padding-top:175px}
+.hp-hero-scene.reference-photo>.reference-image{object-position:center 85%;filter:grayscale(1) brightness(.89)}
+.hp-hero-scene.reference-photo:after{background:linear-gradient(90deg,rgba(5,9,14,.5),rgba(5,9,14,.08)),linear-gradient(0deg,rgba(5,9,14,.55),transparent 60%)}
+.hp-scene.reference-photo .hp-description,.hp-scene.reference-photo .hp-kicker,.hp-scene.reference-photo .hp-status{color:#e1e5e9}
+.hp-scene.reference-photo .reference-credit{left:auto;max-width:100%;background:rgba(5,9,14,.92);padding:8px 20px}
+.hp-products.reference-photo{background:#f2f3f4;--hp-ink:#141d27;--hp-copy:#4a5967}
+.hp-products.reference-photo>.reference-image{left:50%;width:50%;object-fit:contain;padding:30px;filter:grayscale(1) brightness(.96) contrast(1.03);z-index:-1;background:#eef0f2}
+.hp-products.reference-photo:after{display:none}
+.hp-products.reference-photo .hp-copy{max-width:1600px;padding-top:75px}
+.hp-products.reference-photo h2,.hp-products.reference-photo .hp-description{max-width:48%}
+.hp-products.reference-photo .hp-description,.hp-products.reference-photo .hp-kicker{color:#3f4e5c}
+.hp-products.reference-photo .reference-credit{width:50%;background:#1a2027}
+.isr-hero>.reference-photo.media-background-slot{z-index:0;pointer-events:auto;border:0}
+.isr-hero>.reference-photo:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(4,8,13,.7),rgba(4,8,13,.12)),linear-gradient(0deg,rgba(4,8,13,.65),transparent);pointer-events:none;z-index:1}
+.isr-hero>.wrap{position:relative;z-index:2;pointer-events:none;padding-bottom:85px}
+.isr-hero>.wrap a{pointer-events:auto}
+.isr-hero .reference-credit{justify-content:flex-end}
+.isr-hero>.reference-photo>.reference-image{filter:grayscale(1) brightness(.8)}
+.solution-detail .motion-stage.reference-photo{padding:0;background:#0c1118}
+.motion-stage.reference-photo>.reference-image{object-fit:cover;filter:grayscale(1) brightness(.78) contrast(1.08)}
+.motion-stage[data-reference=vtol]>.reference-image,.motion-stage[data-reference=aircraft]>.reference-image{object-fit:contain;background:#131820}
+.technology-light .reference-photo>.reference-image{filter:grayscale(1) brightness(.96) contrast(1.03)}
+.technology-light .ref-product>.reference-image,.technology-light .product-intro .reference-image,.technology-light .cell-stage .reference-image,.technology-light .category-banner[data-reference=cell]>.reference-image{object-fit:contain;background:#edf0f2;padding:22px 22px 58px}
+.product-intro .reference-photo{aspect-ratio:1/1}
+.product-media>.reference-photo{height:100%;width:100%;min-height:220px}
+.reference-banner{position:relative;display:block;width:100%;height:clamp(230px,24vw,350px);margin:35px 0 0;border:1px solid #39434d}
+.reference-category-intro{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);column-gap:50px;align-content:center;align-items:start}
+.reference-category-intro>*{grid-column:1;margin-top:0}
+.reference-category-intro>h1{font-size:clamp(40px,4.5vw,65px);overflow-wrap:anywhere}
+.reference-category-intro>.category-banner{grid-column:2;grid-row:1 / span 7;height:350px;margin:0;align-self:center}
+.reference-category-intro .actions{margin-top:20px}
+.blank-product-photo.reference-photo{display:block;position:relative;min-height:420px;padding:0;border:1px solid #bac2cb}
+.blank-product-photo.reference-photo .reference-model-note{position:absolute;left:14px;top:14px;max-width:calc(100% - 28px);z-index:2;background:#131a22;color:#f0f3f5;font:400 10px/1.6 Arial,sans-serif;letter-spacing:.05em;padding:7px 10px}
+.reference-photo.ref-slot small{display:none}
+.stack-visual .reference-credit{font-size:9px;line-height:1.5;padding:8px 10px;display:block}
+.stack-visual .reference-credit span{display:block}
+.stack-visual .reference-credit a{font-size:9px}
+.usecase-visual .reference-photo{height:100%;aspect-ratio:auto}
+.brand-preview-signature{margin:35px 0 0;min-height:230px;border:1px solid #3f4852;background:#0a0f15;display:flex;align-items:center;justify-content:center}
+.brand-preview-signature img{width:min(280px,60%);height:auto}
+.credits-footer-link{font-size:11px;min-height:44px;display:inline-flex;align-items:center;text-decoration:underline;text-underline-offset:4px}
+.image-credits-main{background:#0b1017;color:#eef2f5}
+.credits-intro p:not(.eyebrow){max-width:900px;font-size:14px;line-height:1.9;color:#c2ccd5;margin-top:20px}
+.credits-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 30px}
+.credit-record{min-width:0;border-top:1px solid #394552;padding-top:22px;scroll-margin-top:120px}
+.credit-record>figure{width:100%;aspect-ratio:16/10;margin:0}
+.credit-record .reference-credit{display:none}
+.credit-record h2{font-size:20px;line-height:1.5;overflow-wrap:anywhere;margin:20px 0 10px}
+.credit-record p{font-size:13px;margin-bottom:10px}
+.credit-record>a{display:inline-flex;min-height:44px;align-items:center;font-size:12px;text-decoration:underline;margin-right:18px;text-underline-offset:4px}
+.credit-record>small{display:block;font-size:11px;line-height:1.8;color:#acb9c7}
+@media(max-width:1000px){.hp-products.reference-photo h2{font-size:clamp(32px,4vw,46px)}.reference-category-intro{column-gap:28px}.reference-category-intro>.category-banner{height:300px}}
+@media(max-width:760px){
+ .reference-credit a{min-height:30px}.reference-photo>.reference-credit{font-size:9px;padding:8px 12px;gap:0 12px}
+ .hp-scene.reference-photo .hp-copy{padding-top:200px;padding-bottom:100px}
+ .hp-hero-scene.reference-photo .hp-copy{padding-top:135px;padding-bottom:90px}
+ .hp-scene.reference-photo:after{background:linear-gradient(0deg,rgba(5,9,14,.95),rgba(5,9,14,.6) 40%,rgba(5,9,14,.12) 80%)}
+ .hp-scene.reference-photo .reference-credit{left:0;padding:7px 14px}
+ .hp-products.reference-photo{padding-top:260px}
+ .hp-products.reference-photo>.reference-image{left:0;top:0;width:100%;height:270px;padding:20px 35px;object-fit:contain}
+ .hp-products.reference-photo .hp-copy{padding-top:28px;padding-bottom:90px}
+ .hp-products.reference-photo h2,.hp-products.reference-photo .hp-description{max-width:100%}
+ .hp-products.reference-photo .reference-credit{width:100%}
+ .reference-category-intro{display:block}
+ .reference-category-intro>.category-banner{margin-top:28px;height:280px}
+ .reference-category-intro>*{margin-top:revert}
+ .reference-banner{height:240px;margin-top:25px}
+ .blank-product-photo.reference-photo{min-height:330px;aspect-ratio:1/1}
+ .solution-detail .motion-stage.reference-photo{min-height:290px;height:clamp(290px,55vw,440px)}
+ .motion-stage.reference-photo>.reference-image{padding-bottom:48px}
+ .isr-hero>.wrap{padding-bottom:110px}.isr-hero .reference-credit{justify-content:flex-start}
+ .credits-grid{grid-template-columns:1fr;gap:32px}
+ .stack-visual .reference-credit{font-size:8px;padding:6px}.stack-visual .reference-credit a{font-size:8px;min-height:30px}
+ .brand-preview-signature{min-height:180px}
+}

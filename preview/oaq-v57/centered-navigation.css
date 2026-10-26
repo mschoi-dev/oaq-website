@@ -1,0 +1,59 @@
+/* v51: viewport-centered primary navigation, independent of logo width. */
+@media (min-width:1024px){
+  header .nav{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    align-items:center;
+    justify-content:normal;
+    column-gap:24px;
+    row-gap:0;
+    padding:18px 36px;
+  }
+  header .nav>.logo{grid-column:1;grid-row:1;justify-self:start;margin:0}
+  header #primary-navigation{
+    grid-column:2;
+    grid-row:1;
+    width:max-content;
+    justify-self:center;
+    justify-content:center;
+    flex-wrap:nowrap;
+    gap:30px;
+  }
+  header #primary-navigation>.nav-group,
+  header #primary-navigation>a{flex:none}
+  header #primary-navigation>.nav-group>.nav-group-head>a,
+  header #primary-navigation>a{white-space:nowrap}
+}
+/* Keep the complete menu centered on smaller tablets without crowding the logo. */
+@media (min-width:761px) and (max-width:1023px){
+  header .nav{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    flex-wrap:nowrap;
+    gap:8px;
+    padding:16px 24px 12px;
+  }
+  header .nav>.logo{margin:0;align-self:center}
+  header #primary-navigation{
+    width:100%;
+    justify-content:center;
+    flex-wrap:wrap;
+    column-gap:24px;
+    row-gap:4px;
+    padding:0;
+    border:0;
+  }
+  header #primary-navigation>.nav-group,
+  header #primary-navigation>a{flex:none}
+  header #primary-navigation>.nav-group>.nav-group-head>a,
+  header #primary-navigation>a{white-space:nowrap}
+}
+@media (min-width:761px){
+  header #primary-navigation>.nav-group:not(.mega-group)>.nav-dropdown{
+    left:50%;
+    transform:translateX(-50%);
+  }
+}
+/* At 760px and below the existing menu button and vertical drawer are preserved. */

@@ -1,0 +1,6 @@
+/* v52: technical foundation now belongs to About OAQ. */
+.company-foundation{border-top:1px solid #35414e;scroll-margin-top:24px}
+.about-opening .actions{margin-top:28px}
+.company-foundation .stack-heading>p{max-width:520px}
+.company-foundation .stack-evidence-note{max-width:1000px}
+@media(max-width:760px){.company-foundation{scroll-margin-top:12px}.about-opening .actions{margin-top:22px}.company-foundation .stack-heading h2{font-size:clamp(28px,7.6vw,34px)}}

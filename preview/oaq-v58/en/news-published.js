@@ -1,0 +1,1 @@
+(()=>{'use strict';const filter=document.getElementById('news-filter');if(!filter)return;filter.addEventListener('change',()=>{document.querySelectorAll('[data-news-category]').forEach(card=>{card.hidden=!!filter.value&&filter.value!==card.dataset.newsCategory;});});})();
